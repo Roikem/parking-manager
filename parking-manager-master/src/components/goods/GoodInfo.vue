@@ -10,12 +10,44 @@
     <div class="parking-table">
       <div class="parking-box-pic">
         <ul class="area_A">
-          <li>
-            <div class="a1_1p"></div>
-            <div class="a1_2p"></div>
-            <div class="a1_3p"></div>
-          </li>
-          <li></li>
+          <!-- A区域 -->
+          <ul class="area_a">
+            <!-- A区域 分区1 -->
+            <li class="area_a1">
+              <!-- 分区1 6小组 -->
+              <ul class="a1_group1">
+                <li class="a1_1">
+                  <div class="a1_1p" v-bind:id="parkingDataForm[0].parkingColor">
+                    <p>{{parkingDataForm[0].parking_area}}</p>
+                    <a>{{parkingDataForm[0].area_num}}</a>
+                  </div>
+                  <div class="a1_2p" v-bind:id="parkingDataForm[1].parkingColor">
+                    <p>{{parkingDataForm[1].parking_area}}</p>
+                    <a>{{parkingDataForm[1].area_num}}</a>
+                  </div>
+                  <div class="a1_3p" v-bind:id="parkingDataForm[2].parkingColor">
+                    <p>{{parkingDataForm[2].parking_area}}</p>
+                    <a>{{parkingDataForm[2].area_num}}</a>
+                  </div>
+                </li>
+                <li class="a1_2">
+                  <div class="a1_1p" v-bind:id="parkingDataForm[3].parkingColor">
+                    <p>{{parkingDataForm[3].parking_area}}</p>
+                    <a>{{parkingDataForm[3].area_num}}</a>
+                  </div>
+                  <div class="a1_2p" v-bind:id="parkingDataForm[4].parkingColor">
+                    <p>{{parkingDataForm[4].parking_area}}</p>
+                    <a>{{parkingDataForm[4].area_num}}</a>
+                  </div>
+                  <div class="a1_3p" v-bind:id="parkingDataForm[5].parkingColor">
+                    <p>{{parkingDataForm[5].parking_area}}</p>
+                    <a>{{parkingDataForm[5].area_num}}</a>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
           <li></li>
         </ul>
         <img src="../../assets/parking-table.png" alt="停车场平面图" />
@@ -40,40 +72,52 @@ export default {
       total: 0,
       addDialogVisible: false,
       editDialogVisible: false,
-      // 添加用户的表单数据
-      addForm: {
-        goodsName: "",
-        goodsCount: "",
-        company: ""
-      },
-      postForm: {
-        goodsName: "",
-        goodsCount: "",
-        company: ""
-      },
-      editForm: {
-        goodsName: "",
-        goodsCount: "",
-        inboundTime: "",
-        goodsId: "",
-        company: "",
-        checkSituation: ""
-      },
 
-      changeForm: {
-        goodsName: "",
-        goodsCount: "",
-        inboundTime: "",
-        goodsId: "",
-        company: "",
-        checkSituation: ""
-      },
-      postchangeForm: {
-        goodsName: "",
-        goodsCount: "",
-        company: "",
-        goodsId: ""
-      }
+      // 加载的车库情况表单数据
+      parkingDataForm: [
+        {
+          parking_area: "a1",
+          area_num: "1",
+          carId: "",
+          parkingColor: "p_red",
+          parkingSituation: "0"
+        },
+        {
+          parking_area: "a1",
+          area_num: "2",
+          carId: "",
+          parkingColor: "p_red",
+          parkingSituation: "1"
+        },
+        {
+          parking_area: "a1",
+          area_num: "3",
+          carId: "",
+          parkingColor: "p_red",
+          parkingSituation: "2"
+        },
+        {
+          parking_area: "a1",
+          area_num: "4",
+          carId: "",
+          parkingColor: "p_red",
+          parkingSituation: "3"
+        },
+        {
+          parking_area: "a1",
+          area_num: "5",
+          carId: "",
+          parkingColor: "p_green",
+          parkingSituation: "3"
+        },
+        {
+          parking_area: "a1",
+          area_num: "6",
+          carId: "",
+          parkingColor: "p_green",
+          parkingSituation: "3"
+        }
+      ]
     };
   },
   created: function() {
@@ -84,6 +128,16 @@ export default {
     //   this.total = this.tableData.length;
   },
   methods: {
+    tableRowClassName({ row, goodsCount }) {
+      if (row.checkSituation == 2) {
+        return "warning-row";
+      } else if (row.checkSituation == 1) {
+        return "success-row";
+      } else {
+        return "audit-row";
+      }
+      return "";
+    }
     //     fetch() {
     //       this.openLoading()
     //           this.$http.get(this.api+"commodity/getAll").then(res => {
@@ -182,7 +236,6 @@ export default {
 .parking-table {
   width: 100%;
   height: 600px;
-  padding: px;
   background-color: red;
 }
 .parking-box-pic img {
@@ -202,21 +255,87 @@ export default {
   background-color: #333744;
   padding: 30px;
 }
-.area_A{
+.area_A {
   width: 860px;
   height: 100%;
   margin-left: -13px;
   margin-top: -4px;
-  list-style:none;
+  list-style: none;
+}
+.area_A li p {
+  color: white;
+  font-size: 1px;
+  font-weight: 400;
+  margin-left: 2px;
+}
+.area_A li a {
+  position: relative;
+  color: white;
+  font-size: 1px;
+  font-weight: 400;
+  padding-right: 3px;
+  top: -10px;
+  margin-left: 4px;
+}
+#p_red {
+  background-color: rgb(255, 64, 64);
+  box-shadow: 0 0 4px rgb(252, 50, 50)
+}
+#p_green {
+  background-color: rgb(2, 187, 42);
+  box-shadow: 0 0 4px rgb(61, 216, 61)
+}
+
+.a1_1 {
+  position: absolute;
+  background-color: yellow;
+  left: -58.0px;
+  top: 113px;
+}
+.a1_2 {
+  position: absolute;
+  background-color: yellow;
+  left: -58.0px;
+  top: 149.8px;
 }
 .a1_1p {
-   height: 32px;
-    width: 16px;
-    position: absolute;
-    background-color: green;
-    z-index: 20;
-    top: 49.5px;
-    left: 115px;
-    opacity: 0.8;
+  height: 35px;
+  width: 14.5px;
+  position: absolute;
+  z-index: 20;
+  top: 49.5px;
+  left: 115.3px;
+  opacity: 0.9;
+  background-color: green;
+}
+.a1_2p {
+  height: 35px;
+  width: 14.5px;
+  position: absolute;
+  z-index: 20;
+  top: 49.5px;
+  left: 132px;
+  opacity: 0.9;
+  background-color: green;
+}
+.a1_3p {
+  height: 35px;
+  width: 14.5px;
+  position: absolute;
+  z-index: 20;
+  top: 49.5px;
+  left: 149px;
+  opacity: 0.9;
+  background-color: green;
+}
+.a1_4p {
+  height: 32px;
+  width: 16px;
+  position: absolute;
+  background-color: green;
+  z-index: 20;
+  top: 49.5px;
+  left: 231px;
+  opacity: 0.8;
 }
 </style>
