@@ -17,31 +17,49 @@
               <!-- 分区1 6小组 -->
               <ul class="a1_group1">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[0].parkingColor">
-                    <p>{{parkingDataForm[0].parking_area}}</p>
-                    <a>{{parkingDataForm[0].area_num}}</a>
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[0].parkingColor"
+                  >
+                    <p>{{ parkingDataForm[0].parking_area }}</p>
+                    <a>{{ parkingDataForm[0].area_num }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[1].parkingColor">
-                    <p>{{parkingDataForm[1].parking_area}}</p>
-                    <a>{{parkingDataForm[1].area_num}}</a>
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[1].parkingColor"
+                  >
+                    <p>{{ parkingDataForm[1].parking_area }}</p>
+                    <a>{{ parkingDataForm[1].area_num }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[2].parkingColor">
-                    <p>{{parkingDataForm[2].parking_area}}</p>
-                    <a>{{parkingDataForm[2].area_num}}</a>
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[2].parkingColor"
+                  >
+                    <p>{{ parkingDataForm[2].parking_area }}</p>
+                    <a>{{ parkingDataForm[2].area_num }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[3].parkingColor">
-                    <p>{{parkingDataForm[3].parking_area}}</p>
-                    <a>{{parkingDataForm[3].area_num}}</a>
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[3].parkingColor"
+                  >
+                    <p>{{ parkingDataForm[3].parking_area }}</p>
+                    <a>{{ parkingDataForm[3].area_num }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[4].parkingColor">
-                    <p>{{parkingDataForm[4].parking_area}}</p>
-                    <a>{{parkingDataForm[4].area_num}}</a>
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[4].parkingColor"
+                  >
+                    <p>{{ parkingDataForm[4].parking_area }}</p>
+                    <a>{{ parkingDataForm[4].area_num }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[5].parkingColor">
-                    <p>{{parkingDataForm[5].parking_area}}</p>
-                    <a>{{parkingDataForm[5].area_num}}</a>
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[5].parkingColor"
+                  >
+                    <p>{{ parkingDataForm[5].parking_area }}</p>
+                    <a>{{ parkingDataForm[5].area_num }}</a>
                   </div>
                 </li>
               </ul>
@@ -66,7 +84,7 @@ export default {
       queryInfo: {
         query: "",
         pagenum: 1,
-        pagesize: 15
+        pagesize: 15,
       },
       userlist: [],
       total: 0,
@@ -80,47 +98,47 @@ export default {
           area_num: "1",
           carId: "",
           parkingColor: "p_red",
-          parkingSituation: "0"
+          parkingSituation: "0",
         },
         {
           parking_area: "a1",
           area_num: "2",
           carId: "",
           parkingColor: "p_red",
-          parkingSituation: "1"
+          parkingSituation: "1",
         },
         {
           parking_area: "a1",
           area_num: "3",
           carId: "",
           parkingColor: "p_red",
-          parkingSituation: "2"
+          parkingSituation: "2",
         },
         {
           parking_area: "a1",
           area_num: "4",
           carId: "",
           parkingColor: "p_red",
-          parkingSituation: "3"
+          parkingSituation: "3",
         },
         {
           parking_area: "a1",
           area_num: "5",
           carId: "",
           parkingColor: "p_green",
-          parkingSituation: "3"
+          parkingSituation: "3",
         },
         {
           parking_area: "a1",
           area_num: "6",
           carId: "",
           parkingColor: "p_green",
-          parkingSituation: "3"
-        }
-      ]
+          parkingSituation: "3",
+        },
+      ],
     };
   },
-  created: function() {
+  created: function () {
     // 获取后端数据后
     ///this.tableData=数据
     //  this.fetch();
@@ -137,7 +155,7 @@ export default {
         return "audit-row";
       }
       return "";
-    }
+    },
     //     fetch() {
     //       this.openLoading()
     //           this.$http.get(this.api+"commodity/getAll").then(res => {
@@ -206,7 +224,7 @@ export default {
     //       checkSituation: ""
     //     },
     //修改信息  @rk---
-  }
+  },
 };
 </script>
 
@@ -236,7 +254,6 @@ export default {
 .parking-table {
   width: 100%;
   height: 600px;
-  background-color: red;
 }
 .parking-box-pic img {
   position: absolute;
@@ -262,6 +279,9 @@ export default {
   margin-top: -4px;
   list-style: none;
 }
+ul {
+  list-style: none;
+}
 .area_A li p {
   color: white;
   font-size: 1px;
@@ -279,23 +299,23 @@ export default {
 }
 #p_red {
   background-color: rgb(255, 64, 64);
-  box-shadow: 0 0 4px rgb(252, 50, 50)
+  box-shadow: 0 0 4px rgb(252, 50, 50);
 }
 #p_green {
   background-color: rgb(2, 187, 42);
-  box-shadow: 0 0 4px rgb(61, 216, 61)
+  box-shadow: 0 0 4px rgb(61, 216, 61);
 }
 
 .a1_1 {
   position: absolute;
   background-color: yellow;
-  left: -58.0px;
+  left: -58px;
   top: 113px;
 }
 .a1_2 {
   position: absolute;
   background-color: yellow;
-  left: -58.0px;
+  left: -58px;
   top: 149.8px;
 }
 .a1_1p {
