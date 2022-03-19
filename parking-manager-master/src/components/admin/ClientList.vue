@@ -3,8 +3,8 @@
     <!-- 头部面包屑 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>管理相关</el-breadcrumb-item>
-      <el-breadcrumb-item>客户信息</el-breadcrumb-item>
+      <el-breadcrumb-item>临时停车</el-breadcrumb-item>
+      <el-breadcrumb-item>临时停车信息列表</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 卡片视图区 -->
@@ -19,24 +19,22 @@
           </el-input> -->
 
           <el-input
-            placeholder="请输入用户姓名或者用户电话号码"
+            placeholder="请输入车位编号、车牌号或手机号"
             v-model="search"
             @input="submitFun"
             ref="searchInput"
+            onkeyup="this.value=this.value.toLowerCase()"
           >
             <el-button slot="append" icon="el-icon-search"></el-button
           ></el-input>
         </el-col>
       </el-row>
       <!-- 表格区 -->
-      <el-table :data="searchData" border :stripe="true">
+      <el-table :data="tempData" border :stripe="true">
         <el-table-column type="index"></el-table-column>
-        <el-table-column prop="userName" label="姓名"></el-table-column>
-        <el-table-column prop="userSex" label="性别"></el-table-column>
-        <el-table-column prop="userTel" label="联系电话"></el-table-column>
-        <el-table-column prop="userId" label="用户ID"></el-table-column>
-        <el-table-column prop="company" label="公司"></el-table-column>
-
+        <el-table-column prop="parking_id" label="车位编号"></el-table-column>
+        <el-table-column prop="car_id" label="车牌号"></el-table-column>
+        <el-table-column prop="tel_number" label="手机号"></el-table-column>
         <!-- <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.state" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
@@ -50,7 +48,8 @@
               icon="el-icon-delete"
               size="mini"
               @click="deleteBridge(scope)"
-            ></el-button>
+              >出库</el-button
+            >
             <!-- 分配角色 -->
             <!-- <el-tooltip effect="dark" content="购买信息" placement="top" :enterable="false">
               <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
@@ -62,27 +61,23 @@
       <div class="block">
         <!-- size-change在切换分页（如100页为一格）的时候触发，current-change在只要换页的时候就会触发 -->
         <el-pagination
+          background
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="queryInfo.pagenum"
-          :page-sizes="[1, 5, 10, 15]"
+          :page-sizes="[5, 10]"
           :page-size="queryInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
+          :total="queryInfo.total"
         ></el-pagination>
       </div>
     </el-card>
 
-    <!-- 修改信息对话框 -->
+    <!-- 出库信息对话框 -->
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
-      <span style="font-size: 20px; font-weight: 800"
-        >确定要删除该条数据吗
-        <img
-          src="../../assets/logo.png"
-          style="position: absolute; top: 34.3px; width: 120px; height: 120px"
-          alt
-          class="logo"
-      /></span>
+      <span style="font-size: 17px; font-weight: 800"
+        >是否确定临时车辆出库（当前计费{{ parking_cost }}元）
+      </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="deleteData(scope)">确 定</el-button>
@@ -95,56 +90,90 @@
 export default {
   data() {
     return {
+      parking_cost: "",
       comValue: "",
       scope: "",
       dialogVisible: false,
       search: "",
-      searchData: [
+      tempData: [],
+      t1data: [],
+      tableData: [
         {
-          goodsName: "1",
-          goodsCount: "1",
-          inboundTime: "1",
-          goodsId: "1",
-          company: "1",
-          checkSituation: "1",
+          parking_id: "a1_4",
+          car_id: "川A23231",
+          tel_number: "19999999999",
+        },
+        {
+          parking_id: "a1_5",
+          car_id: "川A24211",
+          tel_number: "17777777777",
+        },
+        {
+          parking_id: "a1_6",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_6",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_6",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_6",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_6",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_6",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_6",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_6",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_8",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_8",
+          car_id: "川A23211",
+          tel_number: "12222222223",
+        },
+        {
+          parking_id: "a1_8",
+          car_id: "川A23211",
+          tel_number: "12222222223",
         },
       ],
-
-      tableData: [],
       queryInfo: {
         query: "",
         pagenum: 1,
-        pagesize: 15,
+        pagesize: 10,
+        total: "",
       },
       userlist: [],
-      total: 0,
       addDialogVisible: false,
       editDialogVisible: false,
       // 添加用户的表单数据
-      addForm: {
-        goodsName: "",
-        goodsCount: "",
-        inboundTime: "",
-        goodsId: "",
-        company: "",
-        checkSituation: "",
-      },
-      editForm: {
-        goodsName: "",
-        goodsCount: "",
-        inboundTime: "",
-        goodsId: "",
-        company: "",
-        checkSituation: "",
-      },
-      changeForm: {
-        goodsName: "",
-        goodsCount: "",
-        inboundTime: "",
-        goodsId: "",
-        company: "",
-        checkSituation: "",
-      },
     };
   },
 
@@ -152,8 +181,6 @@ export default {
     // 获取后端数据后
     ///this.tableData=数据
     this.fetch();
-
-    this.total = this.tableData.length;
   },
   methods: {
     async getUserList() {
@@ -161,18 +188,19 @@ export default {
     },
     //查询功能
     inintData() {
-      this.searchData = this.tableData;
+      this.tempData = this.tableData;
     },
     submitFun() {
       let search = this.search;
-      this.searchData = this.tableData.filter(function (tabledatas) {
+      search.toLowerCase();
+      this.tempData = this.tableData.filter(function (tabledatas) {
         // console.log('过滤', tabledatas);
         let searchField = {
-          userName: tabledatas.userName,
-          userTel: tabledatas.userTel,
+          parking_id: tabledatas.parking_id,
+          tel_number: tabledatas.tel_number,
+          car_id: tabledatas.car_id,
         };
         return Object.keys(searchField).some(function (key) {
-          //    console.log('key值', key);
           return String(tabledatas[key]).toLowerCase().indexOf(search) > -1;
         });
       });
@@ -187,19 +215,20 @@ export default {
     },
     // 监听页码值改变的事件
     handleCurrentChange(currentPage) {
-      //console.log(newPage);
+      console.log(currentPage);
       this.queryInfo.pagenum = currentPage;
       this.currentChangePage(this.tableData, currentPage);
     },
     currentChangePage(list, currentPage) {
       let from = (currentPage - 1) * this.queryInfo.pagesize;
       let to = currentPage * this.queryInfo.pagesize;
-      this.searchData = [];
+      this.tempData = [];
       for (; from < to; from++) {
         if (list[from]) {
-          this.searchData.push(list[from]);
+          this.tempData.push(list[from]);
         }
       }
+      console.log(list);
     },
 
     // 监听添加用户表单的关闭事件并清除其中的数据
@@ -217,19 +246,29 @@ export default {
 
     //向后端申请数据 @rk---
     // {
-    //       userName: "",
-    //       userSex: "",
-    //       userTel: "",
+    //       parking_id: "",
+    //       car_id: "",
+    //       tel_number: "",
     //       company: "",
     //     },
     fetch() {
-      this.openLoading();
-      this.$http.get(this.api + "/user/getAll").then((res) => {
-        //  console.log(res)
-        this.openLoading().close();
-        this.tableData = res.data.data;
-        this.inintData();
-      });
+      //test
+      this.tempData = [];
+      this.queryInfo.total = this.tableData.length;
+      console.log(this.queryInfo.total);
+      // this.tabledata = this.getData;
+      this.handleCurrentChange(1);
+      //分页bug
+      //this.inintData();
+
+      //启动执行 get
+      //this.openLoading();
+      // this.$http.get(this.api + "/user/getAll").then((res) => {
+      //   //  console.log(res)
+      //   this.openLoading().close();
+      //   this.tableData = res.data.data;
+      //   this.inintData();
+      // });
     },
 
     //修改信息  @rk---
@@ -238,6 +277,16 @@ export default {
     deleteBridge(scope) {
       this.scope = scope;
       this.dialogVisible = true;
+      let postValue = {
+        parking_id: "",
+        car_id: "",
+      };
+      postValue.parking_id = scope.row.parking_id;
+      postValue.car_id = scope.row.car_id;
+      console.log(postValue);
+      let costGet = this.$qs.stringify(postValue);
+      console.log(costGet);
+      this.parking_cost = 10;
     },
     deleteData(scope) {
       //console.log("index的值是：",scope.$index)
@@ -245,27 +294,30 @@ export default {
       //  this.tableData.splice(scope.$index, 1)
       // this.inintData()
       let comValue = {
-        userId: "",
+        parking_id: "",
+        car_id: "",
       };
-      comValue.userId = scope.row.userId;
-
+      comValue.parking_id = scope.row.parking_id;
+      comValue.car_id = scope.row.car_id;
+      console.log(comValue);
       let postinfo = this.$qs.stringify(comValue);
       console.log(postinfo);
       // console.log(scope.row.userId)
       //console.log("出库的货物编码:",scope.row.goodsId)
-      //返回用户姓名，后端根据userName进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
-      this.$http
-        .post(this.api + "user/delete?" + postinfo)
-        .then((res) => {
-          this.$message({
-            message: "操作成功",
-            type: "success",
-          });
-          this.fetch();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      //返回用户车位编号，后端根据parking_id进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
+
+      // this.$http
+      //   .post(this.api + "user/delete?" + postinfo)
+      //   .then((res) => {
+      //     this.$message({
+      //       message: "操作成功",
+      //       type: "success",
+      //     });
+      //     this.fetch();
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     },
   },
 };

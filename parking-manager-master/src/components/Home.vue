@@ -56,7 +56,9 @@
           </ul>
         </div>
 
-        <el-button type="primary" class="sumbtn" plain @click="editInfo">修改信息</el-button>
+        <el-button type="primary" class="sumbtn" plain @click="editInfo"
+          >修改信息</el-button
+        >
       </el-drawer>
       <el-aside :width="collapse ? '64px' : '200px'">
         <div class="toggle-button" @click="toggleCollapse">{{ this.fold }}</div>
@@ -70,7 +72,7 @@
           :router="true"
           :default-active="activePath"
         >
-          <el-menu-item index="index" @click="saveNavState('goodInfo')">
+          <el-menu-item index="index" @click="saveNavState('allgarageinfo')">
             <i class="el-icon-s-home"></i>
             <span>车位总揽</span>
           </el-menu-item>
@@ -95,7 +97,7 @@
                 <i class="el-icon-user-solid"></i>
                 <span>业主信息列表</span>
               </el-menu-item>
-                 <el-menu-item index="users-add" @click="saveNavState('appliOut')">
+              <el-menu-item index="users-add" @click="saveNavState('appliOut')">
                 <i class="el-icon-circle-plus"></i>
                 <span>业主新增</span>
               </el-menu-item>
@@ -109,15 +111,17 @@
             </template>
             <el-menu-item-group>
               <!-- users -->
-              <el-menu-item index="clientList" @click="saveNavState('clientList')">
+              <el-menu-item
+                index="clientList"
+                @click="saveNavState('clientList')"
+              >
                 <i class="el-icon-truck"></i>
                 <span>临时停车信息列表</span>
               </el-menu-item>
-              <el-menu-item index="outInfo" @click="saveNavState('appliOut')">
+              <el-menu-item index="outInfo" @click="saveNavState('tempOut')">
                 <i class="el-icon-circle-plus-outline"></i>
                 <span>临时停车新增</span>
               </el-menu-item>
-            
             </el-menu-item-group>
           </el-submenu>
 
@@ -128,12 +132,12 @@
             </template>
             <el-menu-item-group>
               <!-- roles -->
-              <el-menu-item index="appliOut" @click="saveNavState('appliOut')">
+              <el-menu-item index="appliOut" @click="saveNavState('switchOut')">
                 <i class="el-icon-edit"></i>
                 <span>闲置车位管理</span>
               </el-menu-item>
               <!-- permission -->
-              <el-menu-item index="appliState" @click="saveNavState('appliState')">
+              <el-menu-item index="appliState" @click="saveNavState('record')">
                 <i class="el-icon-s-order"></i>
                 <span>车库历史记录</span>
               </el-menu-item>
@@ -167,16 +171,16 @@ export default {
         company: "",
         userAccount: "",
         userPassword: "",
-        userId: "0"
+        userId: "0",
       },
       userDis: {
         sex: "",
-        cor: ""
+        cor: "",
       },
       // 是否折叠
       collapse: false,
       // 当前被激活的链接地址
-      activePath: ""
+      activePath: "",
     };
   },
 
@@ -214,7 +218,7 @@ export default {
         company: "",
         userAccount: "",
         userPassword: "",
-        userId: ""
+        userId: "",
       };
       this.$router.push("/login");
     },
@@ -236,8 +240,8 @@ export default {
     },
     personMessage() {
       this.$router.push("/userinfo");
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang='less' scoped>

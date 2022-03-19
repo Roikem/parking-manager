@@ -32,20 +32,21 @@
       <el-table :data="searchData" border :stripe="true">
         <el-table-column type="index"></el-table-column>
         <el-table-column prop="goodsName" label="商品名字"></el-table-column>
-        <el-table-column prop="goodsOutCount" label="出库数量"></el-table-column>
-  
+        <el-table-column
+          prop="goodsOutCount"
+          label="出库数量"
+        ></el-table-column>
+
         <el-table-column prop="outboundTime" label="出库时间"></el-table-column>
         <el-table-column prop="goodsId" label="库存编码"></el-table-column>
         <el-table-column prop="company" label="公司姓名"></el-table-column>
-              <el-table-column prop="userId" label="用户id"></el-table-column>
+        <el-table-column prop="userId" label="用户id"></el-table-column>
 
         <!-- <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.state" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
           </template>
         </el-table-column>-->
-      
-      
       </el-table>
       <!-- 分页区 -->
       <div class="block">
@@ -61,13 +62,25 @@
         ></el-pagination>
       </div>
     </el-card>
-  <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
-          <span style="font-size: 20px; font-weight: 800;">确定要删除该条数据吗    <img src="../../assets/logo.png" style="position:absolute ; top:34.3px; width: 120px;height:120px;" alt class="logo" /></span>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="deleteData(scope)">确 定</el-button>
-          </span>
-        </el-dialog>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose"
+    >
+      <span style="font-size: 20px; font-weight: 800"
+        >确定要删除该条数据吗
+        <img
+          src="../../assets/logo.png"
+          style="position: absolute; top: 34.3px; width: 120px; height: 120px"
+          alt
+          class="logo"
+      /></span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="deleteData(scope)">确 定</el-button>
+      </span>
+    </el-dialog>
     <!-- 修改信息对话框 -->
   </div>
 </template>
@@ -76,7 +89,7 @@
 export default {
   data() {
     return {
-      scope:"",
+      scope: "",
       dialogVisible: false,
       search: "",
       searchData: "",
@@ -84,7 +97,7 @@ export default {
       queryInfo: {
         query: "",
         pagenum: 1,
-        pagesize: 15
+        pagesize: 15,
       },
       userlist: [],
       total: 0,
@@ -97,7 +110,7 @@ export default {
         userId: "",
         goodsId: "",
         company: "",
-        checkSituation: ""
+        checkSituation: "",
       },
       editForm: {
         goodsName: "",
@@ -105,7 +118,7 @@ export default {
         userId: "",
         goodsId: "",
         company: "",
-        checkSituation: ""
+        checkSituation: "",
       },
       changeForm: {
         goodsName: "",
@@ -113,12 +126,12 @@ export default {
         userId: "",
         goodsId: "",
         company: "",
-        checkSituation: ""
-      }
+        checkSituation: "",
+      },
     };
   },
 
-  created: function() {
+  created: function () {
     // 获取后端数据后
     ///this.tableData=数据
     this.fetch();
@@ -135,12 +148,12 @@ export default {
     },
     submitFun() {
       let search = this.search;
-      this.searchData = this.tableData.filter(function(tabledatas) {
+      this.searchData = this.tableData.filter(function (tabledatas) {
         //  console.log('过滤', tabledatas);
         let searchField = {
           goodsName: tabledatas.goodsName,
         };
-        return Object.keys(searchField).some(function(key) {
+        return Object.keys(searchField).some(function (key) {
           // console.log('key值', key);
           return String(tabledatas[key]).toLowerCase().indexOf(search) > -1;
         });
@@ -192,35 +205,34 @@ export default {
     //       company: "",
     //     },
     fetch() {
-      this.$http.get(this.api+"/removecommodity/getAll").then(res => {
-        console.log(res)
-           var jsonObj = JSON.parse(JSON.stringify(res.data.data));
-      for (var i = 0; i < jsonObj.length; i++) {
-         var d=new Date(jsonObj[i].outboundTime);
-         var time=d.toLocaleDateString()
-          jsonObj[i].outboundTime = time
-
-      }
-    this.tableData = jsonObj;
+      this.$http.get(this.api + "/removecommodity/getAll").then((res) => {
+        console.log(res);
+        var jsonObj = JSON.parse(JSON.stringify(res.data.data));
+        for (var i = 0; i < jsonObj.length; i++) {
+          var d = new Date(jsonObj[i].outboundTime);
+          var time = d.toLocaleDateString();
+          jsonObj[i].outboundTime = time;
+        }
+        this.tableData = jsonObj;
         this.inintData();
       });
     },
 
     //修改信息  @rk---
- handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {});
-      },
+    handleClose(done) {
+      this.$confirm("确认关闭？")
+        .then((_) => {
+          done();
+        })
+        .catch((_) => {});
+    },
     //出库操作 @rk---
-    deleteBridge(scope){
-             this.scope = scope;
-              this.dialogVisible = true
+    deleteBridge(scope) {
+      this.scope = scope;
+      this.dialogVisible = true;
     },
     deleteData(scope) {
-     this.dialogVisible = false
+      this.dialogVisible = false;
       //console.log("index的值是：",scope.$index)
 
       this.tableData.splice(scope.$index, 1);
@@ -229,18 +241,18 @@ export default {
       //返回用户姓名，后端根据userName进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
       this.$http
         .post("/removeCommodity/outbound", scope.row.goodsId)
-        .then(res => {
+        .then((res) => {
           this.$message({
             message: "操作成功",
-            type: "success"
+            type: "success",
           });
           this.fetch();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

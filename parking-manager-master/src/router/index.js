@@ -7,17 +7,18 @@ import Welcome from '../components/Welcome.vue'
 
 import UserInfo from '../components/UserInfo/UserInfo.vue'
 
-import GoodInfo from '../components/goods/GoodInfo.vue'
+import AllGarageInfo from '../components/goods/AllGarageInfo.vue'
 
 import AddInfo from '../components/admin/AddInfo.vue'
 import OutInfo from '../components/admin/OutInfo.vue'
 import ClientList from '../components/admin/ClientList.vue'
 import ClientAppli from '../components/admin/ClientAppli.vue'
 import AllGoodsInfo from '../components/admin/AllGoodsInfo.vue'
-
+import TempOut from '../components/client/TempOut.vue'
 import AppliOut from '../components/client/AppliOut.vue'
 import RenterInfo from '../components/client/RenterInfo.vue'
-
+import SwitchOut from '../components/client/SwitchOut.vue'
+import Record from '../components/client/Record.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -41,7 +42,7 @@ const routes = [
     {
         path: '/home',
         component: Home,
-        redirect: '/goodInfo',
+        redirect: '/allgarageinfo',
         children: [{
                 path: '/welcome',
                 component: Welcome
@@ -51,8 +52,8 @@ const routes = [
                 component: UserInfo
             },
             {
-                path: '/goodInfo',
-                component: GoodInfo
+                path: '/allgarageinfo',
+                component: AllGarageInfo
             },
             {
                 path: '/outInfo',
@@ -77,6 +78,18 @@ const routes = [
             {
                 path: '/renterInfo',
                 component: RenterInfo
+            },
+            {
+                path: '/tempOut',
+                component:TempOut
+            },
+            {
+                path: '/switchOut',
+                component:SwitchOut
+            },
+            {
+                path: '/record',
+                component:Record
             }
         ]
     }

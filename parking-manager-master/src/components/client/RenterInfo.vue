@@ -66,7 +66,8 @@
           prop="remaining_days"
           label="剩余天数"
           :formatter="formatter"
-        ></el-table-column>
+        >
+        </el-table-column>
       </el-table>
     </el-card>
     <!-- 修改信息对话框 -->
@@ -196,7 +197,6 @@ export default {
         render_place: "",
       },
       renderInfo: {
-        inboundTime: "",
         parking_id: "",
         car_id: "",
         remaining_days: "",
@@ -208,7 +208,6 @@ export default {
       },
       tableData: [
         {
-          inboundTime: "2022-1-1",
           parking_id: "a1_2",
           car_id: "川A88888",
           remaining_days: "200",
@@ -219,7 +218,6 @@ export default {
           render_place: "四川省成都市成华区成都理工大学",
         },
         {
-          inboundTime: "2022-1-1",
           parking_id: "a1_3",
           car_id: "川A86888",
           remaining_days: "2",
@@ -230,7 +228,6 @@ export default {
           render_place: "四川省成都市成华区理工东苑",
         },
         {
-          inboundTime: "2022-1-1",
           parking_id: "a1_2",
           car_id: "川A88668",
           remaining_days: "12",
@@ -244,12 +241,13 @@ export default {
     };
   },
   created() {
+    this.fetch();
     // this.openLoading()
-    let usersid = {
-      userId: "",
-    };
-    usersid.userId = this.personInfo.userId;
-    let postId = this.$qs.stringify(usersid);
+    // let usersid = {
+    //   userId: "",
+    // };
+
+    //let postId = this.$qs.stringify(usersid);
     // console.log(postId);
     // this.$http.post(this.api + "apply/getAll", postId).then(res => {
     //   // this.tableData= res.data.data;
@@ -269,6 +267,19 @@ export default {
     // });
   },
   methods: {
+    fetch() {
+      this.openLoading();
+      this.$http.get(this.api + "RenderInfo").then((res) => {
+        this.openLoading().close();
+        // this.openLoading().close()
+        //console.log(res.data.data)
+        console.log(res.data.tableData);
+        this.tableData = es.data.tableData;
+        // console.log(this.tableData)
+        this.searchData = this.tableData;
+      });
+    },
+
     //信息详情操作
     renderInfoBridge(scope) {
       this.scope = scope;
@@ -335,17 +346,21 @@ export default {
     },
     onSubmit() {
       console.log(this.editForm);
+      let postinfo = this.$qs.stringify(this.editForm);
+      console.log(postinfo);
     },
     reletonSubmit() {
       console.log(this.reletForm);
+      let postinfo = this.$qs.stringify(this.reletForm);
+      console.log(postinfo);
     },
     cellStyle({ row, column, rowIndex, columnIndex }) {
       if (row.remaining_daysSituation == 2 && columnIndex === 4) {
-        return "color: rgba(218, 97, 97, 0.9)";
+        return "background-color: rgba(218, 97, 97, 0.9);color:#fff;text-align:center;";
       } else if (row.remaining_daysSituation == 1 && columnIndex === 4) {
-        return "color: rgba(113, 214, 62, 0.9);";
+        return "background-color: rgba(113, 214, 62, 0.9);color:#fff;text-align:center;";
       } else if (columnIndex === 4) {
-        return "color:rgb(230, 172, 86, 0.9)";
+        return "background-color:rgb(230, 172, 86, 0.9);color:#fff;text-align:center;";
       } else {
         return "success-row";
       }

@@ -3,21 +3,25 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 import qs from 'qs'
-
+import * as echarts from 'echarts/lib/echarts.js'
 // 导入全局样式表
 import './assets/css/global.css'
+import { GridComponent } from 'echarts/components';
+import { TitleComponent } from 'echarts/components';
 
 import axios from 'axios'
 import md5 from 'js-md5';
+Vue.prototype.$echarts = echarts;
 Vue.prototype.$http = axios
 Vue.prototype.$md5 = md5;
 Vue.prototype.$qs = qs;
 // natapp接口前缀
-Vue.prototype.api = 'http://116.62.122.18:8080/kyaru/'
+Vue.prototype.api = 'http://127.0.0.1:4523/mock/754268/'
 
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
-
+echarts.use([TitleComponent]);
+echarts.use([GridComponent]);
 Vue.prototype.personInfo = {
     userName: 'sd',
     userSex: '',

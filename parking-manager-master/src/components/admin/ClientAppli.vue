@@ -18,7 +18,12 @@
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>-->
 
-          <el-input placeholder="请输入商品名或者公司" v-model="search" @input="submitFun" ref="searchInput">
+          <el-input
+            placeholder="请输入商品名或者公司"
+            v-model="search"
+            @input="submitFun"
+            ref="searchInput"
+          >
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </el-col>
@@ -31,7 +36,7 @@
         <el-table-column prop="goodsId" label="库存编码"></el-table-column>
         <el-table-column prop="company" label="公司"></el-table-column>
         <el-table-column prop="userName" label="姓名"></el-table-column>
-        <el-table-column prop="userTel" label="电话"></el-table-column>
+        <el-table-column prop="tel_number" label="电话"></el-table-column>
         <el-table-column prop="userPs" label="备注"></el-table-column>
         <!-- <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
@@ -43,7 +48,12 @@
             <!-- 删除 -->
 
             <!-- 分配角色 -->
-            <el-tooltip effect="dark" content="审批" placement="top" :enterable="false">
+            <el-tooltip
+              effect="dark"
+              content="审批"
+              placement="top"
+              :enterable="false"
+            >
               <el-button
                 type="warning"
                 icon="el-icon-setting"
@@ -71,13 +81,20 @@
 
     <!-- 添加信息对话框 -->
     <el-dialog title="审批" :visible.sync="addDialogVisible" width="20%">
-      <el-form :model="checkedData" ref="addFormRef" label-width="80px" class="demo-ruleForm">
+      <el-form
+        :model="checkedData"
+        ref="addFormRef"
+        label-width="80px"
+        class="demo-ruleForm"
+      >
         <el-radio v-model="checkedData.checkSituation" label="1">允许</el-radio>
         <el-radio v-model="checkedData.checkSituation" label="2">拒绝</el-radio>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addUser" :plain="true">确 定</el-button>
+        <el-button type="primary" @click="addUser" :plain="true"
+          >确 定</el-button
+        >
       </span>
     </el-dialog>
   </div>
@@ -87,18 +104,18 @@
 export default {
   data() {
     return {
-      postForm:"",
+      postForm: "",
       search: "",
       searchData: [],
       tableData: [],
       checkedData: {
         id: "",
-        checkSituation: ""
+        checkSituation: "",
       },
       queryInfo: {
         query: "",
         pagenum: 1,
-        pagesize: 15
+        pagesize: 15,
       },
       userlist: [],
       total: 0,
@@ -107,12 +124,12 @@ export default {
       addDialogVisible: false,
       addForm: {
         id: "",
-        checkSituation: ""
-      }
+        checkSituation: "",
+      },
     };
   },
 
-  created: function() {
+  created: function () {
     // 获取后端数据后
     ///this.tableData=数据
     this.fetch();
@@ -129,17 +146,13 @@ export default {
     },
     submitFun() {
       let search = this.search;
-      this.searchData = this.tableData.filter(function(tabledatas) {
+      this.searchData = this.tableData.filter(function (tabledatas) {
         let searchField = {
           goodsName: tabledatas.goodsName,
-          company: tabledatas.company
+          company: tabledatas.company,
         };
-        return Object.keys(searchField).some(function(key) {
-          return (
-            String(tabledatas[key])
-              .toLowerCase()
-              .indexOf(search) > -1
-          );
+        return Object.keys(searchField).some(function (key) {
+          return String(tabledatas[key]).toLowerCase().indexOf(search) > -1;
         });
       });
     },
@@ -183,19 +196,17 @@ export default {
     // {
     //       userId: "",
     //       userSex: "",
-    //       userTel: "",
+    //       tel_number: "",
     //       company: "",
     //     },
     fetch() {
-       this.openLoading()
-      this.$http
-        .get(this.api+"/apply/getUnchecked")
-        .then(res => {
-          console.log(res)
-           this.openLoading().close()
-          this.tableData = res.data;
-          this.inintData();
-        });
+      this.openLoading();
+      this.$http.get(this.api + "/apply/getUnchecked").then((res) => {
+        console.log(res);
+        this.openLoading().close();
+        this.tableData = res.data;
+        this.inintData();
+      });
     },
     checkDecision(scope) {
       this.addDialogVisible = true;
@@ -203,7 +214,7 @@ export default {
       this.formIndex = scope.$index;
     },
     addUser() {
-      this.$refs.addFormRef.validate(valid => {
+      this.$refs.addFormRef.validate((valid) => {
         if (!valid) {
           this.$message("请填写完整信息");
           this.addDialogClosed();
@@ -211,25 +222,24 @@ export default {
           this.addDialogVisible = false;
           this.addDialogClosed();
           this.inintData();
-       //  console.log(this.checkedData.checkSituation)
-         // console.log(this.checkedData.id)
-          let comValue = this.$qs.stringify(this.checkedData)
-            
+          //  console.log(this.checkedData.checkSituation)
+          // console.log(this.checkedData.id)
+          let comValue = this.$qs.stringify(this.checkedData);
+
           // console.log(comValue)
           this.$http
-            .post(this.api +"apply/update", comValue)
-            .then(res => {
-                console.log(res)
+            .post(this.api + "apply/update", comValue)
+            .then((res) => {
+              console.log(res);
               this.openLoading().close();
               this.$message({
                 message: "操作成功",
-                type: "success"
-              });    
-              this.fetch()
-              
+                type: "success",
+              });
+              this.fetch();
             })
-            .catch(error => {
-             // console.log(error);
+            .catch((error) => {
+              // console.log(error);
             });
         }
       });
@@ -250,18 +260,18 @@ export default {
       //返回用户姓名，后端根据userId进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
       this.$http
         .post("/removeCommodity/outbound", scope.row.id)
-        .then(res => {
+        .then((res) => {
           this.$message({
             message: "操作成功",
-            type: "success"
+            type: "success",
           });
           this.fetch();
         })
-        .catch(error => {
-       //   console.log(error);
+        .catch((error) => {
+          //   console.log(error);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

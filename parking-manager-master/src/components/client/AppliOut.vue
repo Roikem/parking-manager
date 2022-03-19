@@ -61,7 +61,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('renderAddForm')"
-            >发布申请</el-button
+            >确定添加</el-button
           >
           <el-button @click="resetForm('renderAddForm')">重置</el-button>
         </el-form-item>
@@ -103,7 +103,6 @@ export default {
         render_type: [
           { required: true, message: "请选择出租类型", trigger: "blur" },
         ],
-        car_id: [{ required: true, message: "请输入车牌号", trigger: "blur" }],
         render_place: [
           { required: false, message: "请填写活动形式", trigger: "blur" },
         ],
@@ -111,18 +110,20 @@ export default {
     };
   },
   methods: {
-    submitForm(formName) {
+    submitForm(renderAddForm) {
       this.postForm.car_id = this.renderAddForm.car_id;
       // this.postForm.outboundTime = filter_date
+      this.postForm.parking_id = this.renderAddForm.parking_id;
       this.postForm.render_name = this.renderAddForm.render_name;
+      this.postForm.tel_number = this.renderAddForm.tel_number;
       this.postForm.render_place = this.renderAddForm.render_place;
       this.postForm.render_type = this.renderAddForm.render_type;
-      this.postForm.tel_number = this.personInfo.tel_number;
-      this.postForm.parking_id = this.personInfo.parking_id;
+      console.log(this.postForm);
       let comValue = this.$qs.stringify(this.postForm);
-      // console.log( this.postForm)
-      //this.openLoading();
       console.log(comValue);
+
+      // console.log(this.postForm);
+      //this.openLoading();
 
       // this.$http.post(this.api + "/apply/insert", comValue).then((res) => {
       //   console.log(res);
