@@ -269,11 +269,11 @@ export default {
   methods: {
     fetch() {
       this.openLoading();
-      this.$http.get(this.api + "RenderInfo").then((res) => {
+      this.$http.get(this.api + "ReletForm").then((res) => {
         this.openLoading().close();
         // this.openLoading().close()
-        //console.log(res.data.data)
-        console.log(res.data.tableData);
+        console.log(res);
+        //console.log(res.data.tableData);
         this.tableData = es.data.tableData;
         // console.log(this.tableData)
         this.searchData = this.tableData;

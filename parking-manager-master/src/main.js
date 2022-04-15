@@ -16,7 +16,7 @@ Vue.prototype.$http = axios
 Vue.prototype.$md5 = md5;
 Vue.prototype.$qs = qs;
 // natapp接口前缀
-Vue.prototype.api = 'http://127.0.0.1:4523/mock/754268/'
+Vue.prototype.api = 'http://120.24.39.39:8080/'
 
 import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
@@ -48,7 +48,7 @@ Vue.prototype.openLoading = function() {
     return loading;
 }
 
-axios.defaults.baseURL = 'http://127.0.0.1:8888'
+axios.defaults.baseURL = 'http://120.24.39.39:8080/'
 
 Vue.config.productionTip = false
 

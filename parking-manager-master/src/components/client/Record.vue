@@ -33,19 +33,19 @@
       <el-table :data="tempData" border :stripe="true" ref="filterTable">
         <el-table-column type="index"></el-table-column>
         <el-table-column prop="parking_id" label="车位编号"></el-table-column>
-        <el-table-column prop="car_id" label="车牌号"></el-table-column>
+        <el-table-column prop="carNumber" label="车牌号"></el-table-column>
         <el-table-column prop="tel_number" label="手机号"></el-table-column>
         <!-- <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.state" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
           </template>
         </el-table-column>-->
-        <el-table-column label="入库时间" width="130" prop="enter_time">
+        <el-table-column label="入库时间" width="130" prop="enterTime">
         </el-table-column>
-        <el-table-column label="出库时间" width="130" prop="leave_time">
+        <el-table-column label="出库时间" width="130" prop="leaveTime">
         </el-table-column>
         <el-table-column
-          prop="car_type"
+          prop="carType"
           label="车辆类型"
           width="100"
           :filters="[
@@ -57,9 +57,9 @@
         >
           <template slot-scope="scope">
             <el-tag
-              :type="scope.row.car_type === '出租' ? 'primary' : 'success'"
+              :type="scope.row.carType === '出租' ? 'primary' : 'success'"
               disable-transitions
-              >{{ scope.row.car_type }}</el-tag
+              >{{ scope.row.carType }}</el-tag
             >
           </template>
         </el-table-column>
@@ -105,64 +105,7 @@ export default {
       search: "",
       tempData: [],
       t1data: [],
-      tableData: [
-        {
-          parking_id: "a1_4",
-          car_id: "川A23231",
-          tel_number: "19999999999",
-          enter_time: "",
-          leave_time: "",
-          car_type: "临时",
-        },
-        {
-          parking_id: "a1_5",
-          car_id: "川A24211",
-          tel_number: "17777777777",
-          enter_time: "",
-          leave_time: "",
-          car_type: "出租",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-          enter_time: "",
-          leave_time: "",
-          car_type: "出租",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-          enter_time: "",
-          leave_time: "",
-          car_type: "出租",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-          enter_time: "",
-          leave_time: "",
-          car_type: "出租",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-          enter_time: "",
-          leave_time: "",
-          car_type: "出租",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-          enter_time: "",
-          leave_time: "",
-          car_type: "出租",
-        },
-      ],
+      tableData: [],
       queryInfo: {
         query: "",
         pagenum: 1,
@@ -188,6 +131,7 @@ export default {
     //查询功能
     inintData() {
       this.tempData = this.tableData;
+      console.log(this.tempData);
     },
     submitFun() {
       let search = this.search;
@@ -197,7 +141,7 @@ export default {
         let searchField = {
           parking_id: tabledatas.parking_id,
           tel_number: tabledatas.tel_number,
-          car_id: tabledatas.car_id,
+          carNumber: tabledatas.carNumber,
         };
         return Object.keys(searchField).some(function (key) {
           return String(tabledatas[key]).toLowerCase().indexOf(search) > -1;
@@ -214,7 +158,7 @@ export default {
     },
     // 监听页码值改变的事件
     handleCurrentChange(currentPage) {
-      console.log(currentPage);
+      // console.log(currentPage);
       this.queryInfo.pagenum = currentPage;
       this.currentChangePage(this.tableData, currentPage);
     },
@@ -227,7 +171,7 @@ export default {
           this.tempData.push(list[from]);
         }
       }
-      console.log(list);
+      // console.log(list);
     },
 
     // 监听添加用户表单的关闭事件并清除其中的数据
@@ -246,7 +190,7 @@ export default {
     //向后端申请数据 @rk---
     // {
     //       parking_id: "",
-    //       car_id: "",
+    //       carNumber: "",
     //       tel_number: "",
     //       company: "",
     //     },
@@ -254,20 +198,22 @@ export default {
       //test
       this.tempData = [];
       this.queryInfo.total = this.tableData.length;
-      console.log(this.queryInfo.total);
+      //console.log(this.queryInfo.total);
       // this.tabledata = this.getData;
       this.handleCurrentChange(1);
       //分页bug
       //this.inintData();
 
       //启动执行 get
-      //this.openLoading();
-      // this.$http.get(this.api + "/user/getAll").then((res) => {
-      //   //  console.log(res)
-      //   this.openLoading().close();
-      //   this.tableData = res.data.data;
-      //   this.inintData();
-      // });
+      this.openLoading();
+      this.$http.get(this.api + "ReCord").then((res) => {
+        const box = res.data.data;
+        var pDataForm = JSON.parse(box);
+        this.tableData = pDataForm.tableData;
+        console.log(this.tableData);
+        this.openLoading().close();
+        this.inintData();
+      });
     },
 
     //修改信息  @rk---
@@ -283,7 +229,7 @@ export default {
     //标签
 
     filterTag(value, row) {
-      return row.car_type === value;
+      return row.carType === value;
     },
     filterHandler(value, row, column) {
       const property = column["property"];
@@ -301,7 +247,7 @@ export default {
       comValue.parking_id = scope.row.parking_id;
 
       let postinfo = this.$qs.stringify(comValue);
-      console.log(postinfo);
+      // console.log(postinfo);
       // console.log(scope.row.userId)
       //console.log("出库的货物编码:",scope.row.goodsId)
       //返回用户车位编号，后端根据parking_id进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中

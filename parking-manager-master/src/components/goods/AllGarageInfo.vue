@@ -17,49 +17,31 @@
               <!-- 分区1 6小组 -->
               <ul class="a1_group1">
                 <li class="a1_1">
-                  <div
-                    class="a1_1p"
-                    v-bind:id="parkingDataForm[0].parkingColor"
-                  >
-                    <p>{{ parkingDataForm[0].parking_area }}</p>
-                    <a>{{ parkingDataForm[0].area_num }}</a>
+                  <div class="a1_1p" v-bind:id="parkingDataForm[0].color">
+                    <p>{{ parkingDataForm[0].parkingArea }}</p>
+                    <a>{{ parkingDataForm[0].areaNum }}</a>
                   </div>
-                  <div
-                    class="a1_2p"
-                    v-bind:id="parkingDataForm[1].parkingColor"
-                  >
-                    <p>{{ parkingDataForm[1].parking_area }}</p>
-                    <a>{{ parkingDataForm[1].area_num }}</a>
+                  <div class="a1_2p" v-bind:id="parkingDataForm[1].color">
+                    <p>{{ parkingDataForm[1].parkingArea }}</p>
+                    <a>{{ parkingDataForm[1].areaNum }}</a>
                   </div>
-                  <div
-                    class="a1_3p"
-                    v-bind:id="parkingDataForm[2].parkingColor"
-                  >
-                    <p>{{ parkingDataForm[2].parking_area }}</p>
-                    <a>{{ parkingDataForm[2].area_num }}</a>
+                  <div class="a1_3p" v-bind:id="parkingDataForm[2].color">
+                    <p>{{ parkingDataForm[2].parkingArea }}</p>
+                    <a>{{ parkingDataForm[2].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div
-                    class="a1_1p"
-                    v-bind:id="parkingDataForm[3].parkingColor"
-                  >
-                    <p>{{ parkingDataForm[3].parking_area }}</p>
-                    <a>{{ parkingDataForm[3].area_num }}</a>
+                  <div class="a1_1p" v-bind:id="parkingDataForm[3].color">
+                    <p>{{ parkingDataForm[3].parkingArea }}</p>
+                    <a>{{ parkingDataForm[3].areaNum }}</a>
                   </div>
-                  <div
-                    class="a1_2p"
-                    v-bind:id="parkingDataForm[4].parkingColor"
-                  >
-                    <p>{{ parkingDataForm[4].parking_area }}</p>
-                    <a>{{ parkingDataForm[4].area_num }}</a>
+                  <div class="a1_2p" v-bind:id="parkingDataForm[4].color">
+                    <p>{{ parkingDataForm[4].parkingArea }}</p>
+                    <a>{{ parkingDataForm[4].areaNum }}</a>
                   </div>
-                  <div
-                    class="a1_3p"
-                    v-bind:id="parkingDataForm[5].parkingColor"
-                  >
-                    <p>{{ parkingDataForm[5].parking_area }}</p>
-                    <a>{{ parkingDataForm[5].area_num }}</a>
+                  <div class="a1_3p" v-bind:id="parkingDataForm[5].color">
+                    <p>{{ parkingDataForm[5].parkingArea }}</p>
+                    <a>{{ parkingDataForm[5].areaNum }}</a>
                   </div>
                 </li>
               </ul>
@@ -86,53 +68,90 @@
             <template slot="label">
               <el-tag type="success"> 已出租 </el-tag>
             </template>
-            {{ parking_coditon.rented_num }}
+            {{ parking_coditon.rentedNum }}
           </el-descriptions-item>
 
           <el-descriptions-item>
             <template slot="label">
               <el-tag type="danger"> 未出租 </el-tag>
             </template>
-            {{ parking_coditon.unrent_num }}
+            {{ parking_coditon.unrentNum }}
           </el-descriptions-item>
           <el-descriptions-item>
             <template slot="label">
               <el-tag type="primary"> 车库总车辆 </el-tag>
             </template>
-            {{ parking_coditon.unrent_num }}
+            216
           </el-descriptions-item>
 
           <el-descriptions-item>
             <template slot="label">
               <el-tag type="success" effect="dark"> 闲置临时车位 </el-tag>
             </template>
-            {{ parking_coditon.untemp_num }}
+            {{ parking_coditon.unTempNum }}
           </el-descriptions-item>
           <el-descriptions-item>
             <template slot="label">
               <el-tag type="danger" effect="dark"> 已占临时车位 </el-tag>
             </template>
-            {{ parking_coditon.temp_num }}
+            {{ parking_coditon.tempNum }}
           </el-descriptions-item>
           <el-descriptions-item>
             <template slot="label">
               <el-tag type="primary" effect="dark"> 剩余车位数量 </el-tag>
             </template>
-            {{ parking_coditon.temp_num }}
+            {{ lastNum }}
           </el-descriptions-item>
         </el-descriptions>
       </div>
     </div>
+
+    <!-- 入库 出库 -->
+    <div class="inout">
+      <el-button
+        type="success"
+        round
+        style="width: 120px; height: 50px; font-size: 22px"
+        @click="enterBridge()"
+        >入库
+      </el-button>
+      <el-divider direction="vertical"></el-divider>
+      <el-button
+        type="danger"
+        round
+        style="width: 120px; height: 50px; font-size: 22px"
+        >出库</el-button
+      >
+    </div>
+
+    <!-- 车牌查询 -->
+    <el-dialog title="车牌查询 " :visible.sync="editVisible" width="24%">
+      <el-form ref="form" :model="confForm">
+        <el-form-item>
+          <el-input
+            v-model="confForm.carNumber"
+            placeholder="请输入车牌号进行查询"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="confSubmit">查询</el-button>
+          <el-button @click="confDont">取 消</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      lastNum: "",
+      editVisible: false,
       imageUrl: "",
       search: "",
       searchData: "",
       tableData: [],
+      confForm: {},
       queryInfo: {
         query: "",
         pagenum: 1,
@@ -143,54 +162,54 @@ export default {
       addDialogVisible: false,
       editDialogVisible: false,
       parking_coditon: {
-        rented_num: "1",
-        unrent_num: "2",
-        temp_num: "11",
-        untemp_num: "122",
+        rentedNum: "1",
+        unrentNum: "2",
+        tempNum: "11",
+        unTempNum: "122",
       },
       // 加载的车库情况表单数据
       parkingDataForm: [
         {
-          parking_area: "a1",
-          area_num: "1",
-          carId: "",
-          parkingColor: "p_red",
-          parkingSituation: "0",
+          parkingArea: "a1",
+          areaNum: "1",
+          carNumber: "",
+          color: "p_red",
+          status: "0",
         },
         {
-          parking_area: "a1",
-          area_num: "2",
-          carId: "",
-          parkingColor: "p_red",
-          parkingSituation: "1",
+          parkingArea: "a1",
+          areaNum: "2",
+          carNumber: "",
+          color: "p_red",
+          status: "1",
         },
         {
-          parking_area: "a1",
-          area_num: "3",
-          carId: "",
-          parkingColor: "p_red",
-          parkingSituation: "2",
+          parkingArea: "a1",
+          areaNum: "3",
+          carNumber: "",
+          color: "p_red",
+          status: "2",
         },
         {
-          parking_area: "a1",
-          area_num: "4",
-          carId: "",
-          parkingColor: "p_gray",
-          parkingSituation: "3",
+          parkingArea: "a1",
+          areaNum: "4",
+          carNumber: "",
+          color: "p_gray",
+          status: "3",
         },
         {
-          parking_area: "a1",
-          area_num: "5",
-          carId: "",
-          parkingColor: "p_yellow",
-          parkingSituation: "3",
+          parkingArea: "a1",
+          areaNum: "5",
+          carNumber: "",
+          color: "p_yellow",
+          status: "3",
         },
         {
-          parking_area: "a1",
-          area_num: "6",
-          carId: "",
-          parkingColor: "p_green",
-          parkingSituation: "3",
+          parkingArea: "a1",
+          areaNum: "6",
+          carNumber: "",
+          color: "p_green",
+          status: "3",
         },
       ],
     };
@@ -203,6 +222,56 @@ export default {
     //   this.total = this.tableData.length;
   },
   methods: {
+    enterBridge() {
+      this.editVisible = true;
+    },
+    confDont() {
+      this.editVisible = false;
+      this.confForm = {};
+    },
+    confSubmit() {
+      this.openLoading();
+      //  console.log(this.confForm.carNumber);
+
+      var carNumber = this.confForm.carNumber;
+      // let srch = this.$qs.stringify(form1);
+      console.log(carNumber);
+      this.editVisible = false;
+      // this.$http.get(this.api + "enterDoor",{params:{carNumber:ssss}
+
+      // }).
+      this.$http({
+        method: "get",
+        url: this.api + "enterDoor",
+        params: {
+          carNumber,
+        },
+      }).then(
+        (res) => {
+          this.$message({
+            type: "success",
+            message: "此车为业主，请放行",
+          });
+        },
+        (response) => {
+          this.openLoading().close();
+          this.confForm = "";
+          this.$confirm("此车为临时车，是否跳转到临时停车新增页面?", "提示", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning",
+          }).then(() => {
+            this.$router.push("/tempOut");
+            this.$message({
+              type: "success",
+              message: "跳转成功!",
+            });
+            console.log("error");
+          });
+        }
+      );
+    },
+
     tableRowClassName({ row, goodsCount }) {
       if (row.checkSituation == 2) {
         return "warning-row";
@@ -215,13 +284,21 @@ export default {
     },
     fetch() {
       this.openLoading();
-      this.$http.get(this.api + "GetAll").then((res) => {
+      this.$http.get(this.api + "getAll").then((res) => {
         this.openLoading().close();
         // this.openLoading().close()
         //console.log(res.data.data)
-        console.log(res.data.parkingDataForm);
-        this.parkingDataForm = res.data.parkingDataForm;
-        this.parking_coditon = res.data.parking_coditon;
+        //console.log(res.data.data);
+        const box = res.data.data;
+        var pDataForm = JSON.parse(box);
+        //console.log(pDataForm.parking_coditon);
+        console.log(pDataForm.parkingDataForm);
+        this.parkingDataForm = pDataForm.parkingDataForm;
+        this.lastNum =
+          216 -
+          Number(pDataForm.parking_coditon.rentedNum) -
+          Number(pDataForm.parking_coditon.tempNum);
+        this.parking_coditon = pDataForm.parking_coditon;
 
         // console.log(this.tableData)
         this.searchData = this.tableData;
@@ -290,10 +367,15 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.inout {
+  left: 850px;
+  bottom: -300px;
+}
 .parking_state {
-  margin-top: 80px;
+  position: absolute;
   z-index: 30;
-  width: 60%;
+  width: 600px;
+  margin-top: 40px;
 }
 .state_box {
   height: 270px;
@@ -389,7 +471,7 @@ ul {
   box-shadow: 0 0 4px rgb(61, 216, 61);
 }
 #p_gray {
-  background-color: rgba(49, 49, 49, 0.692);
+  background-color: rgba(90, 90, 90, 0.918);
   box-shadow: 0 0 4px rgb(39, 39, 39);
 }
 #p_yellow {

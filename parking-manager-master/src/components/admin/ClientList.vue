@@ -215,7 +215,7 @@ export default {
     },
     // 监听页码值改变的事件
     handleCurrentChange(currentPage) {
-      console.log(currentPage);
+      //   console.log(currentPage);
       this.queryInfo.pagenum = currentPage;
       this.currentChangePage(this.tableData, currentPage);
     },
@@ -228,7 +228,7 @@ export default {
           this.tempData.push(list[from]);
         }
       }
-      console.log(list);
+      // console.log(list);
     },
 
     // 监听添加用户表单的关闭事件并清除其中的数据
@@ -255,20 +255,20 @@ export default {
       //test
       this.tempData = [];
       this.queryInfo.total = this.tableData.length;
-      console.log(this.queryInfo.total);
+      //console.log(this.queryInfo.total);
       // this.tabledata = this.getData;
       this.handleCurrentChange(1);
       //分页bug
       //this.inintData();
 
       //启动执行 get
-      //this.openLoading();
-      // this.$http.get(this.api + "/user/getAll").then((res) => {
-      //   //  console.log(res)
-      //   this.openLoading().close();
-      //   this.tableData = res.data.data;
-      //   this.inintData();
-      // });
+      this.openLoading();
+      this.$http.get(this.api + "TempAddForm").then((res) => {
+        console.log(res);
+        this.openLoading().close();
+        this.tableData = res.data.data;
+        this.inintData();
+      });
     },
 
     //修改信息  @rk---
@@ -283,9 +283,9 @@ export default {
       };
       postValue.parking_id = scope.row.parking_id;
       postValue.car_id = scope.row.car_id;
-      console.log(postValue);
+      // console.log(postValue);
       let costGet = this.$qs.stringify(postValue);
-      console.log(costGet);
+      //console.log(costGet);
       this.parking_cost = 10;
     },
     deleteData(scope) {
@@ -299,9 +299,9 @@ export default {
       };
       comValue.parking_id = scope.row.parking_id;
       comValue.car_id = scope.row.car_id;
-      console.log(comValue);
+      //   console.log(comValue);
       let postinfo = this.$qs.stringify(comValue);
-      console.log(postinfo);
+      // console.log(postinfo);
       // console.log(scope.row.userId)
       //console.log("出库的货物编码:",scope.row.goodsId)
       //返回用户车位编号，后端根据parking_id进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中

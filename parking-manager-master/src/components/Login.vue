@@ -30,17 +30,17 @@
         :rules="rules"
       >
         <!-- 用户名 -->
-        <el-form-item prop="userAccount">
+        <el-form-item prop="username">
           <el-input
             prefix-icon="el-icon-user"
-            v-model="loginForm.userAccount"
+            v-model="loginForm.username"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item prop="userPassword">
+        <el-form-item prop="password">
           <el-input
             prefix-icon="el-icon-unlock"
-            v-model="loginForm.userPassword"
+            v-model="loginForm.password"
             type="password"
           ></el-input>
         </el-form-item>
@@ -79,23 +79,18 @@ export default {
       userData: {},
       fullscreenLoading: false,
       loginForm: {
-        userAccount: "",
-        userPassword: "",
-        code: "",
+        username: "",
+        password: "",
       },
       postForm: {
-        userAccount: "",
-        userPassword: "",
-        code: "",
+        username: "",
+        password: "",
       },
       rules: {
-        userAccount: [
+        username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
         ],
-        userPassword: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-        ],
-        code: [{ required: true, message: "请输入验证码", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
       },
     };
   },
@@ -104,14 +99,14 @@ export default {
     ///this.tableData=数据
     // var img = document.getElementById("codeImg");
     // 当某个操作过于频繁   地址都是一样的 浏览器就有可能出现直接从上一次的缓存中获取值
-    this.changeCode();
+    // this.changeCode();
   },
   methods: {
-    changeCode() {
-      // var img = document.getElementById("codeImg");
-      // 当某个操作过于频繁   地址都是一样的 浏览器就有可能出现直接从上一次的缓存中获取值
-      this.srcTest = this.api + "user/getCode?time=" + new Date().getTime();
-    },
+    // changeCode() {
+    //   // var img = document.getElementById("codeImg");
+    //   // 当某个操作过于频繁   地址都是一样的 浏览器就有可能出现直接从上一次的缓存中获取值
+    //   this.srcTest = this.api + "user/getCode?time=" + new Date().getTime();
+    // },
     resetLoginForm() {
       this.$router.push("/regist");
     },
@@ -122,17 +117,16 @@ export default {
           this.addDialogClosed();
         } else {
           this.openLoading();
-          var psw = this.$md5(this.loginForm.userPassword);
+          var psw = this.$md5(this.loginForm.password);
           var psw_pro = this.$md5(psw);
-          this.postForm.userPassword = psw_pro;
-          this.postForm.userAccount = this.loginForm.userAccount;
-          this.postForm.code = this.loginForm.code;
+          this.postForm.password = psw_pro;
+          this.postForm.username = this.loginForm.username;
           let comValue = this.$qs.stringify(this.postForm);
-          // console.log(comValue)
+          console.log(comValue);
           this.$http
-            .post(this.api + "user/login", comValue)
+            .get(this.api + "login", comValue)
             .then((res) => {
-              //  console.log(res.data.data[0].userName)
+              console.log(res);
               this.openLoading().close();
               if (res.data.code == 200) {
                 this.$message({
@@ -141,19 +135,12 @@ export default {
                 });
                 let useri = res.data;
                 this.personInfo.userName = "ss";
-                this.personInfo.userName = res.data.data[0].userName;
-                this.personInfo.userSex = res.data.data[0].userSex;
-                this.personInfo.isManager = res.data.data[0].isManager;
-                this.personInfo.userTel = res.data.data[0].userTel;
-                this.personInfo.company = res.data.data[0].company;
-                this.personInfo.userAccount = res.data.data[0].userAccount;
                 this.personInfo.userId = res.data.data[0].userId;
                 console.log(this.personInfo);
                 this.$message.success("登录成功！");
                 this.loginForm = {
-                  userAccount: "",
-                  userPassword: "",
-                  code: "",
+                  username: "",
+                  password: "",
                 };
                 this.$router.push("/home");
               } else if (res.data.code == 500) {
