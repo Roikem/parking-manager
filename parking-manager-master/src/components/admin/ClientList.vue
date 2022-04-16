@@ -263,10 +263,10 @@ export default {
 
       //启动执行 get
       this.openLoading();
-      this.$http.get(this.api + "TempAddForm").then((res) => {
+      this.$http.get(this.api + "TempInfo").then((res) => {
         console.log(res);
         this.openLoading().close();
-        this.tableData = res.data.data;
+        // this.tableData = res.data.data;
         this.inintData();
       });
     },

@@ -110,13 +110,13 @@
           <el-input v-model="editForm.car_id"></el-input>
         </el-form-item>
         <el-form-item label="业主姓名">
-          <el-input v-model="editForm.render_name"></el-input>
+          <el-input v-model="editForm.renderName"></el-input>
         </el-form-item>
         <el-form-item label="手机号">
-          <el-input v-model="editForm.tel_number"></el-input>
+          <el-input v-model="editForm.telNumber"></el-input>
         </el-form-item>
         <el-form-item label="联系地址">
-          <el-input v-model="editForm.render_place"></el-input>
+          <el-input v-model="editForm.renderPlace"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">确 认</el-button>
@@ -133,14 +133,14 @@
             <i class="el-icon-user"></i>
             业主姓名
           </template>
-          {{ renderInfo.render_name }}
+          {{ renderInfo.renderName }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-mobile-phone"></i>
             手机号
           </template>
-          {{ renderInfo.tel_number }}
+          {{ renderInfo.telNumber }}
         </el-descriptions-item>
 
         <el-descriptions-item>
@@ -155,7 +155,7 @@
             <i class="el-icon-office-building"></i>
             联系地址
           </template>
-          {{ renderInfo.render_place }}
+          {{ renderInfo.renderPlace }}
         </el-descriptions-item>
       </el-descriptions>
       <span slot="footer" class="dialog-footer">
@@ -192,19 +192,19 @@ export default {
       editForm: {
         parking_id: "",
         car_id: "",
-        render_name: "",
-        tel_number: "",
-        render_place: "",
+        renderName: "",
+        telNumber: "",
+        renderPlace: "",
       },
       renderInfo: {
         parking_id: "",
         car_id: "",
         remaining_days: "",
         remaining_daysSituation: "",
-        render_name: "",
-        tel_number: "",
+        renderName: "",
+        telNumber: "",
         render_type: "",
-        render_place: "",
+        renderPlace: "",
       },
       tableData: [
         {
@@ -212,30 +212,30 @@ export default {
           car_id: "川A88888",
           remaining_days: "200",
           remaining_daysSituation: "1",
-          render_name: "张三",
-          tel_number: "18888888888",
+          renderName: "张三",
+          telNumber: "18888888888",
           render_type: "年租",
-          render_place: "四川省成都市成华区成都理工大学",
+          renderPlace: "四川省成都市成华区成都理工大学",
         },
         {
           parking_id: "a1_3",
           car_id: "川A86888",
           remaining_days: "2",
           remaining_daysSituation: "2",
-          render_name: "李四",
-          tel_number: "18888886688",
+          renderName: "李四",
+          telNumber: "18888886688",
           render_type: "季付",
-          render_place: "四川省成都市成华区理工东苑",
+          renderPlace: "四川省成都市成华区理工东苑",
         },
         {
           parking_id: "a1_2",
           car_id: "川A88668",
           remaining_days: "12",
           remaining_daysSituation: "0",
-          render_name: "李四",
-          tel_number: "18888886688",
+          renderName: "李四",
+          telNumber: "18888886688",
           render_type: "年租",
-          render_place: "四川省成都市成华区理工东苑",
+          renderPlace: "四川省成都市成华区理工东苑",
         },
       ],
     };
@@ -269,12 +269,15 @@ export default {
   methods: {
     fetch() {
       this.openLoading();
-      this.$http.get(this.api + "ReletForm").then((res) => {
+      this.$http.get(this.api + "RenderInfo").then((res) => {
         this.openLoading().close();
         // this.openLoading().close()
-        console.log(res);
+        const box = res.data.data;
+        var pDataForm = JSON.parse(box);
+        //用户信息
+        console.log(pDataForm.tableData);
         //console.log(res.data.tableData);
-        this.tableData = es.data.tableData;
+        this.tableData = pDataForm.tableData;
         // console.log(this.tableData)
         this.searchData = this.tableData;
       });

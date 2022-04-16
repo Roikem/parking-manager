@@ -47,13 +47,13 @@
               "
             >
               <el-table-column
-                prop="parking_id"
+                prop="locate"
                 label="车位编号"
                 width="120"
                 sortable
               ></el-table-column>
               <el-table-column
-                prop="parking_type"
+                prop="status"
                 label="车位类型"
                 width="180"
                 :filters="[
@@ -66,12 +66,12 @@
                 <template slot-scope="scope">
                   <el-tag
                     :type="
-                      scope.row.parking_type === '闲置临时车位'
+                      scope.row.status === '闲置临时车位'
                         ? 'primary'
                         : 'success'
                     "
                     disable-transitions
-                    >{{ scope.row.parking_type }}</el-tag
+                    >{{ scope.row.status }}</el-tag
                   >
                 </template>
               </el-table-column>
@@ -163,7 +163,7 @@
       <el-form ref="form" :model="switchForm" label-width="80px">
         <el-form-item label="续租类型">
           <el-select
-            v-model="switchForm.parking_type"
+            v-model="switchForm.status"
             placeholder="请选择要切换成的车位类型"
           >
             <el-option label="未出租车位" value="未出租车位"></el-option>
@@ -196,8 +196,8 @@ export default {
       tempData: [],
       t1data: [],
       switchForm: {
-        parking_type: "",
-        parking_id: "",
+        status: "",
+        locate: "",
       },
       parking_coditon: {
         rented_num: "120",
@@ -207,56 +207,56 @@ export default {
       },
       tableData: [
         {
-          parking_id: "a1_4",
-          parking_type: "未出租车位",
+          locate: "a1_4",
+          status: "未出租车位",
         },
         {
-          parking_id: "a1_5",
-          parking_type: "未出租车位",
+          locate: "a1_5",
+          status: "未出租车位",
         },
         {
-          parking_id: "a1_6",
-          parking_type: "未出租车位",
+          locate: "a1_6",
+          status: "未出租车位",
         },
         {
-          parking_id: "a1_6",
-          parking_type: "未出租车位",
+          locate: "a1_6",
+          status: "未出租车位",
         },
         {
-          parking_id: "a1_6",
-          parking_type: "未出租车位",
+          locate: "a1_6",
+          status: "未出租车位",
         },
         {
-          parking_id: "a1_6",
-          parking_type: "闲置临时车位",
+          locate: "a1_6",
+          status: "闲置临时车位",
         },
         {
-          parking_id: "a1_6",
-          parking_type: "闲置临时车位",
+          locate: "a1_6",
+          status: "闲置临时车位",
         },
         {
-          parking_id: "a1_6",
-          parking_type: "闲置临时车位",
+          locate: "a1_6",
+          status: "闲置临时车位",
         },
         {
-          parking_id: "a1_6",
-          parking_type: "闲置临时车位",
+          locate: "a1_6",
+          status: "闲置临时车位",
         },
         {
-          parking_id: "a1_6",
-          parking_type: "闲置临时车位",
+          locate: "a1_6",
+          status: "闲置临时车位",
         },
         {
-          parking_id: "a1_8",
-          parking_type: "闲置临时车位",
+          locate: "a1_8",
+          status: "闲置临时车位",
         },
         {
-          parking_id: "a1_8",
-          parking_type: "闲置临时车位",
+          locate: "a1_8",
+          status: "闲置临时车位",
         },
         {
-          parking_id: "a1_11",
-          parking_type: "闲置临时车位",
+          locate: "a1_11",
+          status: "闲置临时车位",
         },
       ],
       queryInfo: {
@@ -318,7 +318,7 @@ export default {
     this.echartsData.series[0].data[3].value = this.parking_coditon.unrent_num;
     this.echartsData.series[0].data[0].value = this.parking_coditon.temp_num;
     this.echartsData.series[0].data[1].value = this.parking_coditon.untemp_num;
-    console.log(this.echartsData.series[0].data[0].value);
+    //console.log(this.echartsData.series[0].data[0].value);
     this.init();
   },
 
@@ -349,8 +349,8 @@ export default {
       this.tempData = this.tableData.filter(function (tabledatas) {
         // console.log('过滤', tabledatas);
         let searchField = {
-          parking_id: tabledatas.parking_id,
-          parking_type: tabledatas.parking_type,
+          locate: tabledatas.locate,
+          status: tabledatas.status,
         };
         return Object.keys(searchField).some(function (key) {
           return String(tabledatas[key]).toLowerCase().indexOf(search) > -1;
@@ -398,8 +398,8 @@ export default {
 
     //向后端申请数据 @rk---
     // {
-    //       parking_id: "",
-    //       parking_type: "",
+    //       locate: "",
+    //       status: "",
     //       tel_number: "",
     //       company: "",
     //     },
@@ -416,10 +416,12 @@ export default {
 
       //启动执行 get
       this.openLoading();
-      this.$http.get(this.api + "SwitchForm").then((res) => {
-        console.log(res);
+      this.$http.get(this.api + "SwitchInfo").then((res) => {
+        const box = res.data.data;
+        var pDataForm = JSON.parse(box);
+        console.log(pDataForm.tableData);
         this.openLoading().close();
-        this.tableData = res.data.data;
+        this.tableData = pDataForm.tableData;
         this.inintData();
       });
     },
@@ -429,7 +431,7 @@ export default {
     //标签
 
     filterTag(value, row) {
-      return row.parking_type === value;
+      return row.status === value;
     },
 
     //出库操作 @rk---
@@ -439,15 +441,15 @@ export default {
       this.parking_cost = 10;
     },
     reletonSubmit() {
-      console.log(this.switchForm);
+      //console.log(this.switchForm);
       let switchinfo = {
-        parking_type: "",
-        parking_id: "",
+        status: "",
+        locate: "",
       };
-      switchinfo.parking_type = this.switchForm.parking_type;
-      switchinfo.parking_id = this.switchForm.parking_id;
+      switchinfo.status = this.switchForm.status;
+      switchinfo.locate = this.switchForm.locate;
       let switchPost = this.$qs.stringify(switchinfo);
-      console.log(switchPost);
+      // console.log(switchPost);
     },
 
     //类型切换操作按钮
@@ -455,8 +457,8 @@ export default {
       this.scope = scope;
       let _1obj = JSON.stringify(this.scope.row);
       let reletJson = JSON.parse(_1obj);
-      this.switchForm.parking_type = reletJson.parking_type;
-      this.switchForm.parking_id = reletJson.parking_id;
+      this.switchForm.status = reletJson.status;
+      this.switchForm.locate = reletJson.locate;
       this.reletVisible = true;
       //console.log(this.switchForm);
     },
@@ -467,15 +469,15 @@ export default {
       //  this.tableData.splice(scope.$index, 1)
       // this.inintData()
       let comValue = {
-        parking_id: "",
+        locate: "",
       };
-      comValue.parking_id = scope.row.parking_id;
+      comValue.locate = scope.row.locate;
 
       let postinfo = this.$qs.stringify(comValue);
       // console.log(postinfo);
       // console.log(scope.row.userId)
       //console.log("出库的货物编码:",scope.row.goodsId)
-      //返回用户车位编号，后端根据parking_id进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
+      //返回用户车位编号，后端根据locate进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
 
       // this.$http
       //   .post(this.api + "user/delete?" + postinfo)
