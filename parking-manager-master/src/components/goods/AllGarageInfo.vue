@@ -1027,26 +1027,36 @@ export default {
           },
         }).then(
           (res) => {
-            this.$message({
-              type: "success",
-              message: "此车为业主，请放行",
-            });
-          },
-          (response) => {
-            this.openLoading().close();
-            this.confForm = "";
-            this.$confirm("此车为临时车，是否跳转到临时停车新增页面?", "提示", {
-              confirmButtonText: "确定",
-              cancelButtonText: "取消",
-              type: "warning",
-            }).then(() => {
-              this.$router.push("/tempOut");
+            console.log(res);
+            if (res.data.code == 200) {
+              this.openLoading().close();
               this.$message({
                 type: "success",
-                message: "跳转成功!",
+                message: "此车为业主，请放行",
               });
-              console.log("error");
-            });
+            } else {
+              this.openLoading().close();
+              this.confForm = "";
+              this.$confirm(
+                "此车为临时车，是否跳转到临时停车新增页面?",
+                "提示",
+                {
+                  confirmButtonText: "确定",
+                  cancelButtonText: "取消",
+                  type: "warning",
+                }
+              ).then(() => {
+                this.$router.push("/tempOut");
+                this.$message({
+                  type: "success",
+                  message: "跳转成功!",
+                });
+                console.log("error");
+              });
+            }
+          },
+          (response) => {
+            console.log(response);
           }
         );
       }
@@ -1074,6 +1084,7 @@ export default {
           },
         }).then(
           (res) => {
+            console.log(res);
             this.deletVisible = false;
             console.log(res);
             {

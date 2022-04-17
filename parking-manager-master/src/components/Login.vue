@@ -121,10 +121,54 @@ export default {
           var psw_pro = this.$md5(psw);
           this.postForm.password = psw_pro;
           this.postForm.username = this.loginForm.username;
+          let password = this.postForm.password;
+          let username = this.postForm.username;
+
           let comValue = this.$qs.stringify(this.postForm);
           console.log(comValue);
+
+          // this.$http({
+          //   method: "post",
+          //   url: this.api + "login",
+          //   params: {
+          //     comValue,
+          //   },
+          // }).then(
+          //   (res) => {
+          //     console.log(res);
+          //     this.openLoading().close();
+          //     if (res.data.code == 200) {
+          //       this.$message({
+          //         message: "登陆成功",
+          //         type: "success",
+          //       });
+          //       let useri = res.data;
+          //       this.personInfo.userName = "ss";
+          //       this.personInfo.userId = res.data.data[0].userId;
+          //       console.log(this.personInfo);
+          //       this.$message.success("登录成功！");
+          //       this.loginForm = {
+          //         username: "",
+          //         password: "",
+          //       };
+          //       this.$router.push("/home");
+          //     } else if (res.data.code == 500) {
+          //       this.$message({
+          //         message: "账号或者密码错误",
+          //         type: "danger",
+          //       });
+          //       this.$refs.loginFormRef.resetFields();
+          //     }
+          //   },
+          //   (response) => {
+          //     console.log(response);
+          //     this.openLoading().close();
+          //     // console.log(error);
+          //   }
+          // );
+
           this.$http
-            .get(this.api + "login", comValue)
+            .post(this.api + "testPost?" + comValue)
             .then((res) => {
               console.log(res);
               this.openLoading().close();
@@ -152,6 +196,7 @@ export default {
               }
             })
             .catch((error) => {
+              console.log(error);
               this.openLoading().close();
               // console.log(error);
             });

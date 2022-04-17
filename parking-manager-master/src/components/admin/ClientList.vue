@@ -285,6 +285,21 @@ export default {
       postValue.car_id = scope.row.car_id;
       // console.log(postValue);
       let costGet = this.$qs.stringify(postValue);
+      this.openLoading();
+      this.$http.get(this.api + "exitDoor?" + costGet).then((res) => {
+        this.openLoading().close();
+        // this.openLoading().close()
+        console.log(res.data.data);
+        const box1 = res.data.data;
+        var pDataForm = JSON.parse(box1);
+        //用户信息
+        // console.log(pDataForm.tableData);
+        //console.log(res.data.tableData);
+        this.tableData = pDataForm.tableData;
+        // console.log(this.tableData)
+        this.searchData = this.tableData;
+      });
+
       //console.log(costGet);
       this.parking_cost = 10;
     },

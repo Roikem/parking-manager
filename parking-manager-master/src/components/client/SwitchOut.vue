@@ -419,7 +419,7 @@ export default {
       this.$http.get(this.api + "SwitchInfo").then((res) => {
         const box = res.data.data;
         var pDataForm = JSON.parse(box);
-        console.log(pDataForm.tableData);
+        //console.log(res);
         this.openLoading().close();
         this.tableData = pDataForm.tableData;
         this.inintData();
@@ -443,12 +443,26 @@ export default {
     reletonSubmit() {
       //console.log(this.switchForm);
       let switchinfo = {
-        status: "",
-        locate: "",
+        parkingType: "",
+        parkingId: "",
       };
-      switchinfo.status = this.switchForm.status;
-      switchinfo.locate = this.switchForm.locate;
+      switchinfo.parkingType = this.switchForm.status;
+      switchinfo.parkingId = this.switchForm.locate;
       let switchPost = this.$qs.stringify(switchinfo);
+      console.log(switchPost);
+      this.$http
+        .get(this.api + "SwitchForm?" + switchPost)
+        .then((res) => {
+          console.log(res);
+          this.$message({
+            message: "操作成功1",
+            type: "success",
+          });
+          this.fetch();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       // console.log(switchPost);
     },
 

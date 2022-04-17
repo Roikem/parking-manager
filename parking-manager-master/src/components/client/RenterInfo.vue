@@ -20,12 +20,12 @@
         :default-sort="{ prop: 'date', order: 'descending' }"
       >
         <el-table-column
-          prop="parking_id"
+          prop="locate"
           label="车位编号"
           width="180"
         ></el-table-column>
         <el-table-column
-          prop="car_id"
+          prop="carNumber"
           label="车牌号"
           width="180"
         ></el-table-column>
@@ -62,11 +62,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column
-          prop="remaining_days"
-          label="剩余天数"
-          :formatter="formatter"
-        >
+        <el-table-column prop="days" label="剩余天数" :formatter="formatter">
         </el-table-column>
       </el-table>
     </el-card>
@@ -107,7 +103,7 @@
     <el-dialog title="车位信息编辑 " :visible.sync="editVisible" width="40%">
       <el-form ref="form" :model="editForm" label-width="80px" size="small">
         <el-form-item label="车牌号">
-          <el-input v-model="editForm.car_id"></el-input>
+          <el-input v-model="editForm.carNumber"></el-input>
         </el-form-item>
         <el-form-item label="业主姓名">
           <el-input v-model="editForm.renderName"></el-input>
@@ -133,14 +129,14 @@
             <i class="el-icon-user"></i>
             业主姓名
           </template>
-          {{ renderInfo.renderName }}
+          {{ infoData.renderName }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-mobile-phone"></i>
             手机号
           </template>
-          {{ renderInfo.telNumber }}
+          {{ infoData.telNumber }}
         </el-descriptions-item>
 
         <el-descriptions-item>
@@ -148,14 +144,14 @@
             <i class="el-icon-tickets"></i>
             出租类型
           </template>
-          <el-tag size="small"> {{ renderInfo.render_type }}</el-tag>
+          <el-tag size="small"> {{ infoData.leaseType }}</el-tag>
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-office-building"></i>
             联系地址
           </template>
-          {{ renderInfo.renderPlace }}
+          {{ infoData.renderPlace }}
         </el-descriptions-item>
       </el-descriptions>
       <span slot="footer" class="dialog-footer">
@@ -185,57 +181,37 @@ export default {
       editDialogVisible: false,
       scope: "",
       reletForm: {
-        parking_id: "",
-        car_id: "",
+        parkingId: "",
         reletDateType: "",
       },
       editForm: {
-        parking_id: "",
-        car_id: "",
+        locate: "",
+        carNumber: "",
         renderName: "",
         telNumber: "",
         renderPlace: "",
       },
       renderInfo: {
-        parking_id: "",
-        car_id: "",
-        remaining_days: "",
-        remaining_daysSituation: "",
+        locate: "",
+        carNumber: "",
+        days: "",
+        daysSituation: "",
         renderName: "",
         telNumber: "",
-        render_type: "",
+        leaseType: "",
         renderPlace: "",
+      },
+      infoData: {
+        leaseType: "",
+        renderName: "",
+        renderPlace: "",
+        telNumber: "",
       },
       tableData: [
         {
-          parking_id: "a1_2",
-          car_id: "川A88888",
-          remaining_days: "200",
-          remaining_daysSituation: "1",
-          renderName: "张三",
-          telNumber: "18888888888",
-          render_type: "年租",
-          renderPlace: "四川省成都市成华区成都理工大学",
-        },
-        {
-          parking_id: "a1_3",
-          car_id: "川A86888",
-          remaining_days: "2",
-          remaining_daysSituation: "2",
-          renderName: "李四",
-          telNumber: "18888886688",
-          render_type: "季付",
-          renderPlace: "四川省成都市成华区理工东苑",
-        },
-        {
-          parking_id: "a1_2",
-          car_id: "川A88668",
-          remaining_days: "12",
-          remaining_daysSituation: "0",
-          renderName: "李四",
-          telNumber: "18888886688",
-          render_type: "年租",
-          renderPlace: "四川省成都市成华区理工东苑",
+          locate: "",
+          carNumber: "",
+          days: "",
         },
       ],
     };
@@ -254,12 +230,12 @@ export default {
     //   this.openLoading().close();
     //   var jsonObj = JSON.parse(JSON.stringify(res.data.data));
     //   for (var i = 0; i < jsonObj.length; i++) {
-    //     if (jsonObj[i].remaining_daysSituation == 0) {
-    //       jsonObj[i].remaining_days = "审核中";
-    //     } else if (jsonObj[i].remaining_daysSituation == 1) {
-    //       jsonObj[i].remaining_days = "通过";
+    //     if (jsonObj[i].daysSituation == 0) {
+    //       jsonObj[i].days = "审核中";
+    //     } else if (jsonObj[i].daysSituation == 1) {
+    //       jsonObj[i].days = "通过";
     //     } else {
-    //       jsonObj[i].remaining_days = "未通过";
+    //       jsonObj[i].days = "未通过";
     //     }
     //   }
     //   console.log(jsonObj);
@@ -269,15 +245,15 @@ export default {
   methods: {
     fetch() {
       this.openLoading();
-      this.$http.get(this.api + "RenderInfo").then((res) => {
+      this.$http.get(this.api + "getAllOwnerParking").then((res) => {
         this.openLoading().close();
         // this.openLoading().close()
         const box = res.data.data;
         var pDataForm = JSON.parse(box);
         //用户信息
-        console.log(pDataForm.tableData);
+        console.log(pDataForm);
         //console.log(res.data.tableData);
-        this.tableData = pDataForm.tableData;
+        this.tableData = pDataForm;
         // console.log(this.tableData)
         this.searchData = this.tableData;
       });
@@ -287,16 +263,52 @@ export default {
     renderInfoBridge(scope) {
       this.scope = scope;
       this.renderInfo = scope.row;
-      console.log(this.renderInfo);
-      this.renderInfoVisible = true;
+      let form = this.renderInfo.carNumber;
+
+      // this.$http
+      //   .get(this.api + "RenderInfoByCarNumber", this.renderInfo.carNumber)
+      //   .then((res) => {
+      //     this.openLoading().close();
+      //     // this.openLoading().close()
+      //     console.log(res.data.data);
+      //     const box1 = res.data.data;
+      //     var pDataForm = JSON.parse(box1);
+      //     //用户信息
+      //     // console.log(pDataForm.tableData);
+      //     console.log(pDataForm);
+      //     this.infoData = pDataForm;
+      //     // console.log(this.tableData)
+      //     this.searchData = this.tableData;
+      //   });
+      // this.renderInfoVisible = true;
+      this.openLoading();
+      this.$http({
+        method: "get",
+        url: this.api + "RenderInfoByCarNumber",
+        params: {
+          carNumber: form,
+        },
+      }).then((res) => {
+        this.openLoading().close();
+        const box1 = res.data.data;
+        var pDataForm = JSON.parse(box1);
+        //用户信息
+        // console.log(pDataForm.tableData);
+
+        this.infoData = pDataForm;
+        this.renderInfoVisible = true;
+        // console.log(this.tableData)
+        console.log(this.infoData);
+        // this.searchData = this.tableData;
+      });
     },
     //续租操作按钮
     reletBridge(scope) {
       this.scope = scope;
+
       let _1obj = JSON.stringify(this.scope.row);
       let reletJson = JSON.parse(_1obj);
-      this.reletForm.car_id = reletJson.car_id;
-      this.reletForm.parking_id = reletJson.parking_id;
+      this.reletForm.parkingId = reletJson.locate;
       this.reletVisible = true;
       console.log(this.reletForm);
     },
@@ -306,12 +318,35 @@ export default {
       //实现浅拷贝
       let _obj = JSON.stringify(this.scope.row);
       this.renderInfo = JSON.parse(_obj);
-      this.editForm = this.renderInfo;
-      this.editVisible = true;
+      this.openLoading();
+      this.$http({
+        method: "get",
+        url: this.api + "RenderInfoByCarNumber",
+        params: {
+          carNumber: scope.row.carNumber,
+        },
+      }).then((res) => {
+        this.openLoading().close();
+        const box1 = res.data.data;
+        var pDataForm = JSON.parse(box1);
+        //用户信息
+        this.infoData = pDataForm;
+        this.renderInfo = this.infoData;
+        console.log(this.tableData.carNumber);
+        this.editForm.carNumber = scope.row.carNumber;
+        this.editForm.locate = scope.row.locate;
+        this.editForm.renderName = this.renderInfo.renderName;
+        this.editForm.telNumber = this.renderInfo.telNumber;
+        this.editForm.renderPlace = this.renderInfo.renderPlace;
+        //  console.log(this.editForm);
+
+        // this.searchData = this.tableData;
+        this.editVisible = true;
+      });
     },
     //退租按钮
     deleteBridge(scope) {
-      console.log("所选择的车位编号为:", scope.row.parking_id);
+      console.log("所选择的车位编号为:", scope.row);
       this.scope = scope;
       this.dialogVisible = true;
     },
@@ -322,45 +357,172 @@ export default {
       //  this.tableData.splice(scope.$index, 1)
       // this.inintData()
       let comValue = {
-        userId: "",
+        parkingId: "",
       };
-      comValue.userId = scope.row.userId;
+      console.log(scope.row);
+      comValue.parkingId = scope.row.locate;
 
-      let postinfo = this.$qs.stringify(comValue);
-      console.log(postinfo);
+      let postinfo = this.$qs.parse(comValue);
+      console.log(comValue);
       // console.log(scope.row.userId)
       //console.log("出库的货物编码:",scope.row.goodsId)
       //返回用户姓名，后端根据userName进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
-      this.$http
-        .post(this.api + "user/delete?" + postinfo)
-        .then((res) => {
+
+      this.$http({
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "post",
+        url: this.api + "UnrentForm",
+        data: postinfo,
+      }).then(
+        (res) => {
+          console.log(res);
           this.$message({
             message: "操作成功",
             type: "success",
           });
+          this.editVisible = false;
           this.fetch();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+
+          this.openLoading().close();
+        },
+        (response) => {}
+      );
+
+      // this.$http
+      //   .post(this.api + "UnrentForm?" + postinfo)
+      //   .then((res) => {
+      //     console.log(res);
+      //     this.$message({
+      //       message: "操作成功",
+      //       type: "success",
+      //     });
+      //     this.fetch();
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     },
     formatter(row, column) {
-      return row.remaining_days;
+      return row.days;
     },
+
+    //编辑提交按钮
     onSubmit() {
-      console.log(this.editForm);
-      let postinfo = this.$qs.stringify(this.editForm);
-      console.log(postinfo);
+      // console.log(this.editForm);
+      if (
+        this.editForm.renderName &&
+        this.editForm.renderPlace &&
+        this.editForm.telNumber &&
+        this.editForm.carNumber
+      ) {
+        let postinfo = this.$qs.parse(this.editForm);
+        console.log(postinfo);
+
+        //   this.$http
+        //     .post(this.api + "RenderEditForm?" + postinfo)
+        //     .then((res) => {
+        //       console.log(res);
+        //       this.$message({
+        //         message: "操作成功",
+        //         type: "success",
+        //       });
+        //       this.editVisible = false;
+        //       this.fetch();
+        //     })
+        //     .catch((error) => {
+        //       this.$message({
+        //         message: "数据没有变化",
+        //         type: "error",
+        //       });
+        //     });
+        //   //console.log("postinfo");
+        // } else {
+        //   this.$message({
+        //     message: "请完整输入内容",
+        //     type: "error",
+        //   });
+
+        this.$http({
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "post",
+          url: this.api + "RenderEditForm",
+          data: postinfo,
+        }).then(
+          (res) => {
+            console.log(res);
+            this.$message({
+              message: "操作成功",
+              type: "success",
+            });
+            this.editVisible = false;
+            this.fetch();
+
+            this.openLoading().close();
+          },
+          (response) => {}
+        );
+      }
     },
+    //续租选择确定按钮
     reletonSubmit() {
       console.log(this.reletForm);
       let postinfo = this.$qs.stringify(this.reletForm);
       console.log(postinfo);
+      this.openLoading();
+
+      // this.$http({
+      //   method: "get",
+      //   url: this.api + "ReletForm",
+      //   params: {
+      //     postinfo,
+      //   },
+      // }).then((res) => {
+      //   this.openLoading().close();
+      //   this.$message({
+      //     message: "操作完成",
+      //     type: "success",
+      //   });
+      //   this.reletVisible = false;
+      //   //用户信息
+      //   console.log(res);
+      //   // this.searchData = this.tableData;
+      // }),
+      //   (response) => {
+      //     console.log(response);
+      //     this.$message({
+      //       message: "操作错误",
+      //       type: "error",
+      //     });
+      //   };
+
+      this.$http
+        .get(this.api + "ReletForm?" + postinfo)
+        .then((res) => {
+          this.openLoading().close();
+          this.$message({
+            message: "操作完成",
+            type: "success",
+          });
+          this.reletVisible = false;
+          this.fetch();
+          //用户信息
+          console.log(res);
+          // this.searchData = this.tableData;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.openLoading().close();
+          // console.log(error);
+        });
     },
     cellStyle({ row, column, rowIndex, columnIndex }) {
-      if (row.remaining_daysSituation == 2 && columnIndex === 4) {
+      if (row.daysSituation == 2 && columnIndex === 4) {
         return "background-color: rgba(218, 97, 97, 0.9);color:#fff;text-align:center;";
-      } else if (row.remaining_daysSituation == 1 && columnIndex === 4) {
+      } else if (row.daysSituation == 1 && columnIndex === 4) {
         return "background-color: rgba(113, 214, 62, 0.9);color:#fff;text-align:center;";
       } else if (columnIndex === 4) {
         return "background-color:rgb(230, 172, 86, 0.9);color:#fff;text-align:center;";

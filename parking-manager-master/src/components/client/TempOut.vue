@@ -29,15 +29,15 @@
     </el-col>
   </el-form-item> -->
 
-        <el-form-item label="车位编号" prop="parking_id">
-          <el-input v-model="tempAddForm.parking_id"></el-input>
+        <el-form-item label="车位编号" prop="parkingId">
+          <el-input v-model="tempAddForm.parkingId"></el-input>
         </el-form-item>
-        <el-form-item label="车牌号" prop="car_id">
-          <el-input v-model="tempAddForm.car_id"></el-input>
+        <el-form-item label="车牌号" prop="carNumber">
+          <el-input v-model="tempAddForm.carNumber"></el-input>
         </el-form-item>
 
-        <el-form-item label="手机号" prop="tel_number">
-          <el-input v-model="tempAddForm.tel_number"></el-input>
+        <el-form-item label="手机号" prop="telNumber">
+          <el-input v-model="tempAddForm.telNumber"></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -55,45 +55,83 @@ export default {
   data() {
     return {
       tempAddForm: {
-        car_id: "",
-        render_name: "",
+        carNumber: "",
+        renderName: "",
         render_place: "",
         render_type: "",
-        tel_number: "",
-        parking_id: "",
+        telNumber: "",
+        parkingId: "",
       },
       postForm: {
-        car_id: "",
-        render_name: "",
-        render_place: "",
-        render_type: "",
-        tel_number: "",
-        parking_id: "",
+        locate: "",
+        carNumber: "",
+        telNumber: "",
       },
       rules: {
-        car_id: [{ required: true, message: "请输入车牌号", trigger: "blur" }],
-        parking_id: [
+        carNumber: [
+          { required: true, message: "请输入车牌号", trigger: "blur" },
+        ],
+        parkingId: [
           { required: true, message: "请输入车位编号", trigger: "blur" },
         ],
-        tel_number: [
+        telNumber: [
           { required: true, message: "请输入手机号", trigger: "blur" },
         ],
       },
     };
   },
   methods: {
-    submitForm(tempAddForm) {
-      this.postForm.car_id = this.tempAddForm.car_id;
-      // this.postForm.outboundTime = filter_date
-      this.postForm.parking_id = this.tempAddForm.parking_id;
-      this.postForm.render_name = this.tempAddForm.render_name;
-      this.postForm.tel_number = this.tempAddForm.tel_number;
-      this.postForm.render_place = this.tempAddForm.render_place;
-      this.postForm.render_type = this.tempAddForm.render_type;
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.postForm.carNumber = this.tempAddForm.carNumber;
+          // this.postForm.outboundTime = filter_date
+          this.postForm.locate = this.tempAddForm.parkingId;
+          this.postForm.telNumber = this.tempAddForm.telNumber;
+          let comValue = this.$qs.parse(this.postForm);
+          console.log(comValue);
+          this.openLoading();
+          this.$http({
+            method: "post",
+            url: this.api + "TempAddForm",
+            data: comValue,
+          }).then(
+            (res) => {
+              console.log(res);
+              if (res.data.code == 200) {
+                this.openLoading().close();
+              } else {
+                this.openLoading().close();
+              }
+            },
+            (response) => {
+              console.log(response);
+            }
+          );
 
-      let comValue = this.$qs.stringify(this.postForm);
-      console.log(comValue);
+          // this.$http
+          //   .post(this.api + "TempAddForm?" + comValue)
+          //   .then((res) => {
+          //     console.log(res);
+          //     if (res.data.code == 200) {
+          //       this.openLoading().close();
+          //     } else {
+          //       this.openLoading().close();
+          //     }
+          //   })
+          //   .catch((error) => {
+          //     this.$message({
+          //       message: "数据没有变化",
+          //       type: "error",
+          //     });
+          //   });
 
+          console.log(comValue);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
       // console.log(this.postForm);
       //this.openLoading();
 

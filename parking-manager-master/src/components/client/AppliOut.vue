@@ -29,15 +29,15 @@
     </el-col>
   </el-form-item> -->
 
-        <el-form-item label="车位编号" prop="parking_id">
-          <el-input v-model="renderAddForm.parking_id"></el-input>
+        <el-form-item label="车位编号" prop="parkingId">
+          <el-input v-model="renderAddForm.parkingId"></el-input>
         </el-form-item>
         <el-form-item label="车牌号" prop="car_id">
           <el-input v-model="renderAddForm.car_id"></el-input>
         </el-form-item>
-        <el-form-item label="续租类型" prop="render_type">
+        <el-form-item label="续租类型" prop="renderType">
           <el-select
-            v-model="renderAddForm.render_type"
+            v-model="renderAddForm.renderType"
             placeholder="请选择续租类型"
           >
             <el-option label="月租" value="月租"></el-option>
@@ -46,17 +46,17 @@
           </el-select>
         </el-form-item>
 
-        <el-form-item label="业主姓名" prop="render_name">
-          <el-input v-model="renderAddForm.render_name"></el-input>
+        <el-form-item label="业主姓名" prop="renderName">
+          <el-input v-model="renderAddForm.renderName"></el-input>
         </el-form-item>
-        <el-form-item label="手机号" prop="tel_number">
-          <el-input v-model="renderAddForm.tel_number"></el-input>
+        <el-form-item label="手机号" prop="telNumber">
+          <el-input v-model="renderAddForm.telNumber"></el-input>
         </el-form-item>
 
-        <el-form-item label="联系地址" prop="render_place">
+        <el-form-item label="联系地址" prop="renderPlace">
           <el-input
             type="textarea"
-            v-model="renderAddForm.render_place"
+            v-model="renderAddForm.renderPlace"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -75,66 +75,102 @@ export default {
     return {
       renderAddForm: {
         car_id: "",
-        render_name: "",
-        render_place: "",
-        render_type: "",
-        tel_number: "",
-        parking_id: "",
+        renderName: "",
+        renderPlace: "",
+        renderType: "",
+        telNumber: "",
+        parkingId: "",
       },
       postForm: {
         car_id: "",
-        render_name: "",
-        render_place: "",
-        render_type: "",
-        tel_number: "",
-        parking_id: "",
+        renderName: "",
+        renderPlace: "",
+        renderType: "",
+        telNumber: "",
+        parkingId: "",
       },
       rules: {
         car_id: [{ required: true, message: "请输入车牌号", trigger: "blur" }],
-        parking_id: [
+        parkingId: [
           { required: true, message: "请输入车位编号", trigger: "blur" },
         ],
-        render_name: [
+        renderName: [
           { required: true, message: "请输入业主姓名", trigger: "blur" },
         ],
-        tel_number: [
+        telNumber: [
           { required: true, message: "请输入手机号", trigger: "blur" },
         ],
-        render_type: [
+        renderType: [
           { required: true, message: "请选择出租类型", trigger: "blur" },
         ],
-        render_place: [
+        renderPlace: [
           { required: false, message: "请填写活动形式", trigger: "blur" },
         ],
       },
     };
   },
   methods: {
-    submitForm(renderAddForm) {
+    submitForm(formName) {
       this.postForm.car_id = this.renderAddForm.car_id;
-      // this.postForm.outboundTime = filter_date
-      this.postForm.parking_id = this.renderAddForm.parking_id;
-      this.postForm.render_name = this.renderAddForm.render_name;
-      this.postForm.tel_number = this.renderAddForm.tel_number;
-      this.postForm.render_place = this.renderAddForm.render_place;
-      this.postForm.render_type = this.renderAddForm.render_type;
-      console.log(this.postForm);
-      let comValue = this.$qs.stringify(this.postForm);
-      console.log(comValue);
 
-      // console.log(this.postForm);
-      //this.openLoading();
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          // this.postForm.outboundTime = filter_date
+          this.postForm.parkingId = this.renderAddForm.parkingId;
+          this.postForm.renderName = this.renderAddForm.renderName;
+          this.postForm.telNumber = this.renderAddForm.telNumber;
+          this.postForm.renderPlace = this.renderAddForm.renderPlace;
+          this.postForm.renderType = this.renderAddForm.renderType;
 
-      // this.$http.post(this.api + "/apply/insert", comValue).then((res) => {
-      //   console.log(res);
-      //   this.openLoading().close();
-      //   this.renderAddForm = [];
+          console.log(this.postForm);
+          let comValue = this.$qs.stringify(this.postForm);
+          console.log(comValue);
 
-      //   this.$message({
-      //     message: " 申请成功",
-      //     type: "success",
-      //   });
-      // });
+          // console.log(this.postForm);
+          // this.openLoading();
+          // this.$http.post(this.api + "AddrentForm", comValue).then((res) => {
+          //   console.log(res);
+          //   this.openLoading().close();
+          //   this.renderAddForm = [];
+          //   this.$message({
+          //     message: " 申请成功",
+          //     type: "success",
+          //   }).catch((error) => {
+          //     console.log(error);
+          //   });
+          // });
+
+          this.$http({
+            method: "post",
+            url: this.api + "AddrentForm",
+            params: {
+              comValue,
+            },
+          }).then(
+            (res) => {
+              this.deletVisible = false;
+              console.log(res);
+              this.openLoading().close();
+              this.renderAddForm = [];
+              this.$message({
+                message: " 申请成功",
+                type: "success",
+              });
+            },
+            (error) => {
+              console.log(error.response);
+              this.openLoading().close();
+              this.$message({
+                message: " 申请成功",
+                type: "success",
+              });
+            }
+          );
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
     },
     resetForm(renderAddForm) {
       this.$refs[renderAddForm].resetFields();
