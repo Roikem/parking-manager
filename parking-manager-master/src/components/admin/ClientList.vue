@@ -264,7 +264,9 @@ export default {
       //启动执行 get
       this.openLoading();
       this.$http.get(this.api + "TempInfo").then((res) => {
-        console.log(res);
+        const box = res.data.data;
+        var pDataForm = JSON.parse(box);
+        console.log(pDataForm[0]);
         this.openLoading().close();
         // this.tableData = res.data.data;
         this.inintData();

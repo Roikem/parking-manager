@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 export default {
   data() {
     return {
@@ -117,24 +118,59 @@ export default {
           this.addDialogClosed();
         } else {
           this.openLoading();
-          var psw = this.$md5(this.loginForm.password);
-          var psw_pro = this.$md5(psw);
-          this.postForm.password = psw_pro;
+          this.postForm.password = this.loginForm.password;
           this.postForm.username = this.loginForm.username;
           let password = this.postForm.password;
           let username = this.postForm.username;
 
-          let comValue = this.$qs.stringify(this.postForm);
+          let comValue = this.$qs.parse(this.postForm);
           console.log(comValue);
 
-          // this.$http({
-          //   method: "post",
-          //   url: this.api + "login",
-          //   params: {
-          //     comValue,
-          //   },
-          // }).then(
-          //   (res) => {
+          this.$http({
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "post",
+            url: this.api + "login.do",
+            data: comValue,
+          }).then(
+            (res) => {
+              //const box = res.data;
+              //  let dataForm = JSON.parse(res.data);
+              //console.log(res.data.code);
+              this.openLoading().close();
+              if (res.data.code == 200) {
+                //Vue.prototype.token = res.data.data.token;
+                localStorage.setItem("token", res.data.data.token);
+                console.log(res);
+
+                this.$message({
+                  message: "登陆成功",
+                  type: "success",
+                });
+                this.loginForm = {
+                  username: "",
+                  password: "",
+                };
+                this.$router.push("/home");
+              } else if (res.data.code == 500) {
+                this.$message({
+                  message: "账号或者密码错误",
+                  type: "danger",
+                });
+                this.$refs.loginFormRef.resetFields();
+              }
+            },
+            (error) => {
+              //console.log("error");
+              this.openLoading().close();
+              // console.log(error);
+            }
+          );
+
+          // this.$http
+          //   .post(this.api + "login.do?" + comValue)
+          //   .then((res) => {
           //     console.log(res);
           //     this.openLoading().close();
           //     if (res.data.code == 200) {
@@ -159,47 +195,12 @@ export default {
           //       });
           //       this.$refs.loginFormRef.resetFields();
           //     }
-          //   },
-          //   (response) => {
-          //     console.log(response);
+          //   })
+          //   .catch((error) => {
+          //     console.log(error);
           //     this.openLoading().close();
           //     // console.log(error);
-          //   }
-          // );
-
-          this.$http
-            .post(this.api + "testPost?" + comValue)
-            .then((res) => {
-              console.log(res);
-              this.openLoading().close();
-              if (res.data.code == 200) {
-                this.$message({
-                  message: "登陆成功",
-                  type: "success",
-                });
-                let useri = res.data;
-                this.personInfo.userName = "ss";
-                this.personInfo.userId = res.data.data[0].userId;
-                console.log(this.personInfo);
-                this.$message.success("登录成功！");
-                this.loginForm = {
-                  username: "",
-                  password: "",
-                };
-                this.$router.push("/home");
-              } else if (res.data.code == 500) {
-                this.$message({
-                  message: "账号或者密码错误",
-                  type: "danger",
-                });
-                this.$refs.loginFormRef.resetFields();
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-              this.openLoading().close();
-              // console.log(error);
-            });
+          //   });
         }
       });
     },

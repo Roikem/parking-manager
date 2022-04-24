@@ -142,9 +142,9 @@
         <el-descriptions-item>
           <template slot="label">
             <i class="el-icon-tickets"></i>
-            出租类型
+            出租天数
           </template>
-          <el-tag size="small"> {{ infoData.leaseType }}</el-tag>
+          <el-tag size="small"> {{ infoData.alreadyLeasedDays }}天</el-tag>
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
@@ -202,7 +202,7 @@ export default {
         renderPlace: "",
       },
       infoData: {
-        leaseType: "",
+        alreadyLeasedDays: "",
         renderName: "",
         renderPlace: "",
         telNumber: "",
@@ -332,7 +332,7 @@ export default {
         //用户信息
         this.infoData = pDataForm;
         this.renderInfo = this.infoData;
-        console.log(this.tableData.carNumber);
+        console.log(this.renderInfo);
         this.editForm.carNumber = scope.row.carNumber;
         this.editForm.locate = scope.row.locate;
         this.editForm.renderName = this.renderInfo.renderName;
@@ -362,47 +362,44 @@ export default {
       console.log(scope.row);
       comValue.parkingId = scope.row.locate;
 
-      let postinfo = this.$qs.parse(comValue);
-      console.log(comValue);
+      let postinfo = this.$qs.stringify(comValue);
+      console.log(postinfo);
       // console.log(scope.row.userId)
       //console.log("出库的货物编码:",scope.row.goodsId)
       //返回用户姓名，后端根据userName进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
 
-      this.$http({
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "post",
-        url: this.api + "UnrentForm",
-        data: postinfo,
-      }).then(
-        (res) => {
-          console.log(res);
-          this.$message({
-            message: "操作成功",
-            type: "success",
-          });
-          this.editVisible = false;
-          this.fetch();
-
-          this.openLoading().close();
-        },
-        (response) => {}
-      );
-
-      // this.$http
-      //   .post(this.api + "UnrentForm?" + postinfo)
-      //   .then((res) => {
+      // this.$http({
+      //   method: "get",
+      //   url: this.api + "UnrentForm",
+      //   data: postinfo,
+      // }).then(
+      //   (res) => {
       //     console.log(res);
       //     this.$message({
       //       message: "操作成功",
       //       type: "success",
       //     });
+      //     this.editVisible = false;
       //     this.fetch();
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
+
+      //     this.openLoading().close();
+      //   },
+      //   (response) => {}
+      // );
+
+      this.$http
+        .get(this.api + "UnrentForm?" + postinfo)
+        .then((res) => {
+          console.log(res);
+          this.$message({
+            message: "操作成功",
+            type: "success",
+          });
+          this.fetch();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     formatter(row, column) {
       return row.days;

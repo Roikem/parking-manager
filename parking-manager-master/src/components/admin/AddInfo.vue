@@ -51,7 +51,6 @@
 export default {
   data() {
     return {
-      formName: "",
       ruleForm: {
         name: "",
         region: "",

@@ -210,6 +210,7 @@ export default {
       this.$router.push("/userInfo");
     },
     logout() {
+      localStorage.removeItem("token");
       this.userData = {
         userName: "",
         userSex: "",
@@ -224,7 +225,7 @@ export default {
     },
     fetch() {
       this.userData = this.personInfo;
-      console.log(this.userData);
+      //console.log(this.userData);
       // this.$http.get(this.api + "apply/insert").then(res => {
       //   // console.log(res.data)
       //   this.userData = res.data;

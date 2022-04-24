@@ -122,27 +122,27 @@
                 <template slot="label">
                   <el-tag type="success"> 已出租 </el-tag>
                 </template>
-                {{ parking_coditon.rented_num }}
+                {{ parking_coditon.rentedNum }}
               </el-descriptions-item>
 
               <el-descriptions-item>
                 <template slot="label">
                   <el-tag type="danger"> 未出租 </el-tag>
                 </template>
-                {{ parking_coditon.unrent_num }}
+                {{ parking_coditon.unrentNum }}
               </el-descriptions-item>
 
               <el-descriptions-item>
                 <template slot="label">
                   <el-tag type="success" effect="dark"> 闲置临时车位 </el-tag>
                 </template>
-                {{ parking_coditon.untemp_num }}
+                {{ parking_coditon.unTempNum }}
               </el-descriptions-item>
               <el-descriptions-item>
                 <template slot="label">
                   <el-tag type="danger" effect="dark"> 已占临时车位 </el-tag>
                 </template>
-                {{ parking_coditon.temp_num }}
+                {{ parking_coditon.tempNum }}
               </el-descriptions-item>
             </el-descriptions>
           </div>
@@ -200,10 +200,10 @@ export default {
         locate: "",
       },
       parking_coditon: {
-        rented_num: "120",
-        unrent_num: "200",
-        temp_num: "110",
-        untemp_num: "122",
+        rentedNum: "",
+        unrentNum: "",
+        tempNum: "",
+        unTempNum: "",
       },
       tableData: [
         {
@@ -314,10 +314,18 @@ export default {
     this.fetch();
   },
   mounted() {
-    this.echartsData.series[0].data[2].value = this.parking_coditon.rented_num;
-    this.echartsData.series[0].data[3].value = this.parking_coditon.unrent_num;
-    this.echartsData.series[0].data[0].value = this.parking_coditon.temp_num;
-    this.echartsData.series[0].data[1].value = this.parking_coditon.untemp_num;
+    this.echartsData.series[0].data[2].value = Number(
+      this.parking_coditon.rentedNum
+    );
+    this.echartsData.series[0].data[3].value = Number(
+      this.parking_coditon.unrentNum
+    );
+    this.echartsData.series[0].data[0].value = Number(
+      this.parking_coditon.tempNum
+    );
+    this.echartsData.series[0].data[1].value = Number(
+      this.parking_coditon.unTempNum
+    );
     //console.log(this.echartsData.series[0].data[0].value);
     this.init();
   },
@@ -419,9 +427,10 @@ export default {
       this.$http.get(this.api + "SwitchInfo").then((res) => {
         const box = res.data.data;
         var pDataForm = JSON.parse(box);
-        //console.log(res);
+        console.log(pDataForm);
         this.openLoading().close();
         this.tableData = pDataForm.tableData;
+        this.parking_coditon = pDataForm.parking_coditon;
         this.inintData();
       });
     },
@@ -458,6 +467,7 @@ export default {
             message: "操作成功1",
             type: "success",
           });
+          this.reletVisible = false;
           this.fetch();
         })
         .catch((error) => {

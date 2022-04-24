@@ -92,6 +92,9 @@ export default {
           console.log(comValue);
           this.openLoading();
           this.$http({
+            headers: {
+              "Content-Type": "application/json",
+            },
             method: "post",
             url: this.api + "TempAddForm",
             data: comValue,

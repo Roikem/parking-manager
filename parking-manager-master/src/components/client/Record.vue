@@ -45,21 +45,21 @@
         <el-table-column label="出库时间" width="130" prop="leaveTime">
         </el-table-column>
         <el-table-column
-          prop="carType"
+          prop="carTypeDesc"
           label="车辆类型"
           width="100"
           :filters="[
-            { text: '临时', value: '临时' },
-            { text: '出租', value: '出租' },
+            { text: '临时车', value: '临时车' },
+            { text: '长期车', value: '长期车' },
           ]"
           :filter-method="filterTag"
           filter-placement="bottom-end"
         >
           <template slot-scope="scope">
             <el-tag
-              :type="scope.row.carType === '出租' ? 'primary' : 'success'"
+              :type="scope.row.carTypeDesc === '长期车' ? 'primary' : 'success'"
               disable-transitions
-              >{{ scope.row.carType }}</el-tag
+              >{{ scope.row.carTypeDesc }}</el-tag
             >
           </template>
         </el-table-column>
@@ -229,7 +229,7 @@ export default {
     //标签
 
     filterTag(value, row) {
-      return row.carType === value;
+      return row.carTypeDesc === value;
     },
     filterHandler(value, row, column) {
       const property = column["property"];

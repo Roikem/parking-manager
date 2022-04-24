@@ -18,29 +18,47 @@
               <!-- 分区1 6小组 -->
               <ul class="a1_group1">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[0].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[0].parkingColor"
+                  >
                     <p>{{ parkingDataForm[0].parkingArea }}</p>
                     <a>{{ parkingDataForm[0].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[1].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[1].parkingColor"
+                  >
                     <p>{{ parkingDataForm[1].parkingArea }}</p>
                     <a>{{ parkingDataForm[1].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[2].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[2].parkingColor"
+                  >
                     <p>{{ parkingDataForm[2].parkingArea }}</p>
                     <a>{{ parkingDataForm[2].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[3].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[3].parkingColor"
+                  >
                     <p>{{ parkingDataForm[3].parkingArea }}</p>
                     <a>{{ parkingDataForm[3].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[4].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[4].parkingColor"
+                  >
                     <p>{{ parkingDataForm[4].parkingArea }}</p>
                     <a>{{ parkingDataForm[4].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[5].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[5].parkingColor"
+                  >
                     <p>{{ parkingDataForm[5].parkingArea }}</p>
                     <a>{{ parkingDataForm[5].areaNum }}</a>
                   </div>
@@ -49,29 +67,47 @@
               <!-- 分区2 6小组 -->
               <ul class="a1_group2">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[6].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[6].parkingColor"
+                  >
                     <p>{{ parkingDataForm[6].parkingArea }}</p>
                     <a>{{ parkingDataForm[6].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[7].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[7].parkingColor"
+                  >
                     <p>{{ parkingDataForm[7].parkingArea }}</p>
                     <a>{{ parkingDataForm[7].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[8].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[8].parkingColor"
+                  >
                     <p>{{ parkingDataForm[8].parkingArea }}</p>
                     <a>{{ parkingDataForm[8].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[9].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[9].parkingColor"
+                  >
                     <p>{{ parkingDataForm[9].parkingArea }}</p>
                     <a>{{ parkingDataForm[9].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[10].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[10].parkingColor"
+                  >
                     <p>{{ parkingDataForm[10].parkingArea }}</p>
                     <a>{{ parkingDataForm[10].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[11].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[11].parkingColor"
+                  >
                     <p>{{ parkingDataForm[11].parkingArea }}</p>
                     <a>{{ parkingDataForm[11].areaNum }}</a>
                   </div>
@@ -80,29 +116,47 @@
               <!-- 分区3 6小组 -->
               <ul class="a1_group3">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[12].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[12].parkingColor"
+                  >
                     <p>{{ parkingDataForm[12].parkingArea }}</p>
                     <a>{{ parkingDataForm[12].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[13].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[13].parkingColor"
+                  >
                     <p>{{ parkingDataForm[13].parkingArea }}</p>
                     <a>{{ parkingDataForm[13].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[14].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[14].parkingColor"
+                  >
                     <p>{{ parkingDataForm[14].parkingArea }}</p>
                     <a>{{ parkingDataForm[14].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[15].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[15].parkingColor"
+                  >
                     <p>{{ parkingDataForm[15].parkingArea }}</p>
                     <a>{{ parkingDataForm[15].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[16].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[16].parkingColor"
+                  >
                     <p>{{ parkingDataForm[16].parkingArea }}</p>
                     <a>{{ parkingDataForm[16].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[17].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[17].parkingColor"
+                  >
                     <p>{{ parkingDataForm[17].parkingArea }}</p>
                     <a>{{ parkingDataForm[17].areaNum }}</a>
                   </div>
@@ -111,29 +165,47 @@
               <!-- 分区4 6小组 -->
               <ul class="a1_group4">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[18].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[18].parkingColor"
+                  >
                     <p>{{ parkingDataForm[18].parkingArea }}</p>
                     <a>{{ parkingDataForm[18].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[19].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[19].parkingColor"
+                  >
                     <p>{{ parkingDataForm[19].parkingArea }}</p>
                     <a>{{ parkingDataForm[19].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[20].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[20].parkingColor"
+                  >
                     <p>{{ parkingDataForm[20].parkingArea }}</p>
                     <a>{{ parkingDataForm[20].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[21].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[21].parkingColor"
+                  >
                     <p>{{ parkingDataForm[21].parkingArea }}</p>
                     <a>{{ parkingDataForm[21].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[22].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[22].parkingColor"
+                  >
                     <p>{{ parkingDataForm[22].parkingArea }}</p>
                     <a>{{ parkingDataForm[22].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[23].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[23].parkingColor"
+                  >
                     <p>{{ parkingDataForm[23].parkingArea }}</p>
                     <a>{{ parkingDataForm[23].areaNum }}</a>
                   </div>
@@ -148,29 +220,47 @@
               <!-- 分区2 6小组 -->
               <ul class="a1_group1">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[24].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[24].parkingColor"
+                  >
                     <p>{{ parkingDataForm[24].parkingArea }}</p>
                     <a>{{ parkingDataForm[24].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[25].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[25].parkingColor"
+                  >
                     <p>{{ parkingDataForm[25].parkingArea }}</p>
                     <a>{{ parkingDataForm[25].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[26].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[26].parkingColor"
+                  >
                     <p>{{ parkingDataForm[26].parkingArea }}</p>
                     <a>{{ parkingDataForm[26].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[27].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[27].parkingColor"
+                  >
                     <p>{{ parkingDataForm[27].parkingArea }}</p>
                     <a>{{ parkingDataForm[27].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[28].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[28].parkingColor"
+                  >
                     <p>{{ parkingDataForm[28].parkingArea }}</p>
                     <a>{{ parkingDataForm[28].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[29].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[29].parkingColor"
+                  >
                     <p>{{ parkingDataForm[29].parkingArea }}</p>
                     <a>{{ parkingDataForm[29].areaNum }}</a>
                   </div>
@@ -179,29 +269,47 @@
               <!-- 分区2 6小组 -->
               <ul class="a1_group2">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[30].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[30].parkingColor"
+                  >
                     <p>{{ parkingDataForm[30].parkingArea }}</p>
                     <a>{{ parkingDataForm[30].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[31].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[31].parkingColor"
+                  >
                     <p>{{ parkingDataForm[31].parkingArea }}</p>
                     <a>{{ parkingDataForm[31].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[32].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[32].parkingColor"
+                  >
                     <p>{{ parkingDataForm[32].parkingArea }}</p>
                     <a>{{ parkingDataForm[32].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[33].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[33].parkingColor"
+                  >
                     <p>{{ parkingDataForm[33].parkingArea }}</p>
                     <a>{{ parkingDataForm[33].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[34].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[34].parkingColor"
+                  >
                     <p>{{ parkingDataForm[34].parkingArea }}</p>
                     <a>{{ parkingDataForm[34].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[35].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[35].parkingColor"
+                  >
                     <p>{{ parkingDataForm[35].parkingArea }}</p>
                     <a>{{ parkingDataForm[35].areaNum }}</a>
                   </div>
@@ -210,29 +318,47 @@
               <!-- 分区3 6小组 -->
               <ul class="a1_group3">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[36].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[36].parkingColor"
+                  >
                     <p>{{ parkingDataForm[36].parkingArea }}</p>
                     <a>{{ parkingDataForm[36].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[37].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[37].parkingColor"
+                  >
                     <p>{{ parkingDataForm[37].parkingArea }}</p>
                     <a>{{ parkingDataForm[37].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[38].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[38].parkingColor"
+                  >
                     <p>{{ parkingDataForm[38].parkingArea }}</p>
                     <a>{{ parkingDataForm[38].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[39].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[39].parkingColor"
+                  >
                     <p>{{ parkingDataForm[39].parkingArea }}</p>
                     <a>{{ parkingDataForm[39].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[40].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[40].parkingColor"
+                  >
                     <p>{{ parkingDataForm[40].parkingArea }}</p>
                     <a>{{ parkingDataForm[40].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[41].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[41].parkingColor"
+                  >
                     <p>{{ parkingDataForm[41].parkingArea }}</p>
                     <a>{{ parkingDataForm[41].areaNum }}</a>
                   </div>
@@ -241,29 +367,47 @@
               <!-- 分区4 6小组 -->
               <ul class="a1_group4">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[42].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[42].parkingColor"
+                  >
                     <p>{{ parkingDataForm[42].parkingArea }}</p>
                     <a>{{ parkingDataForm[42].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[43].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[43].parkingColor"
+                  >
                     <p>{{ parkingDataForm[43].parkingArea }}</p>
                     <a>{{ parkingDataForm[43].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[44].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[44].parkingColor"
+                  >
                     <p>{{ parkingDataForm[44].parkingArea }}</p>
                     <a>{{ parkingDataForm[44].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[45].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[45].parkingColor"
+                  >
                     <p>{{ parkingDataForm[45].parkingArea }}</p>
                     <a>{{ parkingDataForm[45].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[46].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[46].parkingColor"
+                  >
                     <p>{{ parkingDataForm[46].parkingArea }}</p>
                     <a>{{ parkingDataForm[46].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[47].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[47].parkingColor"
+                  >
                     <p>{{ parkingDataForm[47].parkingArea }}</p>
                     <a>{{ parkingDataForm[47].areaNum }}</a>
                   </div>
@@ -278,29 +422,47 @@
               <!-- 分区3 6小组 -->
               <ul class="a1_group1">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[48].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[48].parkingColor"
+                  >
                     <p>{{ parkingDataForm[48].parkingArea }}</p>
                     <a>{{ parkingDataForm[48].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[49].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[49].parkingColor"
+                  >
                     <p>{{ parkingDataForm[49].parkingArea }}</p>
                     <a>{{ parkingDataForm[49].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[50].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[50].parkingColor"
+                  >
                     <p>{{ parkingDataForm[50].parkingArea }}</p>
                     <a>{{ parkingDataForm[50].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[51].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[51].parkingColor"
+                  >
                     <p>{{ parkingDataForm[51].parkingArea }}</p>
                     <a>{{ parkingDataForm[51].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[52].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[52].parkingColor"
+                  >
                     <p>{{ parkingDataForm[52].parkingArea }}</p>
                     <a>{{ parkingDataForm[52].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[53].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[53].parkingColor"
+                  >
                     <p>{{ parkingDataForm[53].parkingArea }}</p>
                     <a>{{ parkingDataForm[53].areaNum }}</a>
                   </div>
@@ -309,29 +471,47 @@
               <!-- 分区2 6小组 -->
               <ul class="a1_group2">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[54].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[54].parkingColor"
+                  >
                     <p>{{ parkingDataForm[54].parkingArea }}</p>
                     <a>{{ parkingDataForm[54].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[55].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[55].parkingColor"
+                  >
                     <p>{{ parkingDataForm[55].parkingArea }}</p>
                     <a>{{ parkingDataForm[55].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[56].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[56].parkingColor"
+                  >
                     <p>{{ parkingDataForm[56].parkingArea }}</p>
                     <a>{{ parkingDataForm[56].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[57].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[57].parkingColor"
+                  >
                     <p>{{ parkingDataForm[57].parkingArea }}</p>
                     <a>{{ parkingDataForm[57].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[58].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[58].parkingColor"
+                  >
                     <p>{{ parkingDataForm[58].parkingArea }}</p>
                     <a>{{ parkingDataForm[58].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[59].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[59].parkingColor"
+                  >
                     <p>{{ parkingDataForm[59].parkingArea }}</p>
                     <a>{{ parkingDataForm[59].areaNum }}</a>
                   </div>
@@ -340,29 +520,47 @@
               <!-- 分区3 6小组 -->
               <ul class="a1_group3">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[60].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[60].parkingColor"
+                  >
                     <p>{{ parkingDataForm[60].parkingArea }}</p>
                     <a>{{ parkingDataForm[60].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[61].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[61].parkingColor"
+                  >
                     <p>{{ parkingDataForm[61].parkingArea }}</p>
                     <a>{{ parkingDataForm[61].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[62].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[62].parkingColor"
+                  >
                     <p>{{ parkingDataForm[62].parkingArea }}</p>
                     <a>{{ parkingDataForm[62].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[63].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[63].parkingColor"
+                  >
                     <p>{{ parkingDataForm[63].parkingArea }}</p>
                     <a>{{ parkingDataForm[63].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[64].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[64].parkingColor"
+                  >
                     <p>{{ parkingDataForm[64].parkingArea }}</p>
                     <a>{{ parkingDataForm[64].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[65].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[65].parkingColor"
+                  >
                     <p>{{ parkingDataForm[65].parkingArea }}</p>
                     <a>{{ parkingDataForm[65].areaNum }}</a>
                   </div>
@@ -371,29 +569,47 @@
               <!-- 分区4 6小组 -->
               <ul class="a1_group4">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[60].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[60].parkingColor"
+                  >
                     <p>{{ parkingDataForm[60].parkingArea }}</p>
                     <a>{{ parkingDataForm[60].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[67].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[67].parkingColor"
+                  >
                     <p>{{ parkingDataForm[67].parkingArea }}</p>
                     <a>{{ parkingDataForm[67].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[68].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[68].parkingColor"
+                  >
                     <p>{{ parkingDataForm[68].parkingArea }}</p>
                     <a>{{ parkingDataForm[68].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[69].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[69].parkingColor"
+                  >
                     <p>{{ parkingDataForm[69].parkingArea }}</p>
                     <a>{{ parkingDataForm[69].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[70].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[70].parkingColor"
+                  >
                     <p>{{ parkingDataForm[70].parkingArea }}</p>
                     <a>{{ parkingDataForm[70].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[71].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[71].parkingColor"
+                  >
                     <p>{{ parkingDataForm[71].parkingArea }}</p>
                     <a>{{ parkingDataForm[71].areaNum }}</a>
                   </div>
@@ -412,29 +628,47 @@
               <!-- 分区1 6小组 -->
               <ul class="a1_group1">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[72].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[72].parkingColor"
+                  >
                     <p>{{ parkingDataForm[72].parkingArea }}</p>
                     <a>{{ parkingDataForm[72].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[73].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[73].parkingColor"
+                  >
                     <p>{{ parkingDataForm[73].parkingArea }}</p>
                     <a>{{ parkingDataForm[73].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[74].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[74].parkingColor"
+                  >
                     <p>{{ parkingDataForm[74].parkingArea }}</p>
                     <a>{{ parkingDataForm[74].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[75].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[75].parkingColor"
+                  >
                     <p>{{ parkingDataForm[75].parkingArea }}</p>
                     <a>{{ parkingDataForm[75].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[76].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[76].parkingColor"
+                  >
                     <p>{{ parkingDataForm[76].parkingArea }}</p>
                     <a>{{ parkingDataForm[76].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[77].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[77].parkingColor"
+                  >
                     <p>{{ parkingDataForm[77].parkingArea }}</p>
                     <a>{{ parkingDataForm[77].areaNum }}</a>
                   </div>
@@ -443,29 +677,47 @@
               <!-- 分区2 6小组 -->
               <ul class="a1_group2">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[78].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[78].parkingColor"
+                  >
                     <p>{{ parkingDataForm[78].parkingArea }}</p>
                     <a>{{ parkingDataForm[78].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[79].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[79].parkingColor"
+                  >
                     <p>{{ parkingDataForm[79].parkingArea }}</p>
                     <a>{{ parkingDataForm[79].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[80].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[80].parkingColor"
+                  >
                     <p>{{ parkingDataForm[80].parkingArea }}</p>
                     <a>{{ parkingDataForm[80].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[81].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[81].parkingColor"
+                  >
                     <p>{{ parkingDataForm[81].parkingArea }}</p>
                     <a>{{ parkingDataForm[81].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[82].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[82].parkingColor"
+                  >
                     <p>{{ parkingDataForm[82].parkingArea }}</p>
                     <a>{{ parkingDataForm[82].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[83].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[83].parkingColor"
+                  >
                     <p>{{ parkingDataForm[83].parkingArea }}</p>
                     <a>{{ parkingDataForm[83].areaNum }}</a>
                   </div>
@@ -474,29 +726,47 @@
               <!-- 分区3 6小组 -->
               <ul class="a1_group3">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[84].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[84].parkingColor"
+                  >
                     <p>{{ parkingDataForm[84].parkingArea }}</p>
                     <a>{{ parkingDataForm[84].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[85].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[85].parkingColor"
+                  >
                     <p>{{ parkingDataForm[85].parkingArea }}</p>
                     <a>{{ parkingDataForm[85].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[86].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[86].parkingColor"
+                  >
                     <p>{{ parkingDataForm[86].parkingArea }}</p>
                     <a>{{ parkingDataForm[86].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[87].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[87].parkingColor"
+                  >
                     <p>{{ parkingDataForm[87].parkingArea }}</p>
                     <a>{{ parkingDataForm[87].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[88].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[88].parkingColor"
+                  >
                     <p>{{ parkingDataForm[88].parkingArea }}</p>
                     <a>{{ parkingDataForm[88].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[89].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[89].parkingColor"
+                  >
                     <p>{{ parkingDataForm[89].parkingArea }}</p>
                     <a>{{ parkingDataForm[89].areaNum }}</a>
                   </div>
@@ -505,29 +775,47 @@
               <!-- 分区4 6小组 -->
               <ul class="a1_group4">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[90].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[90].parkingColor"
+                  >
                     <p>{{ parkingDataForm[90].parkingArea }}</p>
                     <a>{{ parkingDataForm[90].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[91].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[91].parkingColor"
+                  >
                     <p>{{ parkingDataForm[91].parkingArea }}</p>
                     <a>{{ parkingDataForm[91].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[92].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[92].parkingColor"
+                  >
                     <p>{{ parkingDataForm[92].parkingArea }}</p>
                     <a>{{ parkingDataForm[92].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[93].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[93].parkingColor"
+                  >
                     <p>{{ parkingDataForm[93].parkingArea }}</p>
                     <a>{{ parkingDataForm[93].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[94].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[94].parkingColor"
+                  >
                     <p>{{ parkingDataForm[94].parkingArea }}</p>
                     <a>{{ parkingDataForm[94].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[95].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[95].parkingColor"
+                  >
                     <p>{{ parkingDataForm[95].parkingArea }}</p>
                     <a>{{ parkingDataForm[95].areaNum }}</a>
                   </div>
@@ -542,29 +830,47 @@
               <!-- 分区2 6小组 -->
               <ul class="a1_group1">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[96].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[96].parkingColor"
+                  >
                     <p>{{ parkingDataForm[96].parkingArea }}</p>
                     <a>{{ parkingDataForm[96].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[97].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[97].parkingColor"
+                  >
                     <p>{{ parkingDataForm[97].parkingArea }}</p>
                     <a>{{ parkingDataForm[97].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[98].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[98].parkingColor"
+                  >
                     <p>{{ parkingDataForm[98].parkingArea }}</p>
                     <a>{{ parkingDataForm[98].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[99].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[99].parkingColor"
+                  >
                     <p>{{ parkingDataForm[99].parkingArea }}</p>
                     <a>{{ parkingDataForm[99].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[100].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[100].parkingColor"
+                  >
                     <p>{{ parkingDataForm[100].parkingArea }}</p>
                     <a>{{ parkingDataForm[100].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[101].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[101].parkingColor"
+                  >
                     <p>{{ parkingDataForm[101].parkingArea }}</p>
                     <a>{{ parkingDataForm[101].areaNum }}</a>
                   </div>
@@ -573,29 +879,47 @@
               <!-- 分区2 6小组 -->
               <ul class="a1_group2">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[102].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[102].parkingColor"
+                  >
                     <p>{{ parkingDataForm[102].parkingArea }}</p>
                     <a>{{ parkingDataForm[102].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[103].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[103].parkingColor"
+                  >
                     <p>{{ parkingDataForm[103].parkingArea }}</p>
                     <a>{{ parkingDataForm[103].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[104].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[104].parkingColor"
+                  >
                     <p>{{ parkingDataForm[104].parkingArea }}</p>
                     <a>{{ parkingDataForm[104].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[105].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[105].parkingColor"
+                  >
                     <p>{{ parkingDataForm[105].parkingArea }}</p>
                     <a>{{ parkingDataForm[105].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[106].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[106].parkingColor"
+                  >
                     <p>{{ parkingDataForm[106].parkingArea }}</p>
                     <a>{{ parkingDataForm[106].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[107].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[107].parkingColor"
+                  >
                     <p>{{ parkingDataForm[107].parkingArea }}</p>
                     <a>{{ parkingDataForm[107].areaNum }}</a>
                   </div>
@@ -604,29 +928,47 @@
               <!-- 分区3 6小组 -->
               <ul class="a1_group3">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[108].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[108].parkingColor"
+                  >
                     <p>{{ parkingDataForm[108].parkingArea }}</p>
                     <a>{{ parkingDataForm[108].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[109].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[109].parkingColor"
+                  >
                     <p>{{ parkingDataForm[109].parkingArea }}</p>
                     <a>{{ parkingDataForm[109].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[110].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[110].parkingColor"
+                  >
                     <p>{{ parkingDataForm[110].parkingArea }}</p>
                     <a>{{ parkingDataForm[110].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[111].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[111].parkingColor"
+                  >
                     <p>{{ parkingDataForm[111].parkingArea }}</p>
                     <a>{{ parkingDataForm[111].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[112].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[112].parkingColor"
+                  >
                     <p>{{ parkingDataForm[112].parkingArea }}</p>
                     <a>{{ parkingDataForm[112].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[113].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[113].parkingColor"
+                  >
                     <p>{{ parkingDataForm[113].parkingArea }}</p>
                     <a>{{ parkingDataForm[113].areaNum }}</a>
                   </div>
@@ -635,29 +977,47 @@
               <!-- 分区4 6小组 -->
               <ul class="a1_group4">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[114].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[114].parkingColor"
+                  >
                     <p>{{ parkingDataForm[114].parkingArea }}</p>
                     <a>{{ parkingDataForm[114].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[115].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[115].parkingColor"
+                  >
                     <p>{{ parkingDataForm[115].parkingArea }}</p>
                     <a>{{ parkingDataForm[115].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[116].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[116].parkingColor"
+                  >
                     <p>{{ parkingDataForm[116].parkingArea }}</p>
                     <a>{{ parkingDataForm[116].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[117].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[117].parkingColor"
+                  >
                     <p>{{ parkingDataForm[117].parkingArea }}</p>
                     <a>{{ parkingDataForm[117].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[118].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[118].parkingColor"
+                  >
                     <p>{{ parkingDataForm[118].parkingArea }}</p>
                     <a>{{ parkingDataForm[118].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[119].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[119].parkingColor"
+                  >
                     <p>{{ parkingDataForm[119].parkingArea }}</p>
                     <a>{{ parkingDataForm[119].areaNum }}</a>
                   </div>
@@ -672,29 +1032,47 @@
               <!-- 分区3 6小组 -->
               <ul class="a1_group1">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[120].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[120].parkingColor"
+                  >
                     <p>{{ parkingDataForm[120].parkingArea }}</p>
                     <a>{{ parkingDataForm[120].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[121].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[121].parkingColor"
+                  >
                     <p>{{ parkingDataForm[121].parkingArea }}</p>
                     <a>{{ parkingDataForm[121].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[122].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[122].parkingColor"
+                  >
                     <p>{{ parkingDataForm[122].parkingArea }}</p>
                     <a>{{ parkingDataForm[122].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[123].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[123].parkingColor"
+                  >
                     <p>{{ parkingDataForm[123].parkingArea }}</p>
                     <a>{{ parkingDataForm[123].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[124].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[124].parkingColor"
+                  >
                     <p>{{ parkingDataForm[124].parkingArea }}</p>
                     <a>{{ parkingDataForm[124].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[125].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[125].parkingColor"
+                  >
                     <p>{{ parkingDataForm[125].parkingArea }}</p>
                     <a>{{ parkingDataForm[125].areaNum }}</a>
                   </div>
@@ -703,29 +1081,47 @@
               <!-- 分区2 6小组 -->
               <ul class="a1_group2">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[126].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[126].parkingColor"
+                  >
                     <p>{{ parkingDataForm[126].parkingArea }}</p>
                     <a>{{ parkingDataForm[126].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[127].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[127].parkingColor"
+                  >
                     <p>{{ parkingDataForm[127].parkingArea }}</p>
                     <a>{{ parkingDataForm[127].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[128].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[128].parkingColor"
+                  >
                     <p>{{ parkingDataForm[128].parkingArea }}</p>
                     <a>{{ parkingDataForm[128].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[129].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[129].parkingColor"
+                  >
                     <p>{{ parkingDataForm[129].parkingArea }}</p>
                     <a>{{ parkingDataForm[129].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[130].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[130].parkingColor"
+                  >
                     <p>{{ parkingDataForm[130].parkingArea }}</p>
                     <a>{{ parkingDataForm[130].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[131].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[131].parkingColor"
+                  >
                     <p>{{ parkingDataForm[131].parkingArea }}</p>
                     <a>{{ parkingDataForm[131].areaNum }}</a>
                   </div>
@@ -734,29 +1130,47 @@
               <!-- 分区3 6小组 -->
               <ul class="a1_group3">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[132].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[132].parkingColor"
+                  >
                     <p>{{ parkingDataForm[132].parkingArea }}</p>
                     <a>{{ parkingDataForm[132].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[133].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[133].parkingColor"
+                  >
                     <p>{{ parkingDataForm[133].parkingArea }}</p>
                     <a>{{ parkingDataForm[133].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[134].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[134].parkingColor"
+                  >
                     <p>{{ parkingDataForm[134].parkingArea }}</p>
                     <a>{{ parkingDataForm[134].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[135].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[135].parkingColor"
+                  >
                     <p>{{ parkingDataForm[135].parkingArea }}</p>
                     <a>{{ parkingDataForm[135].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[136].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[136].parkingColor"
+                  >
                     <p>{{ parkingDataForm[136].parkingArea }}</p>
                     <a>{{ parkingDataForm[136].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[137].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[137].parkingColor"
+                  >
                     <p>{{ parkingDataForm[137].parkingArea }}</p>
                     <a>{{ parkingDataForm[137].areaNum }}</a>
                   </div>
@@ -765,29 +1179,47 @@
               <!-- 分区4 6小组 -->
               <ul class="a1_group4">
                 <li class="a1_1">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[138].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[138].parkingColor"
+                  >
                     <p>{{ parkingDataForm[138].parkingArea }}</p>
                     <a>{{ parkingDataForm[138].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[139].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[139].parkingColor"
+                  >
                     <p>{{ parkingDataForm[139].parkingArea }}</p>
                     <a>{{ parkingDataForm[139].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[140].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[140].parkingColor"
+                  >
                     <p>{{ parkingDataForm[140].parkingArea }}</p>
                     <a>{{ parkingDataForm[140].areaNum }}</a>
                   </div>
                 </li>
                 <li class="a1_2">
-                  <div class="a1_1p" v-bind:id="parkingDataForm[141].color">
+                  <div
+                    class="a1_1p"
+                    v-bind:id="parkingDataForm[141].parkingColor"
+                  >
                     <p>{{ parkingDataForm[141].parkingArea }}</p>
                     <a>{{ parkingDataForm[141].areaNum }}</a>
                   </div>
-                  <div class="a1_2p" v-bind:id="parkingDataForm[142].color">
+                  <div
+                    class="a1_2p"
+                    v-bind:id="parkingDataForm[142].parkingColor"
+                  >
                     <p>{{ parkingDataForm[142].parkingArea }}</p>
                     <a>{{ parkingDataForm[142].areaNum }}</a>
                   </div>
-                  <div class="a1_3p" v-bind:id="parkingDataForm[143].color">
+                  <div
+                    class="a1_3p"
+                    v-bind:id="parkingDataForm[143].parkingColor"
+                  >
                     <p>{{ parkingDataForm[143].parkingArea }}</p>
                     <a>{{ parkingDataForm[143].areaNum }}</a>
                   </div>
@@ -829,7 +1261,7 @@
             <template slot="label">
               <el-tag type="primary"> 车库总车辆 </el-tag>
             </template>
-            216
+            192
           </el-descriptions-item>
 
           <el-descriptions-item>
@@ -909,6 +1341,7 @@
 export default {
   data() {
     return {
+      token: "",
       lastNum: "",
       editVisible: false,
       deletVisible: false,
@@ -928,54 +1361,18 @@ export default {
       addDialogVisible: false,
       editDialogVisible: false,
       parking_coditon: {
-        rentedNum: "1",
-        unrentNum: "2",
-        tempNum: "11",
-        unTempNum: "122",
+        rentedNum: "",
+        unrentNum: "",
+        tempNum: "",
+        unTempNum: "",
       },
       // 加载的车库情况表单数据
       parkingDataForm: [
         {
-          parkingArea: "a1",
-          areaNum: "1",
+          parkingArea: "",
           carNumber: "",
-          color: "p_red",
-          status: "0",
-        },
-        {
-          parkingArea: "a1",
-          areaNum: "2",
-          carNumber: "",
-          color: "p_red",
-          status: "1",
-        },
-        {
-          parkingArea: "a1",
-          areaNum: "3",
-          carNumber: "",
-          color: "p_red",
-          status: "2",
-        },
-        {
-          parkingArea: "a1",
-          areaNum: "4",
-          carNumber: "",
-          color: "p_gray",
-          status: "3",
-        },
-        {
-          parkingArea: "a1",
-          areaNum: "5",
-          carNumber: "",
-          color: "p_yellow",
-          status: "3",
-        },
-        {
-          parkingArea: "a1",
-          areaNum: "6",
-          carNumber: "",
-          color: "p_green",
-          status: "3",
+          parkingColor: "",
+          status: "",
         },
       ],
     };
@@ -1027,6 +1424,9 @@ export default {
           },
         }).then(
           (res) => {
+            //token 刷新
+            let thetoken = localStorage.getItem("token");
+            localStorage.setItem("token", thetoken);
             console.log(res);
             if (res.data.code == 200) {
               this.openLoading().close();
@@ -1076,6 +1476,7 @@ export default {
         console.log(carNumber);
         // this.$http.get(this.api + "enterDoor",{params:{carNumber:ssss}
         // }).
+
         this.$http({
           method: "get",
           url: this.api + "exitDoor",
@@ -1084,6 +1485,9 @@ export default {
           },
         }).then(
           (res) => {
+            //token 刷新
+            let thetoken = localStorage.getItem("token");
+            localStorage.setItem("token", thetoken);
             console.log(res);
             this.deletVisible = false;
             console.log(res);
@@ -1125,27 +1529,59 @@ export default {
       return "";
     },
     fetch() {
+      this.token = localStorage.getItem("token");
+      console.log(this.token);
       this.openLoading();
-      this.$http.get(this.api + "getAll").then((res) => {
-        this.openLoading().close();
-        // this.openLoading().close()
-        //console.log(res.data.data)
-        console.log(res.data.data);
-        const box = res.data.data;
-        var pDataForm = JSON.parse(box);
-        //console.log(pDataForm.parking_coditon);
-        //console.log(pDataForm.parkingDataForm);
-        this.parkingDataForm = pDataForm.parkingDataForm;
-        // console.log(this.parkingDataForm);
-        this.lastNum =
-          216 -
-          Number(pDataForm.parking_coditon.rentedNum) -
-          Number(pDataForm.parking_coditon.tempNum);
-        this.parking_coditon = pDataForm.parking_coditon;
 
-        // console.log(this.tableData)
-        this.searchData = this.tableData;
-      });
+      // this.$http.get(this.api + "getAll").then((res) => {
+      //   this.openLoading().close();
+      //   // this.openLoading().close()
+      //   //console.log(res.data.data)
+      //   console.log(res);
+      //   // const box = res.data.data;
+      //   var pDataForm = res.data.data;
+      //   //console.log(pDataForm.parking_coditon);
+      //   //console.log(pDataForm.parkingDataForm);
+      //   this.parkingDataForm = pDataForm.parkingDataForm;
+      //   // console.log(this.parkingDataForm);
+      //   this.lastNum =
+      //     192 -
+      //     Number(pDataForm.parking_coditon.rentedNum) -
+      //     Number(pDataForm.parking_coditon.tempNum);
+      //   this.parking_coditon = pDataForm.parking_coditon;
+      //   // console.log(this.tableData)
+      //   this.searchData = this.tableData;
+      // });
+
+      this.$http({
+        method: "get",
+        url: this.api + "getAll",
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+        },
+      }).then(
+        (res) => {
+          //token 刷新
+          let thetoken = localStorage.getItem("token");
+          localStorage.setItem("token", thetoken);
+          this.openLoading().close();
+          const box = res.data.data;
+          var pDataForm = JSON.parse(box);
+          this.parkingDataForm = pDataForm.parkingDataForm;
+          console.log(pDataForm.parkingDataForm);
+          // console.log(this.parkingDataForm);
+          this.lastNum =
+            192 -
+            Number(pDataForm.parking_coditon.rentedNum) -
+            Number(pDataForm.parking_coditon.tempNum);
+          this.parking_coditon = pDataForm.parking_coditon;
+          // console.log(this.tableData)
+          this.searchData = this.tableData;
+        },
+        (error) => {
+          console.log("error");
+        }
+      );
     },
 
     // 监听页码值改变的事件

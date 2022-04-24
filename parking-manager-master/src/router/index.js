@@ -21,6 +21,8 @@ import SwitchOut from '../components/client/SwitchOut.vue'
 import Record from '../components/client/Record.vue'
 Vue.use(VueRouter)
 
+
+
 const routes = [
 
     // {
@@ -33,63 +35,78 @@ const routes = [
     },
     {
         path: '/login',
-        component: Login
+        component: Login,
+        name:'Login'
     },
     {
         path: '/regist',
-        component: Regist
+        component: Regist,
+        name:'Regist'
     },
     {
         path: '/home',
         component: Home,
         redirect: '/allgarageinfo',
+        meta:{authRequired:true},
         children: [{
                 path: '/welcome',
-                component: Welcome
+                component: Welcome,
+                name:'Welcome'
             },
             {
                 path: '/userInfo',
-                component: UserInfo
+                component: UserInfo,
+                name:'UserInfo'
             },
             {
                 path: '/allgarageinfo',
-                component: AllGarageInfo
+                component: AllGarageInfo,
+                name:'AllGarageInfo'
             },
             {
                 path: '/outInfo',
-                component: OutInfo
+                component: OutInfo,
+                name:'OutInfo'
             }, {
                 path: '/clientList',
-                component: ClientList
+                component: ClientList,
+                name:'ClientList'
             },
             {
                 path: '/clientAppli',
-                component: ClientAppli
+                component: ClientAppli,
+                name:'ClientAppli'
             },
             {
                 path: '/allGoodsInfo',
-                component: AllGoodsInfo
+                component: AllGoodsInfo,
+                name:'AllGoodsInfo'
 
             },
             {
                 path: '/appliOut',
-                component: AppliOut
+                component: AppliOut,
+                name:'AppliOut'
             },
             {
                 path: '/renterInfo',
-                component: RenterInfo
+                component: RenterInfo,
+                name:'RenterInfo'
             },
             {
                 path: '/tempOut',
-                component:TempOut
+                component:TempOut,
+                name:'TempOut'
             },
             {
                 path: '/switchOut',
-                component:SwitchOut
+                component:SwitchOut,
+                name:'SwitchOut'
             },
             {
                 path: '/record',
-                component:Record
+                component:Record,
+                name:'Record'
             }
         ]
     }
@@ -98,11 +115,10 @@ const routes = [
 const router = new VueRouter({
     routes
 })
-
-// 避免重复选择控制台报错
-const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push(location) {
-    return originalPush.call(this, location).catch(err => err)
-}
+router.beforeEach((to, from, next)=>{
+    const token =localStorage.getItem('token')
+    if(to.name!=='Login'&&!token) next({name:'Login'})
+    else next()
+})
 
 export default router

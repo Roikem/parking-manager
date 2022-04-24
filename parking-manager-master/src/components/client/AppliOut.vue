@@ -29,15 +29,15 @@
     </el-col>
   </el-form-item> -->
 
-        <el-form-item label="车位编号" prop="parkingId">
-          <el-input v-model="renderAddForm.parkingId"></el-input>
+        <el-form-item label="车位编号" prop="locate">
+          <el-input v-model="renderAddForm.locate"></el-input>
         </el-form-item>
-        <el-form-item label="车牌号" prop="car_id">
-          <el-input v-model="renderAddForm.car_id"></el-input>
+        <el-form-item label="车牌号" prop="carNumber">
+          <el-input v-model="renderAddForm.carNumber"></el-input>
         </el-form-item>
-        <el-form-item label="续租类型" prop="renderType">
+        <el-form-item label="续租类型" prop="leaseType">
           <el-select
-            v-model="renderAddForm.renderType"
+            v-model="renderAddForm.leaseType"
             placeholder="请选择续租类型"
           >
             <el-option label="月租" value="月租"></el-option>
@@ -74,24 +74,26 @@ export default {
   data() {
     return {
       renderAddForm: {
-        car_id: "",
+        carNumber: "",
         renderName: "",
         renderPlace: "",
-        renderType: "",
+        leaseType: "",
         telNumber: "",
-        parkingId: "",
+        locate: "",
       },
       postForm: {
-        car_id: "",
+        carNumber: "",
         renderName: "",
         renderPlace: "",
-        renderType: "",
+        leaseType: "",
         telNumber: "",
-        parkingId: "",
+        locate: "",
       },
       rules: {
-        car_id: [{ required: true, message: "请输入车牌号", trigger: "blur" }],
-        parkingId: [
+        carNumber: [
+          { required: true, message: "请输入车牌号", trigger: "blur" },
+        ],
+        locate: [
           { required: true, message: "请输入车位编号", trigger: "blur" },
         ],
         renderName: [
@@ -100,7 +102,7 @@ export default {
         telNumber: [
           { required: true, message: "请输入手机号", trigger: "blur" },
         ],
-        renderType: [
+        leaseType: [
           { required: true, message: "请选择出租类型", trigger: "blur" },
         ],
         renderPlace: [
@@ -111,19 +113,19 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.postForm.car_id = this.renderAddForm.car_id;
+      this.postForm.carNumber = this.renderAddForm.carNumber;
 
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // this.postForm.outboundTime = filter_date
-          this.postForm.parkingId = this.renderAddForm.parkingId;
+          this.postForm.locate = this.renderAddForm.locate;
           this.postForm.renderName = this.renderAddForm.renderName;
           this.postForm.telNumber = this.renderAddForm.telNumber;
           this.postForm.renderPlace = this.renderAddForm.renderPlace;
-          this.postForm.renderType = this.renderAddForm.renderType;
+          this.postForm.leaseType = this.renderAddForm.leaseType;
 
           console.log(this.postForm);
-          let comValue = this.$qs.stringify(this.postForm);
+          let comValue = this.$qs.parse(this.postForm);
           console.log(comValue);
 
           // console.log(this.postForm);
@@ -141,11 +143,12 @@ export default {
           // });
 
           this.$http({
+            headers: {
+              "Content-Type": "application/json",
+            },
             method: "post",
             url: this.api + "AddrentForm",
-            params: {
-              comValue,
-            },
+            data: comValue,
           }).then(
             (res) => {
               this.deletVisible = false;
