@@ -36,77 +36,79 @@ const routes = [
     {
         path: '/login',
         component: Login,
-        name:'Login'
+        name: 'Login'
     },
     {
         path: '/regist',
         component: Regist,
-        name:'Regist'
+        name: 'Regist'
     },
     {
         path: '/home',
         component: Home,
         redirect: '/allgarageinfo',
-        meta:{authRequired:true},
+        meta: {
+            authRequired: true
+        },
         children: [{
                 path: '/welcome',
                 component: Welcome,
-                name:'Welcome'
+                name: 'Welcome'
             },
             {
                 path: '/userInfo',
                 component: UserInfo,
-                name:'UserInfo'
+                name: 'UserInfo'
             },
             {
                 path: '/allgarageinfo',
                 component: AllGarageInfo,
-                name:'AllGarageInfo'
+                name: 'AllGarageInfo'
             },
             {
                 path: '/outInfo',
                 component: OutInfo,
-                name:'OutInfo'
+                name: 'OutInfo'
             }, {
                 path: '/clientList',
                 component: ClientList,
-                name:'ClientList'
+                name: 'ClientList'
             },
             {
                 path: '/clientAppli',
                 component: ClientAppli,
-                name:'ClientAppli'
+                name: 'ClientAppli'
             },
             {
                 path: '/allGoodsInfo',
                 component: AllGoodsInfo,
-                name:'AllGoodsInfo'
+                name: 'AllGoodsInfo'
 
             },
             {
                 path: '/appliOut',
                 component: AppliOut,
-                name:'AppliOut'
+                name: 'AppliOut'
             },
             {
                 path: '/renterInfo',
                 component: RenterInfo,
-                name:'RenterInfo'
+                name: 'RenterInfo'
             },
             {
                 path: '/tempOut',
-                component:TempOut,
-                name:'TempOut'
+                component: TempOut,
+                name: 'TempOut'
             },
             {
                 path: '/switchOut',
-                component:SwitchOut,
-                name:'SwitchOut'
+                component: SwitchOut,
+                name: 'SwitchOut'
             },
             {
                 path: '/record',
-                component:Record,
-                name:'Record'
+                component: Record,
+                name: 'Record'
             }
         ]
     }
@@ -115,9 +117,12 @@ const routes = [
 const router = new VueRouter({
     routes
 })
-router.beforeEach((to, from, next)=>{
-    const token =localStorage.getItem('token')
-    if(to.name!=='Login'&&!token) next({name:'Login'})
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('token')
+    if (to.name !== 'Login' && !token && to.name !== 'Regist') next({
+        name: 'Login'
+    })
+
     else next()
 })
 

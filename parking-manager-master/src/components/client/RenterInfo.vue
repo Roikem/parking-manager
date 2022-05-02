@@ -8,6 +8,26 @@
     </el-breadcrumb>
 
     <el-card>
+      <!-- 搜索框区 -->
+      <el-row :gutter="20">
+        <el-col :span="10">
+          <!-- <el-input placeholder="请输入内容" v-model="search"
+                       @input="submitFun"
+                       ref='searchInput' class="input-with-select">
+            <el-button slot="append" icon="el-icon-search"></el-button>
+          </el-input> -->
+
+          <el-input
+            placeholder="请输入车位编号、车牌号或手机号"
+            v-model="search"
+            @input="submitFun"
+            ref="searchInput"
+            onkeyup="this.value=this.value.toLowerCase()"
+          >
+            <el-button slot="append" icon="el-icon-search"></el-button
+          ></el-input>
+        </el-col>
+      </el-row>
       <el-table
         :data="tableData"
         border
@@ -65,6 +85,21 @@
         <el-table-column prop="days" label="剩余天数" :formatter="formatter">
         </el-table-column>
       </el-table>
+
+      <!-- 分页区 -->
+      <div class="block">
+        <!-- size-change在切换分页（如100页为一格）的时候触发，current-change在只要换页的时候就会触发 -->
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="queryInfo.pagenum"
+          :page-sizes="[10]"
+          :page-size="queryInfo.pagesize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="queryInfo.total"
+        ></el-pagination>
+      </div>
     </el-card>
     <!-- 修改信息对话框 -->
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
@@ -172,6 +207,13 @@
 export default {
   data() {
     return {
+      search: "",
+      queryInfo: {
+        query: "",
+        pagenum: 1,
+        pagesize: 10,
+        total: "",
+      },
       medium: "",
       reletVisible: false,
       editVisible: false,
@@ -245,17 +287,21 @@ export default {
   methods: {
     fetch() {
       this.openLoading();
-      this.$http.get(this.api + "getAllOwnerParking").then((res) => {
+      var listData = {};
+      listData.pageNum = this.queryInfo.pagenum;
+      listData.pageSize = 10;
+      let listRequest = this.$qs.stringify(listData);
+      this.$http.get(this.api + "RenderInfo?" + listRequest).then((res) => {
         this.openLoading().close();
         // this.openLoading().close()
         const box = res.data.data;
         var pDataForm = JSON.parse(box);
-        //用户信息
         console.log(pDataForm);
         //console.log(res.data.tableData);
-        this.tableData = pDataForm;
+        this.tableData = pDataForm.tableData;
         // console.log(this.tableData)
         this.searchData = this.tableData;
+        this.queryInfo.total = pDataForm.count;
       });
     },
 
@@ -302,6 +348,32 @@ export default {
         // this.searchData = this.tableData;
       });
     },
+    //分页栏
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    //  监听pagesize改变的事件
+    handleSizeChange(newSize) {
+      //console.log(newSize);
+      this.queryInfo.pagesize = newSize;
+      // 案例中是根据当前页面需要的数据数量来发起请求
+      //this.getUserList();
+      this.handleCurrentChange(this.queryInfo.pagenum);
+    },
+    // 监听页码值改变的事件
+    handleCurrentChange(currentPage) {
+      //   console.log(currentPage);
+      this.queryInfo.pagenum = currentPage;
+      this.currentChangePage(this.tableData, currentPage);
+      this.fetch();
+    },
+    currentChangePage(list, currentPage) {
+      let from = (currentPage - 1) * this.queryInfo.pagesize;
+      let to = currentPage * this.queryInfo.pagesize;
+
+      // console.log(list);
+    },
+
     //续租操作按钮
     reletBridge(scope) {
       this.scope = scope;
@@ -404,7 +476,21 @@ export default {
     formatter(row, column) {
       return row.days;
     },
-
+    submitFun() {
+      let search = this.search;
+      search.toLowerCase();
+      this.tempData = this.tableData.filter(function (tabledatas) {
+        // console.log('过滤', tabledatas);
+        let searchField = {
+          parking_id: tabledatas.parking_id,
+          telNumber: tabledatas.telNumber,
+          carNumber: tabledatas.carNumber,
+        };
+        return Object.keys(searchField).some(function (key) {
+          return String(tabledatas[key]).toLowerCase().indexOf(search) > -1;
+        });
+      });
+    },
     //编辑提交按钮
     onSubmit() {
       // console.log(this.editForm);

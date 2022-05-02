@@ -30,11 +30,11 @@
         </el-col>
       </el-row>
       <!-- 表格区 -->
-      <el-table :data="tempData" border :stripe="true">
+      <el-table :data="tableData" border :stripe="true">
         <el-table-column type="index"></el-table-column>
-        <el-table-column prop="parking_id" label="车位编号"></el-table-column>
-        <el-table-column prop="car_id" label="车牌号"></el-table-column>
-        <el-table-column prop="tel_number" label="手机号"></el-table-column>
+        <el-table-column prop="locate" label="车位编号"></el-table-column>
+        <el-table-column prop="carNumber" label="车牌号"></el-table-column>
+        <el-table-column prop="telNumber" label="手机号"></el-table-column>
         <!-- <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.state" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
@@ -99,69 +99,9 @@ export default {
       t1data: [],
       tableData: [
         {
-          parking_id: "a1_4",
-          car_id: "川A23231",
-          tel_number: "19999999999",
-        },
-        {
-          parking_id: "a1_5",
-          car_id: "川A24211",
-          tel_number: "17777777777",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_6",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_8",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_8",
-          car_id: "川A23211",
-          tel_number: "12222222223",
-        },
-        {
-          parking_id: "a1_8",
-          car_id: "川A23211",
-          tel_number: "12222222223",
+          locate: "a1_4",
+          carNumber: "川A23231",
+          telNumber: "19999999999",
         },
       ],
       queryInfo: {
@@ -196,9 +136,9 @@ export default {
       this.tempData = this.tableData.filter(function (tabledatas) {
         // console.log('过滤', tabledatas);
         let searchField = {
-          parking_id: tabledatas.parking_id,
-          tel_number: tabledatas.tel_number,
-          car_id: tabledatas.car_id,
+          locate: tabledatas.locate,
+          telNumber: tabledatas.telNumber,
+          carNumber: tabledatas.carNumber,
         };
         return Object.keys(searchField).some(function (key) {
           return String(tabledatas[key]).toLowerCase().indexOf(search) > -1;
@@ -222,13 +162,6 @@ export default {
     currentChangePage(list, currentPage) {
       let from = (currentPage - 1) * this.queryInfo.pagesize;
       let to = currentPage * this.queryInfo.pagesize;
-      this.tempData = [];
-      for (; from < to; from++) {
-        if (list[from]) {
-          this.tempData.push(list[from]);
-        }
-      }
-      // console.log(list);
     },
 
     // 监听添加用户表单的关闭事件并清除其中的数据
@@ -246,14 +179,14 @@ export default {
 
     //向后端申请数据 @rk---
     // {
-    //       parking_id: "",
-    //       car_id: "",
-    //       tel_number: "",
+    //       locate: "",
+    //       carNumber: "",
+    //       telNumber: "",
     //       company: "",
     //     },
     fetch() {
       //test
-      this.tempData = [];
+
       this.queryInfo.total = this.tableData.length;
       //console.log(this.queryInfo.total);
       // this.tabledata = this.getData;
@@ -266,9 +199,10 @@ export default {
       this.$http.get(this.api + "TempInfo").then((res) => {
         const box = res.data.data;
         var pDataForm = JSON.parse(box);
-        console.log(pDataForm[0]);
+        console.log(pDataForm);
+        this.queryInfo.total = pDataForm.count;
         this.openLoading().close();
-        // this.tableData = res.data.data;
+        this.tableData = pDataForm.carList;
         this.inintData();
       });
     },
@@ -280,18 +214,16 @@ export default {
       this.scope = scope;
       this.dialogVisible = true;
       let postValue = {
-        parking_id: "",
-        car_id: "",
+        carNumber: "",
       };
-      postValue.parking_id = scope.row.parking_id;
-      postValue.car_id = scope.row.car_id;
+      postValue.carNumber = scope.row.carNumber;
       // console.log(postValue);
       let costGet = this.$qs.stringify(postValue);
       this.openLoading();
       this.$http.get(this.api + "exitDoor?" + costGet).then((res) => {
         this.openLoading().close();
         // this.openLoading().close()
-        console.log(res.data.data);
+        console.log(res);
         const box1 = res.data.data;
         var pDataForm = JSON.parse(box1);
         //用户信息
@@ -311,17 +243,17 @@ export default {
       //  this.tableData.splice(scope.$index, 1)
       // this.inintData()
       let comValue = {
-        parking_id: "",
-        car_id: "",
+        locate: "",
+        carNumber: "",
       };
-      comValue.parking_id = scope.row.parking_id;
-      comValue.car_id = scope.row.car_id;
+      comValue.locate = scope.row.locate;
+      comValue.carNumber = scope.row.carNumber;
       //   console.log(comValue);
       let postinfo = this.$qs.stringify(comValue);
       // console.log(postinfo);
       // console.log(scope.row.userId)
       //console.log("出库的货物编码:",scope.row.goodsId)
-      //返回用户车位编号，后端根据parking_id进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
+      //返回用户车位编号，后端根据locate进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
 
       // this.$http
       //   .post(this.api + "user/delete?" + postinfo)

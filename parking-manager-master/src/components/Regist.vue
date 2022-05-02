@@ -35,15 +35,8 @@
           <el-radio v-model="loginForm.userSex" label="0">男</el-radio>
           <el-radio v-model="loginForm.userSex" label="1">女</el-radio>
         </el-form-item>
-        <el-form-item label="身份" prop="isManager">
-          <el-radio v-model="loginForm.isManager" label="0">客户</el-radio>
-          <el-radio v-model="loginForm.isManager" label="1">管理员</el-radio>
-        </el-form-item>
         <el-form-item label="电话" prop="userTel" style="width: 350px">
           <el-input v-model="loginForm.userTel" maxlength="11"></el-input>
-        </el-form-item>
-        <el-form-item label="公司" prop="company" style="width: 350px">
-          <el-input v-model="loginForm.company"></el-input>
         </el-form-item>
         <el-form-item label="设置账号" prop="userAccount" style="width: 350px">
           <el-input v-model="loginForm.userAccount"></el-input>
@@ -93,9 +86,6 @@ export default {
         userSex: "",
         userAccount: "",
         userName: "",
-        company: "",
-        isManager: "",
-        isManager: "",
         userTel: "",
         userAccount: "",
         userPassword1: "",
@@ -105,9 +95,7 @@ export default {
         userName: "",
         userSex: "",
         userAccount: "",
-        company: "",
         userPassword: "",
-        isManager: "",
         userTel: "",
       },
       rules: {
@@ -119,9 +107,6 @@ export default {
         ],
         userAccount: [
           { required: true, message: "请输入您想要的用户名", trigger: "blur" },
-        ],
-        company: [
-          { required: true, message: "请输入您的所在公司名", trigger: "blur" },
         ],
         userPassword1: [
           { required: true, message: "请输入密码", trigger: "blur" },
@@ -135,7 +120,6 @@ export default {
           },
         ],
         userSex: [{ required: true, message: "请选择性别", trigger: "blur" }],
-        isManager: [{ required: true, message: "请选择身份", trigger: "blur" }],
       },
     };
   },
@@ -160,9 +144,7 @@ export default {
           let psw_pro = this.$md5(psw);
           this.postForm.userName = this.loginForm.userName;
           this.postForm.userSex = this.loginForm.userSex;
-          this.postForm.isManager = this.loginForm.isManager;
           this.postForm.userTel = this.loginForm.userTel;
-          this.postForm.company = this.loginForm.company;
           this.postForm.userAccount = this.loginForm.userAccount;
           this.postForm.userPassword = psw_pro;
           //let comValue = JSON.stringify(this.postForm)
@@ -188,11 +170,8 @@ export default {
                 this.loginForm = {
                   userName: "",
                   userSex: "",
-                  isManager: "",
                   userTel: "",
-                  company: "",
                   userAccount: "",
-                  company: "",
                   userPassword1: "",
                   userPassword2: "",
                 };
@@ -216,7 +195,7 @@ export default {
 }
 .login_box {
   width: 450px;
-  height: 650px;
+  height: 550px;
   background-color: #fff;
   border-radius: 9px;
   position: absolute;

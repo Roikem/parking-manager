@@ -161,16 +161,12 @@ export default {
       // console.log(currentPage);
       this.queryInfo.pagenum = currentPage;
       this.currentChangePage(this.tableData, currentPage);
+      this.fetch();
     },
     currentChangePage(list, currentPage) {
       let from = (currentPage - 1) * this.queryInfo.pagesize;
       let to = currentPage * this.queryInfo.pagesize;
-      this.tempData = [];
-      for (; from < to; from++) {
-        if (list[from]) {
-          this.tempData.push(list[from]);
-        }
-      }
+
       // console.log(list);
     },
 
@@ -200,16 +196,22 @@ export default {
       this.queryInfo.total = this.tableData.length;
       //console.log(this.queryInfo.total);
       // this.tabledata = this.getData;
-      this.handleCurrentChange(1);
+      //this.handleCurrentChange(1);
       //分页bug
       //this.inintData();
 
       //启动执行 get
+      var listData = {};
+      listData.pageNum = this.queryInfo.pagenum;
+      listData.pageSize = 10;
+      let listRequest = this.$qs.stringify(listData);
+      console.log(listRequest);
       this.openLoading();
-      this.$http.get(this.api + "ReCord").then((res) => {
+      this.$http.get(this.api + "ReCord?" + listRequest).then((res) => {
         const box = res.data.data;
         var pDataForm = JSON.parse(box);
         this.tableData = pDataForm.tableData;
+        this.queryInfo.total = pDataForm.count;
         console.log(this.tableData);
         this.openLoading().close();
         this.inintData();
