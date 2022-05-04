@@ -122,7 +122,6 @@ export default {
           this.postForm.username = this.loginForm.username;
           let password = this.postForm.password;
           let username = this.postForm.username;
-
           let comValue = this.$qs.parse(this.postForm);
           console.log(comValue);
 
@@ -142,8 +141,6 @@ export default {
               if (res.data.code == 200) {
                 //Vue.prototype.token = res.data.data.token;
                 localStorage.setItem("token", res.data.data.token);
-                console.log(res);
-
                 this.$message({
                   message: "登陆成功",
                   type: "success",
@@ -159,15 +156,23 @@ export default {
                   type: "danger",
                 });
                 this.$refs.loginFormRef.resetFields();
+              } else {
+                this.$message({
+                  message: "无法访问到服务器",
+                  type: "danger",
+                });
               }
             },
             (error) => {
-              //console.log("error");
+              console.log(error.request);
+              this.$message({
+                message: "无法访问到服务器",
+                type: "danger",
+              });
               this.openLoading().close();
               // console.log(error);
             }
           );
-
           // this.$http
           //   .post(this.api + "login.do?" + comValue)
           //   .then((res) => {

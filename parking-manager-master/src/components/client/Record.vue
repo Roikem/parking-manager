@@ -10,31 +10,31 @@
     <!-- 卡片视图区 -->
     <el-card>
       <!-- 搜索框区 -->
-      <el-row :gutter="20">
-        <el-col :span="10">
-          <!-- <el-input placeholder="请输入内容" v-model="search"
-                       @input="submitFun"
-                       ref='searchInput' class="input-with-select">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input> -->
-
+      <el-form :inline="true" :model="search" class="demo-form-inline">
+        <el-form-item label="车位编号">
           <el-input
-            placeholder="请输入车位编号、车牌号或手机号"
-            v-model="search"
-            @input="submitFun"
-            ref="searchInput"
-            onkeyup="this.value=this.value.toLowerCase()"
-          >
-            <el-button slot="append" icon="el-icon-search"></el-button
+            v-model="formInline.locate"
+            placeholder="请输入车位编号"
           ></el-input>
-        </el-col>
-      </el-row>
+        </el-form-item>
+        <el-form-item label="车牌号">
+          <el-input
+            v-model="formInline.carNumber"
+            placeholder="请输入车牌号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="searchForm" icon="el-icon-search"
+            >查询</el-button
+          >
+        </el-form-item>
+      </el-form>
       <!-- 表格区 -->
       <el-table :data="tempData" border :stripe="true" ref="filterTable">
         <el-table-column type="index"></el-table-column>
-        <el-table-column prop="parking_id" label="车位编号"></el-table-column>
+        <el-table-column prop="locate" label="车位编号"></el-table-column>
         <el-table-column prop="carNumber" label="车牌号"></el-table-column>
-        <el-table-column prop="tel_number" label="手机号"></el-table-column>
+        <el-table-column prop="telNumber" label="手机号"></el-table-column>
         <!-- <el-table-column prop="state" label="状态">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.state" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
@@ -45,7 +45,7 @@
         <el-table-column label="出库时间" width="130" prop="leaveTime">
         </el-table-column>
         <el-table-column
-          prop="carTypeDesc"
+          prop="carType"
           label="车辆类型"
           width="100"
           :filters="[
@@ -57,9 +57,9 @@
         >
           <template slot-scope="scope">
             <el-tag
-              :type="scope.row.carTypeDesc === '长期车' ? 'primary' : 'success'"
+              :type="scope.row.carType === '长期车' ? 'primary' : 'success'"
               disable-transitions
-              >{{ scope.row.carTypeDesc }}</el-tag
+              >{{ scope.row.carType }}</el-tag
             >
           </template>
         </el-table-column>
@@ -98,6 +98,10 @@
 export default {
   data() {
     return {
+      formInline: {
+        locate: "",
+        carNumber: "",
+      },
       parking_cost: "",
       comValue: "",
       scope: "",
@@ -118,7 +122,6 @@ export default {
       // 添加用户的表单数据
     };
   },
-
   created: function () {
     // 获取后端数据后
     ///this.tableData=数据
@@ -139,14 +142,19 @@ export default {
       this.tempData = this.tableData.filter(function (tabledatas) {
         // console.log('过滤', tabledatas);
         let searchField = {
-          parking_id: tabledatas.parking_id,
-          tel_number: tabledatas.tel_number,
+          locate: tabledatas.locate,
+          telNumber: tabledatas.telNumber,
           carNumber: tabledatas.carNumber,
         };
         return Object.keys(searchField).some(function (key) {
           return String(tabledatas[key]).toLowerCase().indexOf(search) > -1;
         });
       });
+    },
+
+    //分页栏
+    handleClick(tab, event) {
+      console.log(tab, event);
     },
     //  监听pagesize改变的事件
     handleSizeChange(newSize) {
@@ -169,7 +177,6 @@ export default {
 
       // console.log(list);
     },
-
     // 监听添加用户表单的关闭事件并清除其中的数据
     addDialogClosed() {
       this.$refs.addFormRef.resetFields();
@@ -185,74 +192,92 @@ export default {
 
     //向后端申请数据 @rk---
     // {
-    //       parking_id: "",
+    //       locate: "",
     //       carNumber: "",
-    //       tel_number: "",
+    //       telNumber: "",
     //       company: "",
     //     },
     fetch() {
       //test
-      this.tempData = [];
-      this.queryInfo.total = this.tableData.length;
+      //this.queryInfo.total = this.tableData.length;
       //console.log(this.queryInfo.total);
       // this.tabledata = this.getData;
       //this.handleCurrentChange(1);
       //分页bug
       //this.inintData();
-
       //启动执行 get
+      this.openLoading();
       var listData = {};
       listData.pageNum = this.queryInfo.pagenum;
       listData.pageSize = 10;
       let listRequest = this.$qs.stringify(listData);
       console.log(listRequest);
-      this.openLoading();
-      this.$http.get(this.api + "ReCord?" + listRequest).then((res) => {
+      this.$http
+        .get(this.api + "ReCord?" + listRequest)
+        .then((res) => {
+          const box = res.data.data;
+          var pDataForm = JSON.parse(box);
+          this.tableData = pDataForm.tableData;
+          this.queryInfo.total = pDataForm.count;
+          console.log(res);
+          this.openLoading().close();
+          this.inintData();
+        })
+        .catch((error) => {
+          this.openLoading().close();
+          this.$message({
+            message: "长时间未操作，请重新登录",
+            type: "error",
+          });
+          this.$router.push("/login");
+        });
+    },
+    //修改信息  @rk---
+    //搜索操作
+    searchForm() {
+      var searchForm = {};
+      searchForm.locate = this.formInline.locate;
+      searchForm.carNumber = this.formInline.carNumber;
+      let listSearch = this.$qs.stringify(searchForm);
+      console.log(listSearch);
+      this.$http.get(this.api + "ReCord?" + listSearch).then((res) => {
         const box = res.data.data;
         var pDataForm = JSON.parse(box);
         this.tableData = pDataForm.tableData;
         this.queryInfo.total = pDataForm.count;
-        console.log(this.tableData);
+        console.log(res);
         this.openLoading().close();
         this.inintData();
       });
     },
-
-    //修改信息  @rk---
-
     //出库操作 @rk---
     deleteBridge(scope) {
       this.scope = scope;
       this.dialogVisible = true;
-
       this.parking_cost = 10;
     },
-
     //标签
-
     filterTag(value, row) {
-      return row.carTypeDesc === value;
+      return row.carType === value;
     },
     filterHandler(value, row, column) {
       const property = column["property"];
       return row[property] === value;
     },
-
     deleteData(scope) {
       //console.log("index的值是：",scope.$index)
       this.dialogVisible = false;
       //  this.tableData.splice(scope.$index, 1)
       // this.inintData()
       let comValue = {
-        parking_id: "",
+        locate: "",
       };
-      comValue.parking_id = scope.row.parking_id;
-
+      comValue.locate = scope.row.locate;
       let postinfo = this.$qs.stringify(comValue);
       // console.log(postinfo);
       // console.log(scope.row.userId)
       //console.log("出库的货物编码:",scope.row.goodsId)
-      //返回用户车位编号，后端根据parking_id进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
+      //返回用户车位编号，后端根据locate进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
 
       // this.$http
       //   .post(this.api + "user/delete?" + postinfo)

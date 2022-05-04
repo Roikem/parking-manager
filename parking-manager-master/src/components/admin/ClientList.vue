@@ -10,25 +10,25 @@
     <!-- 卡片视图区 -->
     <el-card>
       <!-- 搜索框区 -->
-      <el-row :gutter="20">
-        <el-col :span="10">
-          <!-- <el-input placeholder="请输入内容" v-model="search"
-                       @input="submitFun"
-                       ref='searchInput' class="input-with-select">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input> -->
-
+      <el-form :inline="true" :model="search" class="demo-form-inline">
+        <el-form-item label="车位编号">
           <el-input
-            placeholder="请输入车位编号、车牌号或手机号"
-            v-model="search"
-            @input="submitFun"
-            ref="searchInput"
-            onkeyup="this.value=this.value.toLowerCase()"
-          >
-            <el-button slot="append" icon="el-icon-search"></el-button
+            v-model="formInline.locate"
+            placeholder="请输入车位编号"
           ></el-input>
-        </el-col>
-      </el-row>
+        </el-form-item>
+        <el-form-item label="车牌号">
+          <el-input
+            v-model="formInline.carNumber"
+            placeholder="请输入车牌号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="searchForm" icon="el-icon-search"
+            >查询</el-button
+          >
+        </el-form-item>
+      </el-form>
       <!-- 表格区 -->
       <el-table :data="tableData" border :stripe="true">
         <el-table-column type="index"></el-table-column>
@@ -65,7 +65,7 @@
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="queryInfo.pagenum"
-          :page-sizes="[5, 10]"
+          :page-sizes="[10]"
           :page-size="queryInfo.pagesize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="queryInfo.total"
@@ -76,7 +76,9 @@
     <!-- 出库信息对话框 -->
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
       <span style="font-size: 17px; font-weight: 800"
-        >是否确定临时车辆出库（当前计费{{ parking_cost }}元）
+        >是否确定临时车辆出库（当前计费
+        <el-tag :type="primary" disable-transitions>{{ parking_cost }}元</el-tag
+        >）
       </span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -90,6 +92,10 @@
 export default {
   data() {
     return {
+      formInline: {
+        locate: "",
+        carNumber: "",
+      },
       parking_cost: "",
       comValue: "",
       scope: "",
@@ -97,13 +103,7 @@ export default {
       search: "",
       tempData: [],
       t1data: [],
-      tableData: [
-        {
-          locate: "a1_4",
-          carNumber: "川A23231",
-          telNumber: "19999999999",
-        },
-      ],
+      tableData: [],
       queryInfo: {
         query: "",
         pagenum: 1,
@@ -120,6 +120,7 @@ export default {
   created: function () {
     // 获取后端数据后
     ///this.tableData=数据
+    this.formInline = {};
     this.fetch();
   },
   methods: {
@@ -145,6 +146,11 @@ export default {
         });
       });
     },
+
+    //分页栏
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
     //  监听pagesize改变的事件
     handleSizeChange(newSize) {
       //console.log(newSize);
@@ -158,6 +164,7 @@ export default {
       //   console.log(currentPage);
       this.queryInfo.pagenum = currentPage;
       this.currentChangePage(this.tableData, currentPage);
+      this.fetch();
     },
     currentChangePage(list, currentPage) {
       let from = (currentPage - 1) * this.queryInfo.pagesize;
@@ -186,29 +193,63 @@ export default {
     //     },
     fetch() {
       //test
-
-      this.queryInfo.total = this.tableData.length;
+      //this.queryInfo.total = this.tableData.length;
       //console.log(this.queryInfo.total);
       // this.tabledata = this.getData;
-      this.handleCurrentChange(1);
+      //this.handleCurrentChange(1);
       //分页bug
       //this.inintData();
-
       //启动执行 get
+      var listData = {};
+      listData.pageNum = this.queryInfo.pagenum - 1;
+      listData.pageSize = 10;
+      let listRequest = this.$qs.stringify(listData);
+      console.log(listRequest);
       this.openLoading();
-      this.$http.get(this.api + "TempInfo").then((res) => {
+      this.$http
+        .get(this.api + "TempInfo?" + listRequest)
+        .then(
+          (res) => {
+            this.openLoading().close();
+            const box = res.data.data;
+            var pDataForm = JSON.parse(box);
+            console.log(res);
+            this.queryInfo.total = pDataForm.count;
+            this.tableData = pDataForm.tempList;
+            this.inintData();
+          },
+          (err) => {
+            console.log(err.response);
+          }
+        )
+        .catch((error) => {
+          this.openLoading().close();
+          this.$message({
+            message: "长时间未操作，请重新登录",
+            type: "error",
+          });
+          this.$router.push("/login");
+        });
+    },
+
+    //修改信息  @rk---
+    searchForm() {
+      var searchForm = {};
+      searchForm.locate = this.formInline.locate;
+      searchForm.carNumber = this.formInline.carNumber;
+      let listSearch = this.$qs.stringify(searchForm);
+      console.log(listSearch);
+      this.openLoading();
+      this.$http.get(this.api + "TempInfo?" + listSearch).then((res) => {
+        this.openLoading().close();
         const box = res.data.data;
         var pDataForm = JSON.parse(box);
         console.log(pDataForm);
         this.queryInfo.total = pDataForm.count;
-        this.openLoading().close();
-        this.tableData = pDataForm.carList;
+        this.tableData = pDataForm.tempList;
         this.inintData();
       });
     },
-
-    //修改信息  @rk---
-
     //出库操作 @rk---
     deleteBridge(scope) {
       this.scope = scope;
@@ -216,26 +257,26 @@ export default {
       let postValue = {
         carNumber: "",
       };
+      //postValue.locate = scope.row.locate;
       postValue.carNumber = scope.row.carNumber;
       // console.log(postValue);
       let costGet = this.$qs.stringify(postValue);
+      console.log(costGet);
       this.openLoading();
-      this.$http.get(this.api + "exitDoor?" + costGet).then((res) => {
-        this.openLoading().close();
-        // this.openLoading().close()
-        console.log(res);
-        const box1 = res.data.data;
-        var pDataForm = JSON.parse(box1);
-        //用户信息
-        // console.log(pDataForm.tableData);
-        //console.log(res.data.tableData);
-        this.tableData = pDataForm.tableData;
-        // console.log(this.tableData)
-        this.searchData = this.tableData;
-      });
-
-      //console.log(costGet);
-      this.parking_cost = 10;
+      this.$http
+        .get(this.api + "exitDoor?" + costGet)
+        .then((res) => {
+          this.openLoading().close();
+          // this.openLoading().close()
+          console.log(res);
+          const box1 = res.data.data;
+          var pDataForm = JSON.parse(box1);
+          this.parking_cost = pDataForm.cost;
+          // console.log(pDataForm);
+        })
+        .catch((error) => {
+          this.openLoading().close();
+        });
     },
     deleteData(scope) {
       //console.log("index的值是：",scope.$index)

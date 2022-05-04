@@ -1829,20 +1829,14 @@ export default {
         unTempNum: "",
       },
       // 加载的车库情况表单数据
-      parkingDataForm: [
-        {
-          parkingArea: "",
-          carNumber: "",
-          parkingColor: "",
-          status: "",
-        },
-      ],
+      parkingDataForm: [],
     };
   },
   created: function () {
     // 获取后端数据后
     ///this.tableData=数据
-    this.fetch();
+    this.confForm = {};
+    (this.confForm1 = {}), this.fetch();
     // //  console.log(this.tableData)
     //   this.total = this.tableData.length;
   },
@@ -1870,7 +1864,6 @@ export default {
           message: "请输入内容",
         });
       } else {
-        this.openLoading();
         //  console.log(this.confForm.carNumber);
         var carNumber = this.confForm.carNumber;
         // let srch = this.$qs.stringify(form1);
@@ -1878,6 +1871,7 @@ export default {
         this.editVisible = false;
         // this.$http.get(this.api + "enterDoor",{params:{carNumber:ssss}
         // }).
+        this.openLoading();
         this.$http({
           method: "get",
           url: this.api + "enterDoor",
@@ -1931,14 +1925,13 @@ export default {
           message: "请输入内容",
         });
       } else {
-        this.openLoading();
         //  console.log(this.confForm1.carNumber);
         var carNumber = this.confForm1.carNumber;
         // let srch = this.$qs.stringify(form1);
         console.log(carNumber);
         // this.$http.get(this.api + "enterDoor",{params:{carNumber:ssss}
         // }).
-
+        this.openLoading();
         this.$http({
           method: "get",
           url: this.api + "exitDoor",
@@ -1947,25 +1940,37 @@ export default {
           },
         }).then(
           (res) => {
+            this.openLoading().close();
             //token 刷新
             let thetoken = localStorage.getItem("token");
             localStorage.setItem("token", thetoken);
-            console.log(res);
+            const box = res.data.data;
+            var pDataForm = JSON.parse(box);
+            //  console.log(pDataForm);
             this.deletVisible = false;
-            console.log(res);
             {
-              this.$alert("停车收费" + res.data.data + "元", "车辆已出库", {
-                confirmButtonText: "确定",
-                callback: (action) => {
+              this.$confirm(
+                "停车收费    " + pDataForm.cost + "元",
+                "该车辆为临时车",
+                {
+                  confirmButtonText: "确定",
+                  type: "warning",
+                }
+              )
+                .then(() => {
                   this.$message({
                     type: "success ",
                     message: "车辆" + this.confForm1.carNumber + "已成功出库",
                   });
-                },
-              });
+                })
+                .catch(() => {
+                  this.$message({
+                    type: "info",
+                    message: "已取消出库",
+                  });
+                });
             }
             this.confForm1.carNumber = "";
-            this.openLoading().close();
           },
           (response) => {
             console.log(response.request);
@@ -1994,7 +1999,6 @@ export default {
       this.token = localStorage.getItem("token");
       console.log(this.token);
       this.openLoading();
-
       // this.$http.get(this.api + "getAll").then((res) => {
       //   this.openLoading().close();
       //   // this.openLoading().close()
@@ -2021,29 +2025,41 @@ export default {
         headers: {
           "Content-Type": "application/json;charset=UTF-8",
         },
-      }).then(
-        (res) => {
-          //token 刷新
-          let thetoken = localStorage.getItem("token");
-          localStorage.setItem("token", thetoken);
+      })
+        .then(
+          (res) => {
+            //token 刷新
+            let thetoken = localStorage.getItem("token");
+            localStorage.setItem("token", thetoken);
+            this.openLoading().close();
+            const box = res.data.data;
+            var pDataForm = JSON.parse(box);
+            this.parkingDataForm = pDataForm.parkingDataForm;
+            console.log(res.data.data);
+            console.log(
+              "----------------------------------------",
+              this.parkingDataForm.length
+            );
+            this.lastNum =
+              192 -
+              Number(pDataForm.parking_coditon.rentedNum) -
+              Number(pDataForm.parking_coditon.tempNum);
+            this.parking_coditon = pDataForm.parking_coditon;
+            // console.log(this.tableData)
+            this.searchData = this.tableData;
+          },
+          (error) => {
+            console.log("error");
+          }
+        )
+        .catch((error) => {
           this.openLoading().close();
-          const box = res.data.data;
-          var pDataForm = JSON.parse(box);
-          this.parkingDataForm = pDataForm.parkingDataForm;
-          console.log(res);
-          // console.log(this.parkingDataForm);
-          this.lastNum =
-            192 -
-            Number(pDataForm.parking_coditon.rentedNum) -
-            Number(pDataForm.parking_coditon.tempNum);
-          this.parking_coditon = pDataForm.parking_coditon;
-          // console.log(this.tableData)
-          this.searchData = this.tableData;
-        },
-        (error) => {
-          console.log("error");
-        }
-      );
+          this.$message({
+            message: "长时间未操作，请重新登录",
+            type: "error",
+          });
+          this.$router.push("/login");
+        });
     },
 
     // 监听页码值改变的事件

@@ -102,13 +102,40 @@ export default {
             (res) => {
               console.log(res);
               if (res.data.code == 200) {
+                this.tempAddForm = {};
+                this.$message({
+                  message: "临时车添加成功",
+                  type: "success",
+                });
                 this.openLoading().close();
               } else {
                 this.openLoading().close();
               }
             },
             (response) => {
-              console.log(response);
+              const box = response.request.response;
+              var pDataForm = JSON.parse(box);
+              console.log(pDataForm);
+              this.openLoading().close();
+              if (
+                pDataForm.msg ==
+                'telNumber 需要匹配正则表达式"^1[3|4|5|7|8]\\d{9}$"\n'
+              ) {
+                this.$message({
+                  message: "手机号码格式错误",
+                  type: "error",
+                });
+              } else if (pDataForm.msg == "carNumber 车牌号只可以是7位\n") {
+                this.$message({
+                  message: "车牌号格式错误",
+                  type: "error",
+                });
+              } else {
+                this.$message({
+                  message: "该车位不是临时停车位",
+                  type: "error",
+                });
+              }
             }
           );
 

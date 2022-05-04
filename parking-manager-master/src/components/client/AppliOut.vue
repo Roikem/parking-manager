@@ -124,9 +124,9 @@ export default {
           this.postForm.renderPlace = this.renderAddForm.renderPlace;
           this.postForm.leaseType = this.renderAddForm.leaseType;
 
-          console.log(this.postForm);
+          //console.log(this.postForm);
           let comValue = this.$qs.parse(this.postForm);
-          console.log(comValue);
+          // console.log(comValue);
 
           // console.log(this.postForm);
           // this.openLoading();
@@ -152,20 +152,27 @@ export default {
           }).then(
             (res) => {
               this.deletVisible = false;
-              console.log(res);
+              console.log(res.data.data.code);
               this.openLoading().close();
-              this.renderAddForm = [];
-              this.$message({
-                message: " 申请成功",
-                type: "success",
-              });
+              if (res.data.code == 200) {
+                this.renderAddForm = [];
+                this.$message({
+                  message: " 申请成功",
+                  type: "success",
+                });
+              } else if (res.data.code == 500) {
+                this.$message({
+                  message: "输入数据不规范",
+                  type: "error",
+                });
+              }
             },
             (error) => {
-              console.log(error.response);
+              console.log(error.response.data.code);
               this.openLoading().close();
               this.$message({
-                message: " 申请成功",
-                type: "success",
+                message: " 输入数据不规范",
+                type: "error",
               });
             }
           );

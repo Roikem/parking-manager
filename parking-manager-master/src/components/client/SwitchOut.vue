@@ -10,25 +10,19 @@
     <!-- 卡片视图区 -->
     <el-card>
       <!-- 搜索框区 -->
-      <el-row :gutter="20">
-        <el-col :span="10">
-          <!-- <el-input placeholder="请输入内容" v-model="search"
-                       @input="submitFun"
-                       ref='searchInput' class="input-with-select">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input> -->
-
+      <el-form :inline="true" :model="search" class="demo-form-inline">
+        <el-form-item label="车位编号">
           <el-input
-            placeholder="请输入车位编号、车位类型"
-            v-model="search"
-            @input="submitFun"
-            ref="searchInput"
-            onkeyup="this.value=this.value.toLowerCase()"
-          >
-            <el-button slot="append" icon="el-icon-search"></el-button
+            v-model="formInline.locate"
+            placeholder="请输入车位编号"
           ></el-input>
-        </el-col>
-      </el-row>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="searchForm" icon="el-icon-search"
+            >查询</el-button
+          >
+        </el-form-item>
+      </el-form>
 
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <div class="tables">
@@ -52,17 +46,7 @@
                 width="120"
                 sortable
               ></el-table-column>
-              <el-table-column
-                prop="status"
-                label="车位类型"
-                width="180"
-                :filters="[
-                  { text: '闲置临时车位', value: '闲置临时车位' },
-                  { text: '未出租车位', value: '未出租车位' },
-                ]"
-                :filter-method="filterTag"
-                filter-placement="bottom-end"
-              >
+              <el-table-column prop="status" label="车位类型" width="180">
                 <template slot-scope="scope">
                   <el-tag
                     :type="
@@ -99,9 +83,10 @@
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
                 :current-page="queryInfo.pagenum"
+                :pager-count="3"
                 :page-sizes="[10]"
                 :page-size="queryInfo.pagesize"
-                layout="total, sizes, prev, pager, next, jumper"
+                layout="total,prev, pager, next, jumper"
                 :total="queryInfo.total"
               ></el-pagination>
             </div>
@@ -185,6 +170,10 @@ require("echarts/lib/chart/pie");
 export default {
   data() {
     return {
+      formInline: {
+        locate: "",
+        carNumber: "",
+      },
       activeName: "first",
       reletVisible: false,
       parking_cost: "",
@@ -204,12 +193,7 @@ export default {
         tempNum: "",
         unTempNum: "",
       },
-      tableData: [
-        {
-          locate: "",
-          status: "",
-        },
-      ],
+      tableData: [],
       queryInfo: {
         query: "",
         pagenum: 1,
@@ -292,31 +276,42 @@ export default {
       //this.inintData();
 
       //启动执行 get
-      this.openLoading();
       var listData = {};
       listData.pageNum = this.queryInfo.pagenum;
       listData.pageSize = 10;
       let listRequest = this.$qs.stringify(listData);
-      console.log(listRequest);
-      this.$http.get(this.api + "SwitchInfo?" + listRequest).then((res) => {
-        const box = res.data.data;
-        var pDataForm = JSON.parse(box);
-        console.log(pDataForm);
-        this.openLoading().close();
-        this.tableData = pDataForm.tableData;
-        this.queryInfo.total = pDataForm.count;
-        this.parking_coditon = pDataForm.parking_coditon;
-        //  console.log(typeof this.parking_coditon.tempNum);
-        this.inintData();
-        this.echartsData.series[0].data[2].value =
-          this.parking_coditon.rentedNum;
-        this.echartsData.series[0].data[3].value =
-          this.parking_coditon.unrentNum;
-        this.echartsData.series[0].data[0].value = this.parking_coditon.tempNum;
-        this.echartsData.series[0].data[1].value =
-          this.parking_coditon.unTempNum;
-        this.init();
-      });
+      // console.log(listRequest);
+      this.openLoading();
+      this.$http
+        .get(this.api + "SwitchInfo?" + listRequest)
+        .then((res) => {
+          this.openLoading().close();
+          const box = res.data.data;
+          var pDataForm = JSON.parse(box);
+          console.log(pDataForm);
+          this.tableData = pDataForm.tableData;
+          this.queryInfo.total = pDataForm.count;
+          this.parking_coditon = pDataForm.parking_coditon;
+          //  console.log(typeof this.parking_coditon.tempNum);
+          this.inintData();
+          this.echartsData.series[0].data[2].value =
+            this.parking_coditon.rentedNum;
+          this.echartsData.series[0].data[3].value =
+            this.parking_coditon.unrentNum;
+          this.echartsData.series[0].data[0].value =
+            this.parking_coditon.tempNum;
+          this.echartsData.series[0].data[1].value =
+            this.parking_coditon.unTempNum;
+          this.init();
+        })
+        .catch((error) => {
+          this.openLoading().close();
+          this.$message({
+            message: "长时间未操作，请重新登录",
+            type: "error",
+          });
+          this.$router.push("/login");
+        });
     },
 
     init() {
@@ -391,7 +386,39 @@ export default {
     filterTag(value, row) {
       return row.status === value;
     },
-
+    //搜索操作
+    searchForm() {
+      var searchForm = {};
+      searchForm.locate = this.formInline.locate;
+      let listSearch = this.$qs.stringify(searchForm);
+      console.log(listSearch);
+      this.openLoading();
+      this.$http
+        .get(this.api + "SwitchInfo?" + listSearch)
+        .then((res) => {
+          this.openLoading().close();
+          const box = res.data.data;
+          var pDataForm = JSON.parse(box);
+          console.log(pDataForm);
+          this.tableData = pDataForm.tableData;
+          this.queryInfo.total = pDataForm.count;
+          this.parking_coditon = pDataForm.parking_coditon;
+          //  console.log(typeof this.parking_coditon.tempNum);
+          this.inintData();
+          this.echartsData.series[0].data[2].value =
+            this.parking_coditon.rentedNum;
+          this.echartsData.series[0].data[3].value =
+            this.parking_coditon.unrentNum;
+          this.echartsData.series[0].data[0].value =
+            this.parking_coditon.tempNum;
+          this.echartsData.series[0].data[1].value =
+            this.parking_coditon.unTempNum;
+          this.init();
+        })
+        .catch((error) => {
+          this.openLoading().close();
+        });
+    },
     //出库操作 @rk---
     deleteBridge(scope) {
       this.scope = scope;
@@ -408,9 +435,11 @@ export default {
       switchinfo.parkingId = this.switchForm.locate;
       let switchPost = this.$qs.stringify(switchinfo);
       console.log(switchPost);
+      this.openLoading();
       this.$http
         .get(this.api + "SwitchForm?" + switchPost)
         .then((res) => {
+          this.openLoading().close();
           console.log(res);
           this.$message({
             message: "操作成功1",
@@ -420,6 +449,7 @@ export default {
           this.fetch();
         })
         .catch((error) => {
+          this.openLoading().close();
           console.log(error);
         });
       // console.log(switchPost);

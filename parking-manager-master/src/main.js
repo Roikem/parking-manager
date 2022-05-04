@@ -15,6 +15,8 @@ import {
 } from 'echarts/components';
 import axios from 'axios'
 import md5 from 'js-md5';
+import SlideVerify from 'vue-monoplasty-slide-verify';
+Vue.use(SlideVerify);
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$http = axios
 Vue.prototype.$md5 = md5;
@@ -40,14 +42,33 @@ axios.interceptors.response.use(
     },
     error => {
         if (error.response) {
-            switch (error.response.status) {
-                case 401:
-                    localStorage.removeItem('token');
-                    router.push({
-                        name: 'Login'
-                    })
-                    return Promise.reject(error)
+            if (error.response.status == 400) {
+                this.$message({
+                    type: "error",
+                    message: "服务器错误",
+                });
+                return Promise.reject(error)
+            } else {
+                return Promise.reject(error)
             }
+
+            // switch (error.response.status) {
+            //     case 401:
+            //         localStorage.removeItem('token');
+            //         router.push({
+            //             name: 'Login'
+            //         })
+            //         return Promise.reject(error)
+            //     case 400:
+
+            //         this.$message({
+            //             type: "error",
+            //             message: "服务器错误",
+            //         });
+            //         return Promise.reject(error)
+
+            // }
+
         }
     })
 import VueParticles from 'vue-particles'
@@ -77,7 +98,7 @@ Vue.prototype.openLoading = function () {
     setTimeout(function () { // 设定定时器，超时5S后自动关闭遮罩层，避免请求失败时，遮罩层一直存在的问题
 
         loading.close(); // 关闭遮罩层
-    }, 3000)
+    }, 2000)
     return loading;
 }
 

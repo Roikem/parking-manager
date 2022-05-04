@@ -9,25 +9,25 @@
 
     <el-card>
       <!-- 搜索框区 -->
-      <el-row :gutter="20">
-        <el-col :span="10">
-          <!-- <el-input placeholder="请输入内容" v-model="search"
-                       @input="submitFun"
-                       ref='searchInput' class="input-with-select">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input> -->
-
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="车位编号">
           <el-input
-            placeholder="请输入车位编号、车牌号或手机号"
-            v-model="search"
-            @input="submitFun"
-            ref="searchInput"
-            onkeyup="this.value=this.value.toLowerCase()"
-          >
-            <el-button slot="append" icon="el-icon-search"></el-button
+            v-model="formInline.locate"
+            placeholder="请输入车位编号"
           ></el-input>
-        </el-col>
-      </el-row>
+        </el-form-item>
+        <el-form-item label="车牌号">
+          <el-input
+            v-model="formInline.carNumber"
+            placeholder="请输入车牌号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="searchForm" icon="el-icon-search"
+            >查询</el-button
+          >
+        </el-form-item>
+      </el-form>
       <el-table
         :data="tableData"
         border
@@ -82,7 +82,11 @@
             >
           </template>
         </el-table-column>
-        <el-table-column prop="days" label="剩余天数" :formatter="formatter">
+        <el-table-column
+          prop="remainingDaysSituation"
+          label="剩余天数"
+          :formatter="formatter"
+        >
         </el-table-column>
       </el-table>
 
@@ -207,12 +211,16 @@
 export default {
   data() {
     return {
+      formInline: {
+        locate: "",
+        carNumber: "",
+      },
       search: "",
       queryInfo: {
         query: "",
         pagenum: 1,
         pagesize: 10,
-        total: "",
+        total: 0,
       },
       medium: "",
       reletVisible: false,
@@ -236,7 +244,7 @@ export default {
       renderInfo: {
         locate: "",
         carNumber: "",
-        days: "",
+        remainingDaysSituation: "",
         daysSituation: "",
         renderName: "",
         telNumber: "",
@@ -253,7 +261,7 @@ export default {
         {
           locate: "",
           carNumber: "",
-          days: "",
+          remainingDaysSituation: "",
         },
       ],
     };
@@ -286,12 +294,39 @@ export default {
   },
   methods: {
     fetch() {
-      this.openLoading();
       var listData = {};
       listData.pageNum = this.queryInfo.pagenum;
       listData.pageSize = 10;
       let listRequest = this.$qs.stringify(listData);
-      this.$http.get(this.api + "RenderInfo?" + listRequest).then((res) => {
+      this.openLoading();
+      this.$http.get(this.api + "RenderInfo?" + listRequest).then(
+        (res) => {
+          this.openLoading().close();
+          // this.openLoading().close()
+          const box = res.data.data;
+          var pDataForm = JSON.parse(box);
+          console.log(pDataForm);
+          //console.log(res.data.tableData);
+          this.tableData = pDataForm.tableData;
+          // console.log(this.tableData)
+          this.searchData = this.tableData;
+          this.queryInfo.total = pDataForm.count;
+        },
+        (response) => {
+          this.openLoading().close();
+          console.log(response.request);
+        }
+      );
+    },
+
+    //搜索操作
+    searchForm() {
+      var searchForm = {};
+      searchForm.locate = this.formInline.locate;
+      searchForm.carNumber = this.formInline.carNumber;
+      let listSearch = this.$qs.stringify(searchForm);
+      console.log(listSearch);
+      this.$http.get(this.api + "RenderInfo?" + listSearch).then((res) => {
         this.openLoading().close();
         // this.openLoading().close()
         const box = res.data.data;
@@ -334,19 +369,22 @@ export default {
         params: {
           carNumber: form,
         },
-      }).then((res) => {
-        this.openLoading().close();
-        const box1 = res.data.data;
-        var pDataForm = JSON.parse(box1);
-        //用户信息
-        // console.log(pDataForm.tableData);
-
-        this.infoData = pDataForm;
-        this.renderInfoVisible = true;
-        // console.log(this.tableData)
-        console.log(this.infoData);
-        // this.searchData = this.tableData;
-      });
+      })
+        .then((res) => {
+          this.openLoading().close();
+          const box1 = res.data.data;
+          var pDataForm = JSON.parse(box1);
+          //用户信息
+          // console.log(pDataForm.tableData);
+          this.infoData = pDataForm;
+          this.renderInfoVisible = true;
+          // console.log(this.tableData)
+          console.log(this.infoData);
+          // this.searchData = this.tableData;
+        })
+        .catch((error) => {
+          this.openLoading().close();
+        });
     },
     //分页栏
     handleClick(tab, event) {
@@ -397,24 +435,32 @@ export default {
         params: {
           carNumber: scope.row.carNumber,
         },
-      }).then((res) => {
-        this.openLoading().close();
-        const box1 = res.data.data;
-        var pDataForm = JSON.parse(box1);
-        //用户信息
-        this.infoData = pDataForm;
-        this.renderInfo = this.infoData;
-        console.log(this.renderInfo);
-        this.editForm.carNumber = scope.row.carNumber;
-        this.editForm.locate = scope.row.locate;
-        this.editForm.renderName = this.renderInfo.renderName;
-        this.editForm.telNumber = this.renderInfo.telNumber;
-        this.editForm.renderPlace = this.renderInfo.renderPlace;
-        //  console.log(this.editForm);
-
-        // this.searchData = this.tableData;
-        this.editVisible = true;
-      });
+      })
+        .then((res) => {
+          this.openLoading().close();
+          const box1 = res.data.data;
+          var pDataForm = JSON.parse(box1);
+          //用户信息
+          this.infoData = pDataForm;
+          this.renderInfo = this.infoData;
+          console.log(this.renderInfo);
+          this.editForm.carNumber = scope.row.carNumber;
+          this.editForm.locate = scope.row.locate;
+          this.editForm.renderName = this.renderInfo.renderName;
+          this.editForm.telNumber = this.renderInfo.telNumber;
+          this.editForm.renderPlace = this.renderInfo.renderPlace;
+          //  console.log(this.editForm);
+          // this.searchData = this.tableData;
+          this.editVisible = true;
+        })
+        .catch((error) => {
+          this.openLoading().close();
+          this.$message({
+            message: "长时间未操作，请重新登录",
+            type: "error",
+          });
+          this.$router.push("/login");
+        });
     },
     //退租按钮
     deleteBridge(scope) {
@@ -474,7 +520,7 @@ export default {
         });
     },
     formatter(row, column) {
-      return row.days;
+      return row.remainingDaysSituation;
     },
     submitFun() {
       let search = this.search;
@@ -546,7 +592,9 @@ export default {
 
             this.openLoading().close();
           },
-          (response) => {}
+          (response) => {
+            this.openLoading().close();
+          }
         );
       }
     },
@@ -597,18 +645,22 @@ export default {
           // this.searchData = this.tableData;
         })
         .catch((error) => {
-          console.log(error);
           this.openLoading().close();
+          console.log(error);
           // console.log(error);
         });
     },
     cellStyle({ row, column, rowIndex, columnIndex }) {
-      if (row.daysSituation == 2 && columnIndex === 4) {
-        return "background-color: rgba(218, 97, 97, 0.9);color:#fff;text-align:center;";
-      } else if (row.daysSituation == 1 && columnIndex === 4) {
+      if (row.remainingDaysSituation > 60 && columnIndex === 4) {
         return "background-color: rgba(113, 214, 62, 0.9);color:#fff;text-align:center;";
-      } else if (columnIndex === 4) {
-        return "background-color:rgb(230, 172, 86, 0.9);color:#fff;text-align:center;";
+      } else if (
+        row.remainingDaysSituation >= 30 &&
+        row.remainingDaysSituation <= 60 &&
+        columnIndex === 4
+      ) {
+        return "background-color: rgba(230, 172, 86, 0.9);color:#fff;text-align:center;";
+      } else if (row.remainingDaysSituation < 30 && columnIndex === 4) {
+        return "background-color:rgb(218, 97, 97, 0.9);color:#fff;text-align:center;";
       } else {
         return "success-row";
       }
