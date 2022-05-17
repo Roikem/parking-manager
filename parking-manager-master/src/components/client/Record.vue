@@ -10,7 +10,7 @@
     <!-- 卡片视图区 -->
     <el-card>
       <!-- 搜索框区 -->
-      <el-form :inline="true" :model="search" class="demo-form-inline">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="车位编号">
           <el-input
             v-model="formInline.locate"
@@ -114,7 +114,7 @@ export default {
         query: "",
         pagenum: 1,
         pagesize: 10,
-        total: "",
+        total: 0,
       },
       userlist: [],
       addDialogVisible: false,
@@ -210,6 +210,8 @@ export default {
       var listData = {};
       listData.pageNum = this.queryInfo.pagenum;
       listData.pageSize = 10;
+      listData.locate = this.formInline.locate;
+      listData.carNumber = this.formInline.carNumber;
       let listRequest = this.$qs.stringify(listData);
       console.log(listRequest);
       this.$http
@@ -238,6 +240,8 @@ export default {
       var searchForm = {};
       searchForm.locate = this.formInline.locate;
       searchForm.carNumber = this.formInline.carNumber;
+      searchForm.pageNum = 1;
+      searchForm.pageSize = 10;
       let listSearch = this.$qs.stringify(searchForm);
       console.log(listSearch);
       this.$http.get(this.api + "ReCord?" + listSearch).then((res) => {
@@ -245,6 +249,7 @@ export default {
         var pDataForm = JSON.parse(box);
         this.tableData = pDataForm.tableData;
         this.queryInfo.total = pDataForm.count;
+        this.queryInfo.pagenum = 1;
         console.log(res);
         this.openLoading().close();
         this.inintData();

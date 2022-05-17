@@ -24,7 +24,6 @@
 
       <div>
         <el-button @click="logout">退出登录</el-button>
-        <el-button @click="drawer = true">个人信息</el-button>
       </div>
     </el-header>
 

@@ -136,7 +136,7 @@ export default {
             (res) => {
               //const box = res.data;
               //  let dataForm = JSON.parse(res.data);
-              //console.log(res.data.code);
+              console.log(res.data);
               this.openLoading().close();
               if (res.data.code == 200) {
                 //Vue.prototype.token = res.data.data.token;
@@ -156,10 +156,16 @@ export default {
                   type: "danger",
                 });
                 this.$refs.loginFormRef.resetFields();
+              } else if (res.data.code == 4000) {
+                this.$message({
+                  message: "该账号还未注册",
+                  type: "error",
+                });
+                this.$refs.loginFormRef.resetFields();
               } else {
                 this.$message({
                   message: "无法访问到服务器",
-                  type: "danger",
+                  type: "error",
                 });
               }
             },
@@ -216,7 +222,7 @@ export default {
 <style lang="less" scoped>
 .login_container {
   background-color: #2b4b6b;
-  height: 770px;
+  height: 100%;
 }
 .login_box {
   width: 450px;

@@ -8,7 +8,7 @@
 
     <!-- 卡片视图区 -->
     <div class="parking-table">
-      <div class="parking-box-pic">
+      <div class="parking-box-pic" v-if="parkingDataForm[0]">
         <!-- 区域A-->
         <ul class="area_A">
           <!-- A区域1 -->
@@ -1768,7 +1768,7 @@
     </div>
 
     <!-- 车牌出库 -->
-    <el-dialog title="车牌出库 " :visible.sync="deletVisible" width="24%">
+    <el-dialog title="车辆出库 " :visible.sync="deletVisible" width="24%">
       <el-form ref="form" :model="confForm1">
         <el-form-item>
           <el-input
@@ -1782,6 +1782,7 @@
         </el-form-item>
       </el-form>
     </el-dialog>
+
     <!-- 车牌查询 -->
     <el-dialog title="车牌查询 " :visible.sync="editVisible" width="24%">
       <el-form ref="form" :model="confForm">
@@ -1803,6 +1804,7 @@
 export default {
   data() {
     return {
+      parkingColor: "",
       token: "",
       lastNum: "",
       editVisible: false,
@@ -1811,10 +1813,14 @@ export default {
       search: "",
       searchData: "",
       tableData: [],
-      confForm: {},
-      confForm1: {},
+      confForm: {
+        carNumber: "",
+      },
+      confForm1: {
+        carNumber: "",
+      },
       queryInfo: {
-        query: "",
+        query: 0,
         pagenum: 1,
         pagesize: 15,
       },
@@ -1836,7 +1842,7 @@ export default {
     // 获取后端数据后
     ///this.tableData=数据
     this.confForm = {};
-    (this.confForm1 = {}), this.fetch();
+    this.fetch();
     // //  console.log(this.tableData)
     //   this.total = this.tableData.length;
   },
@@ -1862,6 +1868,11 @@ export default {
         this.$message({
           type: "error",
           message: "请输入内容",
+        });
+      } else if (!this.isLicenseNo(this.confForm.carNumber)) {
+        this.$message({
+          type: "error",
+          message: "车牌号格式错误",
         });
       } else {
         //  console.log(this.confForm.carNumber);
@@ -1892,23 +1903,33 @@ export default {
               });
             } else {
               this.openLoading().close();
-              this.confForm = "";
+              console.log("123");
+              this.$global_msg.carNumber = this.confForm.carNumber;
+              console.log(this.$global_msg.carNumber);
               this.$confirm(
                 "此车为临时车，是否跳转到临时停车新增页面?",
                 "提示",
                 {
                   confirmButtonText: "确定",
-                  cancelButtonText: "取消",
                   type: "warning",
                 }
-              ).then(() => {
-                this.$router.push("/tempOut");
-                this.$message({
-                  type: "success",
-                  message: "跳转成功!",
+              )
+                .then(() => {
+                  this.confForm.carNumber = "";
+                  this.$router.push("/tempOut");
+                  this.$message({
+                    type: "success",
+                    message: "跳转成功!",
+                  });
+                })
+                .catch(() => {
+                  this.confForm.carNumber = "";
+                  this.$message({
+                    type: "info",
+                    message: "已取消出库",
+                  });
                 });
-                console.log("error");
-              });
+              this.confForm.carNumber = "";
             }
           },
           (response) => {
@@ -1916,6 +1937,11 @@ export default {
           }
         );
       }
+    },
+    isLicenseNo(str) {
+      return /(^[\u4E00-\u9FA5]{1}[A-Z0-9]{6}$)|(^[A-Z]{2}[A-Z0-9]{2}[A-Z0-9\u4E00-\u9FA5]{1}[A-Z0-9]{4}$)|(^[\u4E00-\u9FA5]{1}[A-Z0-9]{5}[挂学警军港澳]{1}$)|(^[A-Z]{2}[0-9]{5}$)|(^(08|38){1}[A-Z0-9]{4}[A-Z0-9挂学警军港澳]{1}$)/.test(
+        str
+      );
     },
     delfSubmit() {
       if (!this.confForm1.carNumber) {
@@ -1948,20 +1974,48 @@ export default {
             var pDataForm = JSON.parse(box);
             //  console.log(pDataForm);
             this.deletVisible = false;
-            {
+            console.log(res);
+            if (pDataForm.放行 == "长期车 你可以走了") {
+              this.$message({
+                type: "success ",
+                message: "车辆为长租车，已放行",
+              });
+            } else {
               this.$confirm(
                 "停车收费    " + pDataForm.cost + "元",
                 "该车辆为临时车",
                 {
-                  confirmButtonText: "确定",
+                  confirmButtonText: "确定放行",
                   type: "warning",
                 }
               )
                 .then(() => {
-                  this.$message({
-                    type: "success ",
-                    message: "车辆" + this.confForm1.carNumber + "已成功出库",
-                  });
+                  this.openLoading();
+                  let comValue = {
+                    carNumber: "",
+                    locate: "",
+                  };
+                  comValue.carNumber = carNumber;
+                  comValue.locate = "";
+                  //   console.log(comValue);
+                  let postinfo = this.$qs.stringify(comValue);
+                  console.log(postinfo);
+                  this.$http
+                    .get(this.api + "TempDelete?" + postinfo)
+                    .then((res) => {
+                      console.log(res);
+                      this.openLoading().close();
+                      this.fetch();
+                      this.$message({
+                        message:
+                          "车辆" + this.confForm1.carNumber + "已成功出库",
+                        type: "success",
+                      });
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                      this.fetch();
+                    });
                 })
                 .catch(() => {
                   this.$message({
@@ -1970,6 +2024,7 @@ export default {
                   });
                 });
             }
+
             this.confForm1.carNumber = "";
           },
           (response) => {
@@ -2035,7 +2090,7 @@ export default {
             const box = res.data.data;
             var pDataForm = JSON.parse(box);
             this.parkingDataForm = pDataForm.parkingDataForm;
-            console.log(res.data.data);
+            console.log(typeof pDataForm.parkingDataForm);
             console.log(
               "----------------------------------------",
               this.parkingDataForm.length
@@ -2049,7 +2104,7 @@ export default {
             this.searchData = this.tableData;
           },
           (error) => {
-            console.log("error");
+            console.log(error);
           }
         )
         .catch((error) => {
@@ -2161,7 +2216,7 @@ export default {
   display: block;
 }
 .parking-table {
-  width: 100%;
+  width: 800px;
   height: 600px;
 }
 .parking-box-pic img {
@@ -2212,7 +2267,7 @@ export default {
 }
 .area_C {
   position: absolute;
-  width: 860px;
+  width: 260px;
   height: 100%;
   margin-left: 571.7px;
   margin-top: -586.5px;

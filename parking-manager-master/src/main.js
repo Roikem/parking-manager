@@ -16,6 +16,8 @@ import {
 import axios from 'axios'
 import md5 from 'js-md5';
 import SlideVerify from 'vue-monoplasty-slide-verify';
+import global_msg from './globle'
+Vue.prototype.$global_msg = global_msg;
 Vue.use(SlideVerify);
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$http = axios

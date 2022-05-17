@@ -30,8 +30,22 @@
   </el-form-item> -->
 
         <el-form-item label="车位编号" prop="locate">
-          <el-input v-model="renderAddForm.locate"></el-input>
+          <el-select
+            v-model="renderAddForm.locate"
+            clearable
+            placeholder="请选择车位"
+          >
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          <!-- <el-input v-model="renderAddForm.locate"></el-input> -->
         </el-form-item>
+
         <el-form-item label="车牌号" prop="carNumber">
           <el-input v-model="renderAddForm.carNumber"></el-input>
         </el-form-item>
@@ -73,6 +87,7 @@
 export default {
   data() {
     return {
+      options: [],
       renderAddForm: {
         carNumber: "",
         renderName: "",
@@ -111,7 +126,35 @@ export default {
       },
     };
   },
+  created() {
+    this.fetch();
+  },
+
   methods: {
+    fetch() {
+      this.openLoading();
+      this.$http.get(this.api + "UnrentList?").then(
+        (res) => {
+          this.openLoading().close();
+          console.log(res.data.data.length);
+          let locateInfo = [{}];
+          for (var i = 0; i < res.data.data.length; i++) {
+            // console.log(i);
+            console.log(res.data.data[i]);
+            this.options.push({
+              value: res.data.data[i],
+              label: res.data.data[i],
+            });
+            // this.options[i].value = res.data.data[i];
+            // this.options[i].label = res.data.data[i];
+          }
+        },
+        (response) => {
+          this.openLoading().close();
+          console.log(response.request);
+        }
+      );
+    },
     submitForm(formName) {
       this.postForm.carNumber = this.renderAddForm.carNumber;
 

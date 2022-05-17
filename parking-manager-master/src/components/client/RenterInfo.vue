@@ -297,6 +297,8 @@ export default {
       var listData = {};
       listData.pageNum = this.queryInfo.pagenum;
       listData.pageSize = 10;
+      listData.locate = this.formInline.locate;
+      listData.carNumber = this.formInline.carNumber;
       let listRequest = this.$qs.stringify(listData);
       this.openLoading();
       this.$http.get(this.api + "RenderInfo?" + listRequest).then(
@@ -324,6 +326,8 @@ export default {
       var searchForm = {};
       searchForm.locate = this.formInline.locate;
       searchForm.carNumber = this.formInline.carNumber;
+      searchForm.pageNum = 1;
+      searchForm.pageSize = 10;
       let listSearch = this.$qs.stringify(searchForm);
       console.log(listSearch);
       this.$http.get(this.api + "RenderInfo?" + listSearch).then((res) => {
@@ -337,6 +341,7 @@ export default {
         // console.log(this.tableData)
         this.searchData = this.tableData;
         this.queryInfo.total = pDataForm.count;
+        this.queryInfo.pagenum = 1;
       });
     },
 
@@ -415,7 +420,6 @@ export default {
     //续租操作按钮
     reletBridge(scope) {
       this.scope = scope;
-
       let _1obj = JSON.stringify(this.scope.row);
       let reletJson = JSON.parse(_1obj);
       this.reletForm.parkingId = reletJson.locate;
@@ -479,7 +483,6 @@ export default {
       };
       console.log(scope.row);
       comValue.parkingId = scope.row.locate;
-
       let postinfo = this.$qs.stringify(comValue);
       console.log(postinfo);
       // console.log(scope.row.userId)
@@ -604,7 +607,6 @@ export default {
       let postinfo = this.$qs.stringify(this.reletForm);
       console.log(postinfo);
       this.openLoading();
-
       // this.$http({
       //   method: "get",
       //   url: this.api + "ReletForm",
@@ -645,6 +647,11 @@ export default {
           // this.searchData = this.tableData;
         })
         .catch((error) => {
+          this.$message({
+            message: "操作失败",
+            type: "error",
+          });
+          this.reletVisible = false;
           this.openLoading().close();
           console.log(error);
           // console.log(error);

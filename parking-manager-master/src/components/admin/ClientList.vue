@@ -10,7 +10,7 @@
     <!-- 卡片视图区 -->
     <el-card>
       <!-- 搜索框区 -->
-      <el-form :inline="true" :model="search" class="demo-form-inline">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="车位编号">
           <el-input
             v-model="formInline.locate"
@@ -77,7 +77,7 @@
     <el-dialog title="提示" :visible.sync="dialogVisible" width="30%">
       <span style="font-size: 17px; font-weight: 800"
         >是否确定临时车辆出库（当前计费
-        <el-tag :type="primary" disable-transitions>{{ parking_cost }}元</el-tag
+        <el-tag type="primary" disable-transitions>{{ parking_cost }}元</el-tag
         >）
       </span>
       <span slot="footer" class="dialog-footer">
@@ -108,7 +108,7 @@ export default {
         query: "",
         pagenum: 1,
         pagesize: 10,
-        total: "",
+        total: 0,
       },
       userlist: [],
       addDialogVisible: false,
@@ -120,7 +120,6 @@ export default {
   created: function () {
     // 获取后端数据后
     ///this.tableData=数据
-    this.formInline = {};
     this.fetch();
   },
   methods: {
@@ -203,6 +202,8 @@ export default {
       var listData = {};
       listData.pageNum = this.queryInfo.pagenum - 1;
       listData.pageSize = 10;
+      listData.locate = this.formInline.locate;
+      listData.carNumber = this.formInline.carNumber;
       let listRequest = this.$qs.stringify(listData);
       console.log(listRequest);
       this.openLoading();
@@ -237,6 +238,8 @@ export default {
       var searchForm = {};
       searchForm.locate = this.formInline.locate;
       searchForm.carNumber = this.formInline.carNumber;
+      searchForm.pageNum = 0;
+      searchForm.pageSize = 10;
       let listSearch = this.$qs.stringify(searchForm);
       console.log(listSearch);
       this.openLoading();
@@ -244,16 +247,16 @@ export default {
         this.openLoading().close();
         const box = res.data.data;
         var pDataForm = JSON.parse(box);
-        console.log(pDataForm);
+        console.log(res);
         this.queryInfo.total = pDataForm.count;
         this.tableData = pDataForm.tempList;
+        this.queryInfo.pagenum = 1;
         this.inintData();
       });
     },
     //出库操作 @rk---
     deleteBridge(scope) {
       this.scope = scope;
-      this.dialogVisible = true;
       let postValue = {
         carNumber: "",
       };
@@ -267,6 +270,7 @@ export default {
         .get(this.api + "exitDoor?" + costGet)
         .then((res) => {
           this.openLoading().close();
+          this.dialogVisible = true;
           // this.openLoading().close()
           console.log(res);
           const box1 = res.data.data;
@@ -276,6 +280,10 @@ export default {
         })
         .catch((error) => {
           this.openLoading().close();
+          this.$message({
+            message: "网络超时",
+            type: "error",
+          });
         });
     },
     deleteData(scope) {
@@ -284,30 +292,33 @@ export default {
       //  this.tableData.splice(scope.$index, 1)
       // this.inintData()
       let comValue = {
-        locate: "",
         carNumber: "",
+        locate: "",
       };
-      comValue.locate = scope.row.locate;
       comValue.carNumber = scope.row.carNumber;
+      comValue.locate = scope.row.locate;
       //   console.log(comValue);
       let postinfo = this.$qs.stringify(comValue);
-      // console.log(postinfo);
+      console.log(postinfo);
       // console.log(scope.row.userId)
       //console.log("出库的货物编码:",scope.row.goodsId)
       //返回用户车位编号，后端根据locate进行相关处理    将该商品从商品展示的数据库中删除并保存到出库记录数据库中
-
-      // this.$http
-      //   .post(this.api + "user/delete?" + postinfo)
-      //   .then((res) => {
-      //     this.$message({
-      //       message: "操作成功",
-      //       type: "success",
-      //     });
-      //     this.fetch();
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
+      this.openLoading();
+      this.$http
+        .get(this.api + "TempDelete?" + postinfo)
+        .then((res) => {
+          console.log(res);
+          this.openLoading().close();
+          this.fetch();
+          this.$message({
+            message: "出库成功",
+            type: "success",
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.fetch();
+        });
     },
   },
 };

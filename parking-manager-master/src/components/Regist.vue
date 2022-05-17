@@ -399,14 +399,14 @@ export default {
   left: 130px;
 }
 .codebox {
-  height: 500px;
+  height: 100%;
   width: 700px;
   margin: 0 auto;
   padding-top: 100px;
 }
 .login_container {
   background-color: #2b4b6b;
-  height: 770px;
+  height: 100%;
 }
 .login_box {
   width: 450px;
