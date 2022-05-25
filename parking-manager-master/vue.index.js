@@ -54,7 +54,7 @@ module.exports = {
         // https://webpack.js.org/configuration/devtool/#production
         devtool: '#source-map',
         // Gzip off by default as many popular static hosts such as
-        // Surge or Netlify already gzip all static assets for you.
+        // Surge or Netlify already gzip all static assets fors you.
         // Before setting to `true`, make sure to:
         // npm install --save-dev compression-webpack-plugin
         productionGzip: false,
